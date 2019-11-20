@@ -1,0 +1,38 @@
+<% include partials/header %>
+    <h1>Dados dos Bolsistas</h1>
+    <!-- Note the use of the for attribute on all <label> elements; it's a formal way to link a label to a form widget. This attribute references the id of the corresponding widget. -->
+    <form action="/savegrantee" method="POST" class="sendForm">
+        <div class="get_data">
+            <div class="item">
+                <label for="cpf">CPF</label>
+                <input type="text" placeholder="cpf do(a) bolsista" id="cpf">
+            </div>
+            <div class=" item">
+                <label for="nome">Nome Bolsista</label>
+                <input type="text" placeholder="nome do(a) bolsista" id="nome">
+            </div>
+            <div class="select-sexo">
+                <label for="sexo">Sexo</label>
+                <select class="sexo" id="sexo">
+                    <option value="female">Feminino</option>
+                    <option value="male">Masculino</option>
+                </select>
+            </div>
+            <div class="select-clbr">
+                <label for="clbr">Cadastro por:</label>
+                <select class="clbr" id="clbr">
+                    <option value="cid">Cid</option>
+                    <option value="carlos">Carlos</option>
+                    <option value="mayra">Mayra</option>
+                    <option value="monica">Mônica</option>
+                    <option value="gilson">Gilson</option>
+                    <option value="pricilla">Pricilla</option>
+                    <option value="andre">André</option>
+                </select>
+            </div>
+        </div>
+        <div class="save_button">
+            <button>Salvar</button>
+        </div>
+    </form>
+<% include partials/footer %>
