@@ -1,3 +1,5 @@
+import {state} from ''
+
 export const dom = {
     sendData: document.querySelector('.sendForm'),
     cpfInput: document.getElementById('cpf'),

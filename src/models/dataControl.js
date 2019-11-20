@@ -1,3 +1,4 @@
+import {state} from 'source/index';
 export class Bolsista{
     constructor(cpf,nome,sexo, colaborador){
         this.cpf = cpf;

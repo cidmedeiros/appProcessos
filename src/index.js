@@ -3,7 +3,7 @@ import {Bolsista} from "./models/dataControl"
 import {dom} from "./views/uiControl"
 import './style.css';
 
-const state = {};
+export const state = {};
 
 const getInput = () => {
     state.bolsista = new  Bolsista(
