@@ -1,4 +1,3 @@
-const path = require('path')
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -38,10 +37,5 @@ module.exports = {
     ],
     devServer:{
         contentBase: "./dist" /* this is the folder where webpack will compile the files to be served to clients */
-    },
-    resolve: {
-        alias: {
-            source: path.resolve('./src')
-        }
     }
 }
