@@ -1,0 +1,38 @@
+{
+  "name": "budget",
+  "version": "1.0.0",
+  "description": "multi_modular project",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --open"
+  },
+  "author": "Scifi Stalker",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "style-loader": "^1.0.0",
+    "url-loader": "^2.2.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "dependencies": {
+    "async": "^3.1.0",
+    "body-parser": "^1.19.0",
+    "coffeescript": "^2.4.1",
+    "commander": "^4.0.1",
+    "ejs": "^2.7.3",
+    "express": "^4.17.1",
+    "lodash": "^4.17.15",
+    "mongodb": "^3.3.4",
+    "mongoose": "^5.7.11",
+    "underscore": "^1.9.1",
+    "yargs": "^15.0.1"
+  }
+}
