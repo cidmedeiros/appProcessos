@@ -15,21 +15,33 @@ const hostname = `${tools.getLocalIp()}`;
 const port = 8087;
 
 //Set DataBase
-mongoose.connect('mongodb://localhost:27017/bolsistas', {'useNewUrlParser': true, 'useUnifiedTopology':true});
+mongoose.connect('mongodb://localhost:27017/testDB', {'useNewUrlParser': true, 'useUnifiedTopology':true});
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-const bolsista = new mongoose.Schema({
+const bolsistaSchema = new mongoose.Schema({
 	cpf: String,
 	nome: String,
 	sexo: String,
 	colaborador: String
 });
 
-const Bolsista = mongoose.model('Bolsista', bolsista);
+	//the next statement uses the plural form of the string param to create (if needed) a collection on the DB.
+const bolsista = mongoose.model('bolsista', bolsistaSchema);
+
+async function getBolsistas(){
+	bolsista.find({}, (err, bolss) => {
+		if(err){
+			alert('Error retrieving data from Mongo', err);
+		}else{
+			console.log('data loaded');
+			return bolss;
+		}
+	});
+};
 
 //Routes Definitions
-const bolsista_post = [];
+const bolsistas = getBolsistas();
 
 async function wait (ms) {
   return new Promise((resolve, reject) => {
@@ -41,7 +53,7 @@ app.get('/', async (req, res) =>{
 	console.log('Waiting...');
 	try{
 		await wait(5);
-		res.status(200).render('landing.ejs',{bolsista_post:bolsista_post});
+		res.status(200).render('landing.ejs',{bolsistas:bolsistas});
 		console.log('Operating ok...');
 	} catch(error){
 		alert(error);
@@ -52,15 +64,22 @@ app.post('/', async (req, res) =>{
 	console.log('Saving...');
 	try{
 		await wait(500);
-		const bolsista_local = {};
-		bolsista_local.cpf = req.body.cpf;
-		bolsista_local.nome = req.body.nome;
-		bolsista_local.sexo = req.body.sexo;
-		bolsista_local.colaborador= req.body.clbr;
-		bolsista_post.push(bolsista_local);
+		const bolsista_local = new bolsista({
+			cpf:req.body.cpf,
+			nome:req.body.nome,
+			sexo:req.body.sexo,
+			colaborador:req.body.clbr
+		});
 	} catch(error){
 		alert('The data was not sent! Try Again.', error);
 	}
+	bolsista_local.save((err, bols) => {
+		if(err){
+			alert('Not Saved!', err);
+		} else{
+			console.log(`${bols} has just been saved`)
+		}
+	});
 	res.redirect('/');
 });
 
