@@ -4,14 +4,14 @@ const express = require('express');
 const http = require("http");
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const getIP = require('./assets/scripts/tools')
+const tools = require('./assets/scripts/tools')
 
 //App Variable
 const app = express();
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static('assets'));
 app.set('view engine', 'ejs');
-const hostname = `${getIP.getLocalIp()}`;
+const hostname = `${tools.getLocalIp()}`;
 const port = 8087;
 
 //Set DataBase
