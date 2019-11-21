@@ -73,3 +73,14 @@ button {
      between the labels and their text fields */
   margin-left: .5em;
 }
+
+.ans_list{
+  /* Center the form on the page */
+  margin: 0 auto;
+  margin-top: 23px;
+  width: 800px;
+  /* Form outline */
+  padding: 1em;
+  border: 1px solid #CCC;
+  border-radius: 1em;
+}

@@ -1,7 +1,7 @@
 <% include partials/header %>
     <h1>Dados dos Bolsistas</h1>
     <!-- Note the use of the for attribute on all <label> elements; it's a formal way to link a label to a form widget. This attribute references the id of the corresponding widget. -->
-    <form action="/savegrantee" method="POST" class="sendForm">
+    <form method="POST" class="sendForm">
         <div class="get_data">
             <div class="item">
                 <label for="cpf">CPF</label>
@@ -35,4 +35,13 @@
             <button>Salvar</button>
         </div>
     </form>
+     <% bolsista_post.forEach(function(bolsista){ %>
+    <div class="ans_list">
+        <li>CPF: <%=bolsista.cpf%></li>
+        <li>Nome: <%=bolsista.nome%></li>
+        <li>Sexo: <%=bolsista.sexo%></li>
+        <li>Colaborador: <%=bolsista.colaborador%></li>
+    </div>
+    <% }); %>
+    
 <% include partials/footer %>

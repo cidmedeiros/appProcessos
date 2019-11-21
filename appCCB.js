@@ -29,6 +29,8 @@ const bolsista = new mongoose.Schema({
 const Bolsista = mongoose.model('Bolsista', bolsista);
 
 //Routes Definitions
+const bolsista_post = [];
+
 async function wait (ms) {
   return new Promise((resolve, reject) => {
     setTimeout(resolve, ms)
@@ -38,27 +40,28 @@ async function wait (ms) {
 app.get('/', async (req, res) =>{
 	console.log('Waiting...');
 	try{
-		await wait(1000);
-		res.status(200).render('landing.ejs');
+		await wait(5);
+		res.status(200).render('landing.ejs',{bolsista_post:bolsista_post});
 		console.log('Operating ok...');
 	} catch(error){
 		alert(error);
 	}
 });
 
-app.post('/savegrantee', async (req, res) =>{
+app.post('/', async (req, res) =>{
 	console.log('Saving...');
-	const bolsista = {}
 	try{
-		await wait(1000);
-		bolsista.cpf = req.body.cpf;
-		bolsista.nome = req.body.nome;
-		bolsista.sexo = req.body.sexo;
-		bolsista.colaborador= req.body.clbr;
+		await wait(500);
+		const bolsista_local = {};
+		bolsista_local.cpf = req.body.cpf;
+		bolsista_local.nome = req.body.nome;
+		bolsista_local.sexo = req.body.sexo;
+		bolsista_local.colaborador= req.body.clbr;
+		bolsista_post.push(bolsista_local);
 	} catch(error){
 		alert('The data was not sent! Try Again.', error);
 	}
-	console.log(bolsista);
+	res.redirect('/');
 });
 
 /* 
