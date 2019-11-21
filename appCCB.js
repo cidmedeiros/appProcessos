@@ -48,13 +48,17 @@ app.get('/', async (req, res) =>{
 
 app.post('/savegrantee', async (req, res) =>{
 	console.log('Saving...');
+	const bolsista = {}
 	try{
 		await wait(1000);
-		res.status(200).render('landing.ejs');
-		console.log('Operating ok...');
+		bolsista.cpf = req.body.cpf;
+		bolsista.nome = req.body.nome;
+		bolsista.sexo = req.body.sexo;
+		bolsista.colaborador= req.body.clbr;
 	} catch(error){
-		alert(error);
+		alert('The data was not sent! Try Again.', error);
 	}
+	console.log(bolsista);
 });
 
 /* 
