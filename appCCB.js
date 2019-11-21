@@ -35,13 +35,14 @@ async function getBolsistas(){
 			alert('Error retrieving data from Mongo', err);
 		}else{
 			console.log('data loaded');
+			console.log(bolss);
 			return bolss;
 		}
 	});
 };
 
 //Routes Definitions
-const bolsistas = getBolsistas();
+const todosBolsistas = getBolsistas();
 
 async function wait (ms) {
   return new Promise((resolve, reject) => {
@@ -53,7 +54,7 @@ app.get('/', async (req, res) =>{
 	console.log('Waiting...');
 	try{
 		await wait(5);
-		res.status(200).render('landing.ejs',{bolsistas:bolsistas});
+		res.status(200).render('landing.ejs',{bolsistas:todosBolsistas});
 		console.log('Operating ok...');
 	} catch(error){
 		alert(error);
