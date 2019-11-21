@@ -35,7 +35,7 @@ async function wait (ms) {
 }
 
 app.get('/', async (req, res) =>{
-	console.log('Loading...');
+	console.log('Waiting...');
 	try{
 		await wait(1000);
 		res.status(200).render('landing.ejs');
@@ -73,7 +73,7 @@ app.get('/views/:someView', async (req, res) =>{
 
 	//Routes order matters! This should always be the last route!!
 app.get('*', async (req, res) =>{
-	console.log('Loading...');
+	console.log('Waiting...');
 	try{
 		await wait(3 * 1000);
 		res.status(200).send("Sorry, We don't have any content here... yet :)");
