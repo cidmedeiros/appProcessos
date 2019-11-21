@@ -1,15 +1,21 @@
 <% include partials/header %>
-    <h1>Dados dos Bolsistas</h1>
+    <link rel="stylesheet" href="/style.css">
+<% include partials/headerBottom %>
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Formulário Simples Teste</h1>
+        </div>
+    </header>
     <!-- Note the use of the for attribute on all <label> elements; it's a formal way to link a label to a form widget. This attribute references the id of the corresponding widget. -->
-    <form method="POST" class="sendForm">
+    <form method="POST" class="sendForm container">
         <div class="get_data">
             <div class="item">
                 <label for="cpf">CPF</label>
-                <input type="text" placeholder="cpf do(a) bolsista" id="cpf" name="cpf">
+                <input type="text" placeholder="qualquer número" id="cpf" name="cpf">
             </div>
             <div class=" item">
                 <label for="nome">Nome Bolsista</label>
-                <input type="text" placeholder="nome do(a) bolsista" id="nome" name="nome">
+                <input type="text" placeholder="qualquer nome" id="nome" name="nome">
             </div>
             <div class="select-sexo">
                 <label for="sexo">Sexo</label>
@@ -31,17 +37,21 @@
                 </select>
             </div>
         </div>
-        <div class="save_button">
+        <div class="btn-lg">
             <button>Salvar</button>
         </div>
     </form>
-     <% bolsista_post.forEach(function(bolsista){ %>
-    <div class="ans_list">
-        <li>CPF: <%=bolsista.cpf%></li>
-        <li>Nome: <%=bolsista.nome%></li>
-        <li>Sexo: <%=bolsista.sexo%></li>
-        <li>Colaborador: <%=bolsista.colaborador%></li>
-    </div>
+    <div class="row">
+        <% bolsistas.forEach(function(bolsista){ %>
+        <div class="ans_list col-md-3 col-sm-6">
+            <div class="thumbnail">
+                <li>CPF: <%=bolsista.cpf%></li>
+                <li>Nome: <%=bolsista.nome%></li>
+                <li>Sexo: <%=bolsista.sexo%></li>
+                <li>Colaborador: <%=bolsista.colaborador%></li>
+            </div>
+        </div>
     <% }); %>
+    </div>
     
 <% include partials/footer %>
