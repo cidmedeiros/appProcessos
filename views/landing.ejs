@@ -3,7 +3,7 @@
 <% include partials/headerBottom %>
     <header class="jumbotron">
         <div class="container">
-            <h1>Formulário Simples Teste</h1>
+            <h1>Formulário Teste</h1>
         </div>
     </header>
     <!-- Note the use of the for attribute on all <label> elements; it's a formal way to link a label to a form widget. This attribute references the id of the corresponding widget. -->
@@ -42,7 +42,7 @@
         </div>
     </form>
     <div class="row">
-        <% bolsistas.forEach(function(bolsista){ %>
+        <% outBolsistas.forEach(function(bolsista){ %>
         <div class="ans_list col-md-3 col-sm-6">
             <div class="thumbnail">
                 <li>CPF: <%=bolsista.cpf%></li>
