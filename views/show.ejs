@@ -1,0 +1,16 @@
+<% include partials/header %>
+    <link rel="stylesheet" href="/style.css">
+<% include partials/headerBottom %>
+    <h1>Bolsista Informações</h1>
+    <div class="row">
+        <% outBolsista.forEach(function(bolsista){ %>
+        <div class="ans_list col-md-3 col-sm-6">
+            <div class="thumbnail">
+                <li>CPF: <%=bolsista.cpf%></li>
+                <li>Nome: <%=bolsista.nome%></li>
+                <li>Sexo: <%=bolsista.sexo%></li>
+                <li>Colaborador: <%=bolsista.colaborador%></li>
+            </div>
+        </div>
+    </div>
+<% include partials/footer %>

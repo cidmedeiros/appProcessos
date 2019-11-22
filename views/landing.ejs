@@ -50,8 +50,10 @@
                 <li>Sexo: <%=bolsista.sexo%></li>
                 <li>Colaborador: <%=bolsista.colaborador%></li>
             </div>
+            <p>
+                <a href="/bolsista/<%= bolsista._id %>" class="btn btn-primary">Info</a>
+            </p>
         </div>
     <% }); %>
     </div>
-    
 <% include partials/footer %>
