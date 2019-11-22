@@ -37,6 +37,8 @@ async function wait (ms) {
 }
 
 //Routes Definitions
+
+	//INDEX ROUTE - Lists all the related data from DB
 app.get('/', async (req, res) =>{
 	console.log('Waiting...');
 	try{
@@ -53,6 +55,7 @@ app.get('/', async (req, res) =>{
 	}
 });
 
+	//CREATE ROUTE - Save Data into DB
 app.post('/', async (req, res) =>{
 	console.log('Saving...');
 	const bolsista_local = new Bolsista({
@@ -73,6 +76,25 @@ app.post('/', async (req, res) =>{
 		console.log('The data was not sent! Try Again.', error);
 	}
 });
+
+	//SHOW ROUTE
+app.get('/bolsista/:id', async (req, res) => {
+	//find bolsista with provided ID
+	try{
+		await Bolsista.findById(req.params.id, (err,foundBol) =>{
+			if(err){
+				console.log('Error retrieving data', err);
+			} else{
+				console.log(`${foundBol} has just been retrieved`);
+				res.render('show', {outBolsista:foundBol});
+			}
+	});}
+	catch{
+		console.log('Error retrieving data', err);
+	}
+	//render show-template with that bolsista
+	res.render('show');
+})
 
 /* 
 	//Global pattern for views pages
