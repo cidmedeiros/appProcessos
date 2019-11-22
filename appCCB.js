@@ -27,61 +27,51 @@ const bolsistaSchema = new mongoose.Schema({
 });
 
 	//the next statement uses the plural form of the string param to create (if needed) a collection on the DB.
-const bolsista = mongoose.model('bolsista', bolsistaSchema);
+const Bolsista = mongoose.model('Bolsista', bolsistaSchema);
 
-async function getBolsistas(){
-	bolsista.find({}, (err, bolss) => {
-		if(err){
-			alert('Error retrieving data from Mongo', err);
-		}else{
-			console.log('data loaded');
-			console.log(bolss);
-			return bolss;
-		}
-	});
-};
-
-//Routes Definitions
-const todosBolsistas = getBolsistas();
-
+	//Asyncronous function to use to teste DataBase performance
 async function wait (ms) {
   return new Promise((resolve, reject) => {
     setTimeout(resolve, ms)
   });
 }
 
+//Routes Definitions
 app.get('/', async (req, res) =>{
 	console.log('Waiting...');
 	try{
-		await wait(5);
-		res.status(200).render('landing.ejs',{bolsistas:todosBolsistas});
-		console.log('Operating ok...');
+		await Bolsista.find({}, (err, todosBolsistas)=> {
+			if(err){
+				aconsole.log('Error retrieving data', err);
+			} else{
+				res.render('landing.ejs', {outBolsistas:todosBolsistas});
+				console.log('Operating ok...');
+			}
+		});
 	} catch(error){
-		alert(error);
+		console.log('If not the same erro => error rendering template',error);
 	}
 });
 
 app.post('/', async (req, res) =>{
 	console.log('Saving...');
+	const bolsista_local = new Bolsista({
+		cpf:req.body.cpf,
+		nome:req.body.nome,
+		sexo:req.body.sexo,
+		colaborador:req.body.clbr});
 	try{
-		await wait(500);
-		const bolsista_local = new bolsista({
-			cpf:req.body.cpf,
-			nome:req.body.nome,
-			sexo:req.body.sexo,
-			colaborador:req.body.clbr
-		});
-	} catch(error){
-		alert('The data was not sent! Try Again.', error);
-	}
-	bolsista_local.save((err, bols) => {
-		if(err){
-			alert('Not Saved!', err);
-		} else{
-			console.log(`${bols} has just been saved`)
-		}
+		await bolsista_local.save((err, bols) => {
+			if(err){
+				console.log('Not Saved!', err);
+			} else{
+				console.log(`${bols} has just been saved`);
+				res.redirect('/');
+			}
 	});
-	res.redirect('/');
+	} catch(error){
+		console.log('The data was not sent! Try Again.', error);
+	}
 });
 
 /* 
@@ -107,7 +97,7 @@ app.get('*', async (req, res) =>{
 		res.status(200).send("Sorry, We don't have any content here... yet :)");
 		console.log('Operating ok...');
 	} catch(error){
-		alert(error);
+		console.log(error);
 	}
 });
 
