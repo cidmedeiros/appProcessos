@@ -95,6 +95,7 @@ app.get('/bolsista/:id', async (req, res) => {
 	}
 });
 
+	//EDIT ROUTE
 app.get('/bolsista/:id/edit', async (req, res) => {
 	//retrieve bolsista with provided ID
 	try{

@@ -5,15 +5,16 @@
     <div class="get_data">
         <div class="item">
             <label for="cpf">CPF</label>
-            <input type="text" placeholder="qualquer número" id="cpf" name="cpf">
+            <input type="text" value="<%= outBolsista.cpf %>" id="cpf" name="cpf">
         </div>
         <div class=" item">
             <label for="nome">Nome Bolsista</label>
-            <input type="text" placeholder="qualquer nome" id="nome" name="nome">
+            <input type="text" value="<%= outBolsista.nome %>" id="nome" name="nome">
         </div>
         <div class="select-sexo">
             <label for="sexo">Sexo</label>
             <select class="sexo" id="sexo" name="sexo">
+                <option value="<%=outBolsista.sexo%>"selected="selected"><%=outBolsista.sexo%></option>
                 <option value="female">Feminino</option>
                 <option value="male">Masculino</option>
             </select>
@@ -21,13 +22,14 @@
         <div class="select-clbr">
             <label for="clbr">Cadastro por:</label>
             <select class="clbr" id="clbr" name="clbr">
-                <option value="cid">Cid</option>
-                <option value="carlos">Carlos</option>
-                <option value="mayra">Mayra</option>
-                <option value="monica">Mônica</option>
-                <option value="gilson">Gilson</option>
-                <option value="pricilla">Pricilla</option>
-                <option value="andre">André</option>
+                <option value="<%=outBolsista.colaborador%>" selected="selected"><%=outBolsista.colaborador%></option>
+                <option value="Cid">Cid</option>
+                <option value="Carlos">Carlos</option>
+                <option value="Mayra">Mayra</option>
+                <option value="Mônica">Mônica</option>
+                <option value="Gilson">Gilson</option>
+                <option value="Pricilla">Pricilla</option>
+                <option value="André">André</option>
             </select>
         </div>
     </div>
