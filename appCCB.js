@@ -4,12 +4,14 @@ const express = require('express');
 const http = require("http");
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const methodOverride = require('method-override');
 const tools = require('./assets/scripts/tools')
 
 //App Variable
 const app = express();
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static('assets'));
+app.use(methodOverride("_method"));
 app.set('view engine', 'ejs');
 const hostname = `${tools.getLocalIp()}`;
 const port = 8087;
@@ -112,6 +114,9 @@ app.get('/bolsista/:id/edit', async (req, res) => {
 		console.log('Error retrieving edit data', error);
 	}
 });
+
+	//PUT ROUTE
+
 
 /* 
 	//Global pattern for views pages

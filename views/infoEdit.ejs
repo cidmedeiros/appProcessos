@@ -1,7 +1,7 @@
 <% include partials/header %>
     <link rel="stylesheet" href="/style.css">
 <% include partials/headerBottom %>
-<form method="PUT" class="sendForm container">
+<form action="/bolsista/:<%= outBolsista._id %>?_method=PUT" method="POST" class="sendForm container">
     <div class="get_data">
         <div class="item">
             <label for="cpf">CPF</label>
