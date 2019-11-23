@@ -95,6 +95,23 @@ app.get('/bolsista/:id', async (req, res) => {
 	}
 });
 
+app.get('/bolsista/:id/edit', async (req, res) => {
+	//retrieve bolsista with provided ID
+	try{
+		await Bolsista.findById(req.params.id, (err, foundBol) => {
+			if(err){
+				console.log('Error retrieving edit data', error);		
+			} else {
+				console.log(`${foundBol} has just been retrieved for edit`);
+				res.render('infoEdit', {outBolsista:foundBol});
+				console.log('data sent to edit template');
+			}
+		})
+	} catch(error){
+		console.log('Error retrieving edit data', error);
+	}
+});
+
 /* 
 	//Global pattern for views pages
 app.get('/views/:someView', async (req, res) =>{
