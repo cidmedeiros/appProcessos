@@ -51,7 +51,7 @@ app.get('/', async (req, res) =>{
 			}
 		});
 	} catch(error){
-		console.log('If not the same erro => error rendering template',error);
+		console.log('If not the same error => error rendering template',error);
 	}
 });
 
@@ -81,20 +81,19 @@ app.post('/', async (req, res) =>{
 app.get('/bolsista/:id', async (req, res) => {
 	//find bolsista with provided ID
 	try{
-		await Bolsista.findById(req.params.id, (err,foundBol) =>{
+		await Bolsista.findById(req.params.id, (err,foundBol) => {
 			if(err){
 				console.log('Error retrieving data', err);
 			} else{
 				console.log(`${foundBol} has just been retrieved`);
 				res.render('show', {outBolsista:foundBol});
+				console.log('data sent to template');
 			}
-	});}
-	catch{
-		console.log('Error retrieving data', err);
+		});
+	} catch(error) {
+		console.log('Error retrieving data', error);
 	}
-	//render show-template with that bolsista
-	res.render('show');
-})
+});
 
 /* 
 	//Global pattern for views pages
