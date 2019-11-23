@@ -132,21 +132,20 @@ app.put('/bolsista/:id', async (req, res) => {
 	}
 });
 
-
-/* 
-	//Global pattern for views pages
-app.get('/views/:someView', async (req, res) =>{
-	console.log('Loading...');
+app.delete('/bolsista/:id', async (req, res) => {
 	try{
-		await wait(1000);
-		const view = req.params.someView;
-		res.status(200).send(`Welcome to ${view} page! New content here soon :)`);
-		console.log('Operating ok...');
+		await Bolsista.findByIdAndDelete(req.params.id, (err) =>{
+			if(err){
+				console.log('Error trying to delete', err);
+			} else {
+				console.log('Data deleted')
+				res.redirect('/');
+			}
+		});
 	} catch(error){
-		alert(error);
+		console.log('Error trying to delete');
 	}
 });
- */
 
 	//Routes order matters! This should always be the last route!!
 app.get('*', async (req, res) =>{

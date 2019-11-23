@@ -8,6 +8,9 @@
     </header>
     <!-- Note the use of the for attribute on all <label> elements; it's a formal way to link a label to a form widget. This attribute references the id of the corresponding widget. -->
     <form method="POST" class="sendForm container">
+        <div>
+            <h3>Cadastro Novo Bolsista</h3>
+        </div>
         <div class="get_data">
             <div class="item">
                 <label for="cpf">CPF</label>
@@ -41,6 +44,9 @@
             <button>Salvar</button>
         </div>
     </form>
+    <div>
+        <h3>Bolsistas Cadastrados</h3>
+    </div>
     <div class="row">
         <% outBolsistas.forEach(function(bolsista){ %>
         <div class="ans_list col-md-3 col-sm-6">
