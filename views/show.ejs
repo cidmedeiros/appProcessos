@@ -12,10 +12,10 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <form action="/bolsista/<%= outBolsista._id %>?_method=DELETE" method="POST">
+    <div class="row" id="showB">
+        <a href="/bolsista/<%= outBolsista._id %>/edit" class="btn btn-primary">Editar</a>
+        <form class="delete" action="/bolsista/<%= outBolsista._id %>?_method=DELETE" method="POST">
             <button class="btn btn-danger">Excluir</button>
         </form>
-
     </div>
 <% include partials/footer %>

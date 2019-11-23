@@ -11,7 +11,7 @@ h3{
   margin-bottom: 23px;
 }
 
-form:not(#excluir){
+form:not(.delete){
     /* Center the form on the page */
     margin: 0 auto;
     width: 800px;
@@ -87,4 +87,12 @@ button {
   padding: 1em;
   border: 1px solid #CCC;
   border-radius: 1em;
+}
+.delete{
+  display: inline;
+}
+
+#showB{
+  margin-top: 3px;
+  margin-left: 15px;
 }
