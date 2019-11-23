@@ -1,0 +1,38 @@
+<% include partials/header %>
+    <link rel="stylesheet" href="/style.css">
+<% include partials/headerBottom %>
+<form method="PUT" class="sendForm container">
+    <div class="get_data">
+        <div class="item">
+            <label for="cpf">CPF</label>
+            <input type="text" placeholder="qualquer número" id="cpf" name="cpf">
+        </div>
+        <div class=" item">
+            <label for="nome">Nome Bolsista</label>
+            <input type="text" placeholder="qualquer nome" id="nome" name="nome">
+        </div>
+        <div class="select-sexo">
+            <label for="sexo">Sexo</label>
+            <select class="sexo" id="sexo" name="sexo">
+                <option value="female">Feminino</option>
+                <option value="male">Masculino</option>
+            </select>
+        </div>
+        <div class="select-clbr">
+            <label for="clbr">Cadastro por:</label>
+            <select class="clbr" id="clbr" name="clbr">
+                <option value="cid">Cid</option>
+                <option value="carlos">Carlos</option>
+                <option value="mayra">Mayra</option>
+                <option value="monica">Mônica</option>
+                <option value="gilson">Gilson</option>
+                <option value="pricilla">Pricilla</option>
+                <option value="andre">André</option>
+            </select>
+        </div>
+    </div>
+    <div class="btn-lg">
+        <button>Salvar</button>
+    </div>
+</form>
+<% include partials/footer %>
