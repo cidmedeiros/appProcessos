@@ -116,6 +116,21 @@ app.get('/bolsista/:id/edit', async (req, res) => {
 });
 
 	//PUT ROUTE
+app.put('/bolsista/:id', async (req, res) => {
+	try{
+		await Bolsista.findByIdAndUpdate(req.params.id,req.body.outBolsista, (err, foundBol) => {
+			if(err){
+				console.log('Error retrieving update data', err);
+				res.redirect(`/bolsista/:${req.params.id}/edit`);
+			} else {
+				console.log('Data Saved',foundBol,req.body.outBolsista);
+				res.redirect('/');
+			}
+		});
+	} catch(error) {
+		console.log('Error retrieving update data', error);
+	}
+});
 
 
 /* 
