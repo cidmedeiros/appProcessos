@@ -5,11 +5,13 @@ const http = require("http");
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
+const expressSanitizer = require('express-sanitizer');
 const tools = require('./assets/scripts/tools')
 
 //App Variable
 const app = express();
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(expressSanitizer());
 app.use(express.static('assets'));
 app.use(methodOverride("_method"));
 app.set('view engine', 'ejs');
@@ -60,13 +62,8 @@ app.get('/', async (req, res) =>{
 	//CREATE ROUTE - Save Data into DB
 app.post('/', async (req, res) =>{
 	console.log('Saving...');
-	const bolsista_local = new Bolsista({
-		cpf:req.body.cpf,
-		nome:req.body.nome,
-		sexo:req.body.sexo,
-		colaborador:req.body.clbr});
 	try{
-		await bolsista_local.save((err, bols) => {
+		await Bolsista.create(req.body.outBolsista, (err, bols) => {
 			if(err){
 				console.log('Not Saved!', err);
 			} else{
@@ -115,7 +112,7 @@ app.get('/bolsista/:id/edit', async (req, res) => {
 	}
 });
 
-	//PUT ROUTE
+	//PUT ROUTE (UPDATE ROUTE)
 app.put('/bolsista/:id', async (req, res) => {
 	try{
 		await Bolsista.findByIdAndUpdate(req.params.id,req.body.outBolsista, (err, foundBol) => {
@@ -163,5 +160,3 @@ app.get('*', async (req, res) =>{
 app.listen(port, hostname, (req, res) => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
-
-

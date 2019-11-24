@@ -1,6 +1,6 @@
 {
-  "name": "budget",
-  "version": "1.0.0",
+  "name": "capesproject",
+  "version": "2.0.0",
   "description": "multi_modular project",
   "main": "index.js",
   "scripts": {
@@ -29,6 +29,7 @@
     "commander": "^4.0.1",
     "ejs": "^2.7.3",
     "express": "^4.17.1",
+    "express-sanitizer": "^1.0.5",
     "lodash": "^4.17.15",
     "method-override": "^3.0.0",
     "mongodb": "^3.3.4",
