@@ -1,12 +1,12 @@
 //Required External Modules
-const path = require("path");
-const express = require('express');
-const http = require("http");
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const methodOverride = require('method-override');
-const expressSanitizer = require('express-sanitizer');
-const tools = require('./assets/scripts/tools')
+path = require("path");
+express = require('express');
+http = require("http");
+bodyParser = require('body-parser');
+mongoose = require('mongoose');
+methodOverride = require('method-override');
+expressSanitizer = require('express-sanitizer');
+tools = require('./assets/scripts/tools')
 
 //App Variable
 const app = express();
@@ -30,8 +30,22 @@ const bolsistaSchema = new mongoose.Schema({
 	colaborador: String
 });
 
-	//the next statement uses the plural form of the string param to create (if needed) a collection on the DB.
+//the next statement uses the plural form of the string param to create (if needed) a collection on the DB.
 const Bolsista = mongoose.model('Bolsista', bolsistaSchema);
+
+const userSchema = new mongoose.Schema({
+	userName: String,
+	email: String
+});
+
+const User = mongoose.model('User', userSchema);
+
+const ObsSchema = mongoose.Schema({
+	title: String,
+	constent: String
+});	
+
+const Obs = mongoose.model('Ob', ObsSchema);
 
 	//Asyncronous function to use to teste DataBase performance
 async function wait (ms) {
@@ -56,6 +70,23 @@ app.get('/', async (req, res) =>{
 		});
 	} catch(error){
 		console.log('If not the same error => error rendering template',error);
+	}
+});
+
+	//ROUTE test users
+app.get('/testusers', async (req, res) =>{
+	try{
+		await res.render('users');
+	} catch(error) {
+		console.error();
+	}
+});
+
+app.post('/testusers', async (req, res) =>{
+	try{
+		await res.render('users');
+	} catch(error) {
+		console.error();
 	}
 });
 
