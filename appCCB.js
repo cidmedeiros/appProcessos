@@ -6,7 +6,8 @@ bodyParser = require('body-parser');
 mongoose = require('mongoose');
 methodOverride = require('method-override');
 expressSanitizer = require('express-sanitizer');
-tools = require('./assets/scripts/tools')
+tools = require('./assets/scripts/tools');
+Bolsista = require('./models/bolsistas');
 
 //App Variable
 const app = express();
@@ -22,16 +23,6 @@ const port = 8087;
 mongoose.connect('mongodb://localhost:27017/testDB', {'useNewUrlParser': true, 'useUnifiedTopology':true});
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
-
-const bolsistaSchema = new mongoose.Schema({
-	cpf: String,
-	nome: String,
-	sexo: String,
-	colaborador: String
-});
-
-//the next statement uses the plural form of the string param to create (if needed) a collection on the DB.
-const Bolsista = mongoose.model('Bolsista', bolsistaSchema);
 
 	//Asyncronous function to use to teste DataBase performance
 async function wait (ms) {
@@ -72,28 +63,6 @@ app.get('/testusers', async (req, res) =>{
 		});
 	} catch(error) {
 		console.error('Error retrieving users', error);
-	}
-});
-
-app.post('/testusers', async (req, res) =>{
-	//check for new use
-	User.findOne({userName:req.body.user.nome}, (err, user) => {
-		if(err){
-
-		} else {
-
-		}
-
-	})
-
-	//if create new user
-
-	//push obs to user
-
-	try{
-		
-	} catch(error) {
-		console.error();
 	}
 });
 
