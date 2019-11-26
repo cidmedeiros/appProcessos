@@ -1,4 +1,5 @@
 mongoose = require('mongoose');
+Municipio = require('./municipios')
 
 const iesSchema = new mongoose.Schema({
 	nome: String,
