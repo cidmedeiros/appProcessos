@@ -26,12 +26,6 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
 seedDB();
-	//Asyncronous function to use to teste DataBase performance
-async function wait (ms) {
-  return new Promise((resolve, reject) => {
-    setTimeout(resolve, ms)
-  });
-}
 
 //Routes Definitions
 
@@ -52,7 +46,7 @@ app.get('/', async (req, res) =>{
 	}
 });
 
-	//ROUTE test users
+/* 	//ROUTE test users
 app.get('/testusers', async (req, res) =>{
 	try{
 		await User.find({}, (err, inUser) =>{
@@ -66,7 +60,7 @@ app.get('/testusers', async (req, res) =>{
 	} catch(error) {
 		console.error('Error retrieving users', error);
 	}
-});
+}); */
 
 	//CREATE ROUTE - Save Data into DB
 app.post('/', async (req, res) =>{
