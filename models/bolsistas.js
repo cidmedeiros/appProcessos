@@ -4,7 +4,8 @@ const bolsistaSchema = new mongoose.Schema({
 	cpf: String,
 	nome: String,
 	sexo: String,
-	colaborador: String
+    colaborador: String,
+    obsv: String
 });
 
 //the next statement uses the plural form of the string param to create (if needed) a collection on the DB.

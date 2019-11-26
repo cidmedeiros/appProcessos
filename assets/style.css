@@ -96,3 +96,7 @@ button {
   margin-top: 3px;
   margin-left: 15px;
 }
+
+p{
+  display: inline;
+}

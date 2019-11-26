@@ -39,6 +39,10 @@
                     <option value="André">André</option>
                 </select>
             </div>
+            <div>
+                <label for='obsv'>Observações</label>
+                <textarea rows="10" cols="85" placeholder="observacoes" id="obsv" name="outBolsista[obsv]"></textarea>
+            </div>
         </div>
         <div class="btn-lg">
             <button>Salvar</button>
@@ -55,11 +59,14 @@
                 <li>Nome: <%=bolsista.nome%></li>
                 <li>Sexo: <%=bolsista.sexo%></li>
                 <li>Colaborador: <%=bolsista.colaborador%></li>
+                <div>
+                    <li>
+                        <p><%=bolsista.obsv%></p>
+                    </li>
+                </div>
             </div>
-            <p>
-                <a href="/bolsista/<%= bolsista._id %>" class="btn btn-primary">Info</a>
-                <a href="/bolsista/<%= bolsista._id %>/edit" class="btn btn-primary">Editar</a>
-            </p>
+            <a href="/bolsista/<%= bolsista._id %>" class="btn btn-primary">Info</a>
+            <a href="/bolsista/<%= bolsista._id %>/edit" class="btn btn-primary">Editar</a>
         </div>
     <% }); %>
     </div>
