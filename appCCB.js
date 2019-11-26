@@ -33,20 +33,6 @@ const bolsistaSchema = new mongoose.Schema({
 //the next statement uses the plural form of the string param to create (if needed) a collection on the DB.
 const Bolsista = mongoose.model('Bolsista', bolsistaSchema);
 
-const userSchema = new mongoose.Schema({
-	userName: String,
-	email: String
-});
-
-const User = mongoose.model('User', userSchema);
-
-const ObsSchema = mongoose.Schema({
-	title: String,
-	constent: String
-});	
-
-const Obs = mongoose.model('Ob', ObsSchema);
-
 	//Asyncronous function to use to teste DataBase performance
 async function wait (ms) {
   return new Promise((resolve, reject) => {
@@ -65,7 +51,7 @@ app.get('/', async (req, res) =>{
 				aconsole.log('Error retrieving data', err);
 			} else{
 				res.render('landing.ejs', {outBolsistas:todosBolsistas});
-				console.log('Operating ok...');
+				console.log('App status: nominal.');
 			}
 		});
 	} catch(error){
@@ -76,15 +62,36 @@ app.get('/', async (req, res) =>{
 	//ROUTE test users
 app.get('/testusers', async (req, res) =>{
 	try{
-		await res.render('users');
+		await User.find({}, (err, inUser) =>{
+			if(err){
+				console.log('Error retrieving users', err);
+			} else {
+				res.render('users', {outUser:inUser});
+				console.log('App status: nominal.');
+			}
+		});
 	} catch(error) {
-		console.error();
+		console.error('Error retrieving users', error);
 	}
 });
 
 app.post('/testusers', async (req, res) =>{
+	//check for new use
+	User.findOne({userName:req.body.user.nome}, (err, user) => {
+		if(err){
+
+		} else {
+
+		}
+
+	})
+
+	//if create new user
+
+	//push obs to user
+
 	try{
-		await res.render('users');
+		
 	} catch(error) {
 		console.error();
 	}
@@ -181,7 +188,7 @@ app.get('*', async (req, res) =>{
 	try{
 		await wait(3 * 1000);
 		res.status(200).send("Sorry, We don't have any content here... yet :)");
-		console.log('Operating ok...');
+		console.log('App status: nominal.');
 	} catch(error){
 		console.log(error);
 	}

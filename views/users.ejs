@@ -14,9 +14,12 @@
                     <input type="email" placeholder="email" id="nome" name="user[email]">
             </div>
             <div>
+                <label for="title">Título</label>
+                <input type="text" placeholder="título">
+            </div>
+            <div>
                 <label for='obs'>Observações</label>
-                    <textarea rows="10" cols="85" placeholder="email" id="nome" name="user[obs]">
-                </textarea>
+                <textarea rows="10" cols="85" placeholder="email" id="nome" name="user[obs]"></textarea>
             </div>
             <div>
                 <button class="btn btn-primary" type="submit">Enviar</button>
@@ -30,15 +33,9 @@
         <% outUser.forEach(function(user){ %>
         <div class="ans_list col-md-3 col-sm-6">
             <div class="thumbnail">
-                <li>CPF: <%=bolsista.cpf%></li>
-                <li>Nome: <%=bolsista.nome%></li>
-                <li>Sexo: <%=bolsista.sexo%></li>
-                <li>Colaborador: <%=bolsista.colaborador%></li>
+                <li>Nome: <%=outUser.nome%></li>
+                <li>Observação: <%=outUser.obs%></li>
             </div>
-            <p>
-                <a href="/bolsista/<%= bolsista._id %>" class="btn btn-primary">Info</a>
-                <a href="/bolsista/<%= bolsista._id %>/edit" class="btn btn-primary">Editar</a>
-            </p>
         </div>
     <% }); %>
     </div>
