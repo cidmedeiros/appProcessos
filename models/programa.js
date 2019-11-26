@@ -1,4 +1,5 @@
 mongoose = require('mongoose');
+Ies = require('./ies')
 
 const programaSchema = new mongoose.Schema({
 	nome: String,
