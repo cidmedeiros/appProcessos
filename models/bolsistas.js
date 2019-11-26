@@ -7,24 +7,24 @@ const bolsistaSchema = new mongoose.Schema({
 	cpf: String,
 	nome: String,
 	sei: String,
-	email: [String],
+	email: [{email:String, data:Date}],
 	sexo: String,
 	docFoto: [
 		{
 			doc: String,
-			regular: Boolean,
+			regular: [{sit:Boolean, data: Date}],
 			motivo: [
 				{
 					tipo: String,
 					data: Date
 				}
-			]	
+			]
 		}
 	],
 	docRes:[
 		{
 			doc: String,
-			regular: Boolean,
+			regular: [{sit:Boolean, data: Date}],
 			motivo: [
 				{
 					tipo: String,
@@ -36,7 +36,7 @@ const bolsistaSchema = new mongoose.Schema({
 	respInst: [
 		{
 			doc: String,
-			regular: Boolean,
+			regular: [{sit:Boolean, data: Date}],
 			motivo: [
 				{
 					tipo: String,
@@ -47,7 +47,7 @@ const bolsistaSchema = new mongoose.Schema({
 	],
 	termo: [
 		{
-			regular: Boolean,
+			regular: [{sit:Boolean, data: Date}],
 			motivo: [
 				{
 					tipo: String,
@@ -59,14 +59,13 @@ const bolsistaSchema = new mongoose.Schema({
 	declaracao: [
 		{
 			escola: {
-				nome: String,
 				municipio: {
 					type: mongoose.Schema.Types.ObjectId,
 					ref: 'Municipio'
 				}
 			},
 			permanencia: Number,
-			regular: Boolean,
+			regular: [{sit:Boolean, data: Date}],
 			motivo: [
 				{
 					tipo: String,
@@ -77,7 +76,11 @@ const bolsistaSchema = new mongoose.Schema({
 	],
 	certCon: [
 		{
-			regular: Boolean,
+			ies: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Ies'
+			},
+			regular: [{sit:Boolean, data: Date}],
 			motivo: [
 				{
 					tipo: String,
@@ -86,8 +89,8 @@ const bolsistaSchema = new mongoose.Schema({
 			]
 		}
 	],	
-	statusCurso: [String],
-	conclusao: Date,
+	statusCurso: [{status: String, data: Date}],
+	conclusao: [{sit:String, data: Date}],
 	turma: [
 		{
 			tipo: String,
@@ -95,10 +98,14 @@ const bolsistaSchema = new mongoose.Schema({
 			fim: Date
 		}
 	],
-	programa: [
-		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Programa'
+	programa: [{
+			programa:
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Programa'
+			},
+			inicio: Date,
+			fim: Date
 		}
 	],
 	iesLocal: [
@@ -111,22 +118,23 @@ const bolsistaSchema = new mongoose.Schema({
 			fim: Date
 		}
 	],
-	clbr: [String],
-	obsv: [String],
+	clbr: [{nome: String, data: Date}],
+	obsv: [{obs: String, data: Date}],
 	analiseComp: [
 		{
-			regular: Boolean,
+			regular: [{sit:Boolean, data: Date}],
 			situacao: {tipo:String, data:Date},
 			pendencia: [
 				{
 					tipo: String,
 					data: Date
 				}
-			]
+			],
+			data: Date
 		}
 	],
 	pad: {
-		regular: Boolean,
+		regular: [{sit:Boolean, data: Date}],
 		situacao:[
 			{
 				tipo: String,
@@ -147,10 +155,10 @@ const bolsistaSchema = new mongoose.Schema({
 			}
 		]
 	},
-	pag: [
+	pags: [
 		{
 			dataRef: Date,
-			dataPag: Schema.Types.Mixed,
+			dataPag: mongoose.Schema.Types.Mixed,
 			sistema: String,
 			valor: Number,
 		}
