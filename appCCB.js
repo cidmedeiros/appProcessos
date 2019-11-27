@@ -6,7 +6,6 @@ bodyParser = require('body-parser');
 mongoose = require('mongoose');
 methodOverride = require('method-override');
 expressSanitizer = require('express-sanitizer');
-seedDB = require('./models/seeds');
 tools = require('./assets/scripts/tools');
 Bolsista = require('./models/bolsistas');
 
@@ -25,7 +24,6 @@ mongoose.connect('mongodb://localhost:27017/testDB', {'useNewUrlParser': true, '
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-seedDB();
 
 //Routes Definitions
 
