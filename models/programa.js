@@ -3,7 +3,6 @@ Ies = require('./ies')
 
 const programaSchema = new mongoose.Schema({
 	nome: String,
-	sigla: String,
 	coordNacional: [
 		{
 			ies: {
