@@ -2,8 +2,9 @@ mongoose = require('mongoose');
 Municipio = require('./municipios')
 
 const iesSchema = new mongoose.Schema({
-	nome: String,
 	sigla: String,
+	nome: String,
+	cnpj: String,
 	municipio: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Municipio'
