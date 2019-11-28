@@ -6,10 +6,10 @@ mongoose.set('useCreateIndex', true);
 
 Municipio = require('./municipios');
 munData = require('../assets/dados/municipios.json'); //it returns a string
-munData = JSON.parse(munData); //it parse the string to a iterable object
+munData = JSON.parse(munData); //it parses the string to a iterable object
 
 
-function cleanMun(){
+const cleanMun = function(){
     try{
         Municipio.deleteMany({}, (err) => {
             if(err){
@@ -23,12 +23,21 @@ function cleanMun(){
     }
 };
 
-Municipio.collection.insertMany(munData, addMun)
-
-function addMun(err, docs){
-    if(err){
-        console.log(`Error 1 trying to save municipio ${err}`);
-    } else{
-        console.log('Municipios saved!');
+const addMun = function() {
+    try{
+        Municipio.insertMany(munData, (err, data) =>{
+            if(err){
+                console.log(`Error 1 trying to save ies ${err}`);
+            } else{
+                console.log('Ies saved!');
+            }
+        });
+    } catch(error){
+        console.log(`Error 2 trying to save ies ${error}`);
     }
+};
+
+const seedMun = function(){
+    cleanMun();
+    addMun();
 };
