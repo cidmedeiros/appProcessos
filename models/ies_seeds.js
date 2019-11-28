@@ -6,10 +6,10 @@ mongoose.set('useCreateIndex', true);
 
 Ies = require('./ies');
 iesData = require('../assets/dados/ies.json'); //it returns a string
-iesData = JSON.parse(iesData); //it parse the string to a iterable object
+//iesData = JSON.parse(iesData); //it parses the string to a iterable object
 
 
-function cleanIes(){
+const cleanIes = function() {
     try{
         Ies.deleteMany({}, (err) => {
             if(err){
@@ -23,12 +23,21 @@ function cleanIes(){
     }
 };
 
-Ies.collection.insertMany(iesData, addIes);
-
-function addIes(err, docs){
-    if(err){
-        console.log(`Error 1 trying to save ies ${err}`);
-    } else{
-        console.log('Ies saved!');
+const addIes = function() {
+    try{
+        Ies.insertMany(iesData, (err, data) =>{
+            if(err){
+                console.log(`Error 1 trying to save ies ${err}`);
+            } else{
+                console.log('Ies saved!');
+            }
+        });
+    } catch(error){
+        console.log(`Error 2 trying to save ies ${error}`);
     }
 };
+
+const seedIES = function(){
+    cleanIes();
+    addIes();
+}
