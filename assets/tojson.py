@@ -105,3 +105,29 @@ def pagsJson(min_score=0):
     ies_local = ies_local.append(series_local)
         
     return ies_nacional, ies_local
+
+def programaJson():
+    
+    """
+    """
+    pags = pd.read_excel('dados\proeb_2011_2012_profmat.xlsx', encoding='ISO-8859-1')
+    
+    progIes = pags[['programa','ies', 'dataRef']].drop_duplicates()
+    progIesmin = progIes.groupby(['programa','ies'], as_index=False)['dataRef'].min()
+    progIesmin.columns = ['programa','ies','inicio']
+    
+    progIesmax = progIes.groupby(['programa','ies'], as_index=False)['dataRef'].max()
+    progIesmax.columns = ['programa','ies','fim']
+    
+    progIes = pd.merge(progIesmin, progIesmax)
+    
+    progrmJson = []
+    
+    for _id, row in progIes.iterrows():
+        values = {'nome':row.programa, 'coordNacional':[{'ies':row.ies,'inicio':row.inicio,'fim':row.fim}]}
+        progrmJson.append(values)
+    
+    with open('dados\programas.json', 'w', encoding='utf-8') as f:
+        json.dump(progrmJson, f, ensure_ascii=False, sort_keys=True, default=str)
+        
+    return progrmJson
