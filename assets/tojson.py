@@ -9,8 +9,9 @@ os.chdir(r'C:\Users\cidm\Documents\python_control\sisuab')
 os.chdir(r'C:\Users\cidm\Documents\python_control\monitoramento_proeb')
 import json
 import pandas as pd
+from fuzzywuzzy import fuzz
 
-def mun_json():
+def munJson():
     
     """
     """
@@ -29,7 +30,7 @@ def mun_json():
         
     return mun_json
 
-def ies_json():
+def iesJson():
     
     """
     """
@@ -46,9 +47,22 @@ def ies_json():
         
     return ies_json
 
-
-#pags = pd.read_excel('dados\proeb_2011_2012_profmat.xlsx', encoding='ISO-8859-1')
-
-
-
+def match_name(name, list_names, min_score=0):
+    
+    """
+    """
+    # -1 score incase we don't get any matches
+    max_score = -1
+    # Returning empty name for no match as well
+    max_name = ""
+    # Iternating over all names in the other
+    for name2 in list_names:
+        #Finding fuzzy match score
+        score = fuzz.ratio(name, name2)
+        # Checking if we are above our threshold and have a better score
+        if (score > min_score) & (score > max_score):
+            max_name = name2
+            max_score = score
+            
+    return (max_name, max_score)
 
