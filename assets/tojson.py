@@ -66,12 +66,12 @@ def match_name(name, list_names, min_score=0):
             
     return (max_name, max_score)
 
-def pagsJson(min_score=0):
+def preProcessPags(min_score=0):
     
     """
     """
     ies = pd.read_csv('dados\ies.csv', sep=';', encoding='ISO-8859-1')
-    ies = list(ies.nome_entidade)
+    ies_only = list(ies.nome_entidade)
     pags = pd.read_excel('dados\proeb_2011_2012_profmat.xlsx', encoding='ISO-8859-1')
     pags.iesLocal = np.where(pags.iesLocal.isin(['UNIVERSIDADE EST.PAULISTA JÚLIO DE MESQUITA FILHO/SJ.R PRETO',
                                                'UNIVERSIDADE EST.PAULISTA JÚLIO DE MESQUITA FILHO/RIO CLARO',
@@ -82,7 +82,7 @@ def pagsJson(min_score=0):
     #ENTIDADE NACIONAL
     nac_ies = list(pags.ies.drop_duplicates())
     nac_ies = [ies.upper() for ies in nac_ies]
-    ansNacional = [match_name(x, ies, 75) for x in nac_ies]
+    ansNacional = [match_name(x, ies_only, 75) for x in nac_ies]
     df_Nacional = pd.DataFrame()
     df_Nacional['ies'] = nac_ies
     df_Nacional['iesNacional'] = [x[0] for x in ansNacional]
@@ -91,17 +91,28 @@ def pagsJson(min_score=0):
     #ENTIDADE LOCAL
     local_ies = list(pags.iesLocal.drop_duplicates())
     local_ies = [ies.upper() for ies in local_ies]
-    ansLocal = [match_name(x, ies, 75) for x in local_ies]
+    ansLocal = [match_name(x, ies_only, 75) for x in local_ies]
     df_local = pd.DataFrame()
     df_local['iesLocal'] = local_ies
     df_local['iesMatchLocal'] = [x[0] for x in ansLocal]
     df_local['iesLocalScore'] = [x[1] for x in ansLocal]
     
+    #TYDING UP
     pags = pd.merge(pags, df_Nacional, left_on=['ies'], right_on=['ies'], how='left')
     pags = pd.merge(pags, df_local, left_on=['iesLocal'], right_on=['iesLocal'], how='left')
     pags.iesLocal = pags.iesMatchLocal
     pags.drop(['ies','iesNacionalScore','iesMatchLocal','iesLocalScore'], axis=1, inplace=True)
-        
+    pags = pd.merge(pags,ies,left_on=['iesNacional'],right_on=['nome_entidade'],how='left')
+    pags = pd.merge(pags,ies,left_on=['iesLocal'],right_on=['nome_entidade'], how='left')
+    
+    pags = pags[['cpf','nome','programa','iesNacional','cnpj_entidade_x','sigla_x','iesLocal','cnpj_entidade_y','sigla_y',
+                 'uf_entidade_local','turma','modalidade_bolsa','dataRef','dataPag','valor','sistema','ano_referencia',
+                 'mes_referencia','ano_pagamento','mes_pagamento']]
+    
+    pags.columns = ['cpf','nome','programa','iesNacional','iesNacionalCnpj','iesNacionalSigla','iesLocal','iesLocalcnpj',
+                    'iesLocalSigla','iesLocalUf','turma','modalidade_bolsa','dataRef','dataPag','valor','sistema','ano_referencia',
+                 'mes_referencia','ano_pagamento','mes_pagamento']
+    
     return pags
 
 def programaJson():
