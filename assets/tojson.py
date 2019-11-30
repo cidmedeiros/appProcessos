@@ -5,8 +5,7 @@ Created on Wed Nov 27 09:17:05 2019
 @author: cidm
 """
 import os
-os.chdir(r'C:\Users\cidm\Documents\python_control\sisuab')
-os.chdir(r'C:\Users\cidm\Documents\python_control\monitoramento_proeb')
+os.chdir(r'D:\computer-science\web-development\capesProject\assets')
 import json
 import pandas as pd
 import numpy as np
@@ -80,28 +79,28 @@ def pagsJson(min_score=0):
                                                'UNIVERSIDADE EST.PAULISTA JÚLIO DE MESQUITA FILHO/SJR. PRETO']),
                                                 'UNIVERSIDADE ESTADUAL PAULISTA',pags.iesLocal)
     
+    #ENTIDADE NACIONAL
     nac_ies = list(pags.ies.drop_duplicates())
     nac_ies = [ies.upper() for ies in nac_ies]
+    ansNacional = [match_name(x, ies, 75) for x in nac_ies]
+    df_Nacional = pd.DataFrame()
+    df_Nacional['ies'] = nac_ies
+    df_Nacional['iesNacional'] = [x[0] for x in ansNacional]
+    df_Nacional['iesNacionalScore'] = [x[1] for x in ansNacional]
     
+    #ENTIDADE LOCAL
     local_ies = list(pags.iesLocal.drop_duplicates())
     local_ies = [ies.upper() for ies in local_ies]
+    ansLocal = [match_name(x, ies, 75) for x in local_ies]
+    df_local = pd.DataFrame()
+    df_local['iesLocal'] = local_ies
+    df_local['iesMatchLocal'] = [x[0] for x in ansLocal]
+    df_local['iesLocalScore'] = [x[1] for x in ansLocal]
     
-    list_series = []
-    
-    for _id, row in pags.iterrows():
-        for nome in nac_ies:
-            ans = match_name(nome, ies, min_score)
-            series = pd.Series()
-            series['ies'] = nome
-            series['match_name'] = ans[0]
-            series['match_score'] = ans[1]
-        
-        for nome in local_ies:
-            ans = match_name(nome, ies, min_score=75)
-            series = pd.Series()
-            series['iesLocal'] = nome
-            series['match_name'] = ans[0]
-            series['match_score'] = ans[1]
+    pags = pd.merge(pags, df_Nacional, left_on=['ies'], right_on=['ies'], how='left')
+    pags = pd.merge(pags, df_local, left_on=['iesLocal'], right_on=['iesLocal'], how='left')
+    pags.iesLocal = pags.iesMatchLocal
+    pags.drop(['ies','iesNacionalScore','iesMatchLocal','iesLocalScore'], axis=1, inplace=True)
         
     return pags
 
