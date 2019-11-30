@@ -113,30 +113,38 @@ def preProcessPags(min_score=0):
                     'iesLocalSigla','iesLocalUf','turma','modalidade_bolsa','dataRef','dataPag','valor','sistema','ano_referencia',
                  'mes_referencia','ano_pagamento','mes_pagamento']
     
-    return pags
+    return pags    
 
-def programaJson():
+def programaJson(minScore):
     
     """
     """
-    pags = pd.read_excel('dados\proeb_2011_2012_profmat.xlsx', encoding='ISO-8859-1')
+    pags = preProcessPags(minScore)
     
-    progIes = pags[['programa','ies', 'dataRef']].drop_duplicates()
-    progIesmin = progIes.groupby(['programa','ies'], as_index=False)['dataRef'].min()
-    progIesmin.columns = ['programa','ies','inicio']
+    progIes = pags[['programa','iesNacional','dataRef']].drop_duplicates()
+    progIesmin = progIes.groupby(['programa','iesNacional'], as_index=False)['dataRef'].min()
+    progIesmin.columns = ['programa','iesNacional','inicio']
     
-    progIesmax = progIes.groupby(['programa','ies'], as_index=False)['dataRef'].max()
-    progIesmax.columns = ['programa','ies','fim']
+    progIesmax = progIes.groupby(['programa','iesNacional'], as_index=False)['dataRef'].max()
+    progIesmax.columns = ['programa','iesNacional','fim']
     
     progIes = pd.merge(progIesmin, progIesmax)
     
     progrmJson = []
     
     for _id, row in progIes.iterrows():
-        values = {'nome':row.programa, 'coordNacional':[{'ies':row.ies,'inicio':row.inicio,'fim':row.fim}]}
+        values = {'nome':row.programa, 'coordNacional':[{'ies':row.iesNacional,'inicio':row.inicio,'fim':row.fim}]}
         progrmJson.append(values)
     
     with open('dados\programas.json', 'w', encoding='utf-8') as f:
         json.dump(progrmJson, f, ensure_ascii=False, sort_keys=True, default=str)
         
     return progrmJson
+
+def bolsistasJson(minScore):
+    
+    """
+    """
+    pags = preProcessPags(minScore)
+    
+    return pags
