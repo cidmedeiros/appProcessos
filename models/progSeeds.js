@@ -5,4 +5,50 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
 Ies = require('./ies');
-iesData = require('../assets/dados/ies.json'); //it returns a string
+Programa = require('./programa');
+progData = require('../assets/dados/programas.json');
+
+const cleanProg = function() {
+    try{
+        Programa.deleteMany({}, (err) => {
+            if(err){
+                console.log('Error 1 trying to clean programa data', err)
+            } else {
+                console.log('Programas Removed')
+            }
+        });
+    }catch(error){
+        console.log('Error 2 trying to clean programa data', err)
+    }
+};
+
+const addProg = function(){
+    console.log(progData);
+    progData.forEach(element => {
+        try{
+
+            Ies.findOne({nome:element.coordNacional[0].ies}, (err, foundOne) => {
+                if(err){
+                    console.log(`error finding ${element.ies}`, err)
+                } else {
+                    element.coordNacional[0].ies = foundOne;
+                    Programa.insertMany(element, (err, saved) => {
+                        if(err){
+                            console.log(`error saving ${element}`, err)
+                        } else{
+                            console.log(`${saved} saved!`);
+                        }
+                    });
+                }
+            });            
+        } catch(error){
+            console.log(`error saving ${element}`, error);
+        } 
+    });   
+};
+
+const seedProg = function(){
+    addProg();
+};
+
+seedProg();

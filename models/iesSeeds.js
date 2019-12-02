@@ -40,4 +40,6 @@ const addIes = function() {
 const seedIES = function(){
     cleanIes();
     addIes();
-}
+};
+
+//seedIES();

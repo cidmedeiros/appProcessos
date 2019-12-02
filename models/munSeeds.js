@@ -27,9 +27,9 @@ const addMun = function() {
     try{
         Municipio.insertMany(munData, (err, data) =>{
             if(err){
-                console.log(`Error 1 trying to save ies ${err}`);
+                console.log(`Error 1 trying to save municipio ${err}`);
             } else{
-                console.log('Ies saved!');
+                console.log('Municipios saved!');
             }
         });
     } catch(error){
@@ -41,3 +41,5 @@ const seedMun = function(){
     cleanMun();
     addMun();
 };
+
+//seedMun();
