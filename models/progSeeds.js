@@ -32,7 +32,9 @@ const addProg = function(){
                     console.log(`error finding ${element.ies}`, err)
                 } else {
                     element.coordNacional[0].ies = foundOne;
-                    Programa.insertMany(element, (err, saved) => {
+                    element.coordNacional[0].inicio = new Date(element.coordNacional[0].inicio+'Z');
+                    element.coordNacional[0].fim = new Date(element.coordNacional[0].fim+'Z');
+                    Programa.create(element, (err, saved) => {
                         if(err){
                             console.log(`error saving ${element}`, err)
                         } else{
