@@ -15,7 +15,7 @@ def munJson():
     
     """
     """
-    municipios = pd.read_csv('dados\ibge_mun.csv', sep=';', encoding='ISO-8859-1')
+    municipios = pd.read_csv('dados\ibge_mun.csv',sep=';',encoding='ISO-8859-1',dtype=str)
     municipios = municipios[['Codmun','NomeMunic','UF']].copy()
     municipios.columns = ['ibge','nome','uf']
     
@@ -34,7 +34,7 @@ def iesJson():
     
     """
     """
-    ies = pd.read_csv('dados\ies.csv', sep=';', encoding='ISO-8859-1')
+    ies = pd.read_csv('dados\ies.csv', sep=';', encoding='ISO-8859-1',dtype=str)
     
     ies_json = []
     
@@ -66,13 +66,23 @@ def match_name(name, list_names, min_score=0):
             
     return (max_name, max_score)
 
-def preProcessPags(min_score=0):
+def makeCpf(string):
     
     """
     """
-    ies = pd.read_csv('dados\ies.csv', sep=';', encoding='ISO-8859-1')
+    ans = string[:3]+'.'+string[3:6]+'.'+string[6:9]+'-'+string[9:]
+    
+    return ans
+    
+
+def preProcessPags(min_score=0):
+    
+    """
+    Pre-engineer pags data for later processes.
+    """
+    ies = pd.read_csv('dados\ies.csv', sep=';', encoding='ISO-8859-1',dtype=str)
     ies_only = list(ies.nome_entidade)
-    pags = pd.read_excel('dados\proeb_2011_2012_profmat.xlsx', encoding='ISO-8859-1')
+    pags = pd.read_csv('dados\proeb_2011_2012_profmat.csv',sep=';',encoding='ISO-8859-1',dtype=str)
     pags.iesLocal = np.where(pags.iesLocal.isin(['UNIVERSIDADE EST.PAULISTA JÚLIO DE MESQUITA FILHO/SJ.R PRETO',
                                                'UNIVERSIDADE EST.PAULISTA JÚLIO DE MESQUITA FILHO/RIO CLARO',
                                                'UNIVERSIDADE EST.PAULISTA JÚLIO DE MESQUITA FILHO/ILHA  SOLT',
@@ -82,7 +92,7 @@ def preProcessPags(min_score=0):
     #ENTIDADE NACIONAL
     nac_ies = list(pags.ies.drop_duplicates())
     nac_ies = [ies.upper() for ies in nac_ies]
-    ansNacional = [match_name(x, ies_only, 75) for x in nac_ies]
+    ansNacional = [match_name(x, ies_only, min_score) for x in nac_ies]
     df_Nacional = pd.DataFrame()
     df_Nacional['ies'] = nac_ies
     df_Nacional['iesNacional'] = [x[0] for x in ansNacional]
@@ -91,7 +101,7 @@ def preProcessPags(min_score=0):
     #ENTIDADE LOCAL
     local_ies = list(pags.iesLocal.drop_duplicates())
     local_ies = [ies.upper() for ies in local_ies]
-    ansLocal = [match_name(x, ies_only, 75) for x in local_ies]
+    ansLocal = [match_name(x, ies_only, min_score) for x in local_ies]
     df_local = pd.DataFrame()
     df_local['iesLocal'] = local_ies
     df_local['iesMatchLocal'] = [x[0] for x in ansLocal]
@@ -104,6 +114,7 @@ def preProcessPags(min_score=0):
     pags.drop(['ies','iesNacionalScore','iesMatchLocal','iesLocalScore'], axis=1, inplace=True)
     pags = pd.merge(pags,ies,left_on=['iesNacional'],right_on=['nome_entidade'],how='left')
     pags = pd.merge(pags,ies,left_on=['iesLocal'],right_on=['nome_entidade'], how='left')
+    pags.cpf = [makeCpf(x) for x in pags.cpf]
     
     pags = pags[['cpf','nome','programa','iesNacional','cnpj_entidade_x','sigla_x','iesLocal','cnpj_entidade_y','sigla_y',
                  'uf_entidade_local','turma','modalidade_bolsa','dataRef','dataPag','valor','sistema','ano_referencia',
@@ -145,6 +156,9 @@ def bolsistasJson(minScore):
     
     """
     """
-    pags = preProcessPags(minScore)
+    sei = pd.read_csv('dados\profmat_2011_2012_processosSEI.csv',sep=';',encoding='ISO-8859-1',dtype=str)
+    pags = preProcessPags(75)
+    
+    
     
     return pags
