@@ -9,55 +9,21 @@ const bolsistaSchema = new mongoose.Schema({
 	sei: String,
 	email: [{email:String, data:Date}],
 	sexo: String,
-	statusCurso: [{status: String, data: Date}],
-	conclusao: [{sit:String, data: Date}],
+	statusCurso: [{status:{sit:String, dataSit: Date}, data: Date}],
 	clbr: [{nome: String, data: Date}],
-	obsv: [{obs: String, data: Date}],
+	valorBolsas: [{valor: Number, data: Date}],
+	valorDev: [{valor: Number, data: Date}],
 	docFoto: [
 		{
 			doc: String,
 			regular: [{sit:Boolean, data: Date}],
-			motivo: [
-				{
-					tipo: String,
-					data: Date
-				}
-			]
-		}
-	],
-	respostaBol: [
-		{
-			doc: String,
-			regular: [{sit:Boolean, data: Date}],
-			motivo: [
-				{
-					tipo: String,
-					data: Date
-				}
-			]
-		}
-	],
-	respostaInst: [
-		{
-			doc: String,
-			regular: [{sit:Boolean, data: Date}],
-			motivo: [
-				{
-					tipo: String,
-					data: Date
-				}
-			]
+			motivo: [{tipo: String,	data: Date}]
 		}
 	],
 	termo: [
 		{
 			regular: [{sit:Boolean, data: Date}],
-			motivo: [
-				{
-					tipo: String,
-					data: Date
-				}
-			]
+			motivo: [{tipo: String,	data: Date}]
 		}
 	],
 	declaracao: [
@@ -70,12 +36,7 @@ const bolsistaSchema = new mongoose.Schema({
 			},
 			permanencia: Number,
 			regular: [{sit:Boolean, data: Date}],
-			motivo: [
-				{
-					tipo: String,
-					data: Date
-				}
-			]
+			motivo: [{tipo: String, data: Date}]
 		}
 	],
 	certConclusao: [
@@ -85,48 +46,25 @@ const bolsistaSchema = new mongoose.Schema({
 				ref: 'Ies'
 			},
 			regular: [{sit:Boolean, data: Date}],
-			motivo: [
-				{
-					tipo: String,
-					data: Date
-				}
-			]
+			motivo: [{tipo: String,	data: Date}]
 		}
 	],
-	analiseCompromisso: [
-		{
-			regular: [{sit:Boolean, data: Date}],
-			situacao: {tipo:String, data:Date},
-			pendencia: [
-				{
-					tipo: String,
-					data: Date
-				}
-			],
-			data: Date
-		}
-	],
+	analiseCompromisso: {
+		regular: [{sit:Boolean, data: Date}],
+		motivo: [{tipo:String, data:Date}]
+	},
 	pad: {
 		regular: [{sit:Boolean, data: Date}],
-		situacao:[
-			{
-				tipo: String,
-				data: Date
-			}
-		],
-		pendencia: [
-			{
-				tipo: String,
-				data: Date
-			}
-		],
+		obsv: [{obs: String, data: Date}],
 		tramite: [
 			{
 				tipo: String,
 				acao: String,
-				data: Date
+				inicioTramite: Date,
+				fimTramite: Date,
 			}
-		]
+		],
+		situacao:[{tipo: String, data: Date}]
 	},
 	pags: [
 		{
