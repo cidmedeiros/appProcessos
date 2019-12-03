@@ -183,7 +183,33 @@ def preProcessBolsistas(minScore):
     bolsistas = pd.merge(bolsistas,dataRef,left_on=['cpf','sei','nome'], right_on=['cpf','sei','nome'], how='outer')
     bolsistas = pd.merge(bolsistas,dataPag,left_on=['cpf','sei','nome'], right_on=['cpf','sei','nome'], how='outer')
     bolsistas = pd.merge(bolsistas,valor,left_on=['cpf','sei','nome'], right_on=['cpf','sei','nome'], how='outer')
-    bolsistas = pd.merge(bolsistas,sistema,left_on=['cpf','sei','nome'], right_on=['cpf','sei','nome'], how='outer')    
+    bolsistas = pd.merge(bolsistas,sistema,left_on=['cpf','sei','nome'], right_on=['cpf','sei','nome'], how='outer')
+    bolsistas['colaborador'] = np.where(bolsistas.index.isin(bolsistas.iloc[0:372].index), 'André Braga', 'A definir')
+    bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[372:744].index), 'Gilson Oliveira', bolsistas.colaborador)
+    bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[744:1116].index), 'Débora Costa', bolsistas.colaborador)
+    bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[1116:1488].index), 'Pricilla Oliveira', bolsistas.colaborador)
+    bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[1488:1767].index), 'Mônica Gama', bolsistas.colaborador)
+    bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[1767:2046].index), 'Mayra Gobbato', bolsistas.colaborador)
+    bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[2046:2324].index), 'Carlos Boseli', bolsistas.colaborador)
     
     return bolsistas
+
+def bolsistasJson(minScore):
+    
+    """
+    """
+    bolsistas = preProcessBolsistas(75)
+    
+
+
+
+
+
+
+
+
+
+
+
+
 
