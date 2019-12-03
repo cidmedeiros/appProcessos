@@ -70,6 +70,9 @@ def makeCpf(string):
     
     """
     """
+    string = string.replace('.','')
+    string = string.replace('-','')
+    string = string.replace('/','')
     ans = string[:3]+'.'+string[3:6]+'.'+string[6:9]+'-'+string[9:]
     
     return ans
@@ -78,37 +81,40 @@ def makeCpf(string):
 def preProcessPags(min_score=0):
     
     """
-    Pre-engineer pags data for later processes.
+    Pre-engineer pags data for later processes. It assumes the original data without any duplicates.
     """
     ies = pd.read_csv('dados\ies.csv', sep=';', encoding='ISO-8859-1',dtype=str)
     ies_only = list(ies.nome_entidade)
-    pags = pd.read_csv('dados\proeb_2011_2012_profmat.csv',sep=';',encoding='ISO-8859-1',dtype=str)
-    pags.iesLocal = np.where(pags.iesLocal.isin(['UNIVERSIDADE EST.PAULISTA JÚLIO DE MESQUITA FILHO/SJ.R PRETO',
+    pagsOr = pd.read_csv('dados\proeb_2011_2012_profmat.csv',sep=';',encoding='ISO-8859-1',dtype=str)
+    pagsOr.iesLocal = np.where(pagsOr.iesLocal.isin(['UNIVERSIDADE EST.PAULISTA JÚLIO DE MESQUITA FILHO/SJ.R PRETO',
                                                'UNIVERSIDADE EST.PAULISTA JÚLIO DE MESQUITA FILHO/RIO CLARO',
                                                'UNIVERSIDADE EST.PAULISTA JÚLIO DE MESQUITA FILHO/ILHA  SOLT',
                                                'UNIVERSIDADE EST.PAULISTA JÚLIO DE MESQUITA FILHO/SJR. PRETO']),
-                                                'UNIVERSIDADE ESTADUAL PAULISTA',pags.iesLocal)
+                                                'UNIVERSIDADE ESTADUAL PAULISTA',pagsOr.iesLocal)
+    
+    pagsOr.ies = [ies.upper() for ies in pagsOr.ies]
+    pagsOr.iesLocal = [ies.upper() for ies in pagsOr.iesLocal]
     
     #ENTIDADE NACIONAL
-    nac_ies = list(pags.ies.drop_duplicates())
+    nac_ies = list(pagsOr.ies.drop_duplicates())
     nac_ies = [ies.upper() for ies in nac_ies]
-    ansNacional = [match_name(x, ies_only, min_score) for x in nac_ies]
+    ansNacional = [match_name(x, ies_only, 75) for x in nac_ies]
     df_Nacional = pd.DataFrame()
     df_Nacional['ies'] = nac_ies
     df_Nacional['iesNacional'] = [x[0] for x in ansNacional]
     df_Nacional['iesNacionalScore'] = [x[1] for x in ansNacional]
     
     #ENTIDADE LOCAL
-    local_ies = list(pags.iesLocal.drop_duplicates())
+    local_ies = list(pagsOr.iesLocal.drop_duplicates())
     local_ies = [ies.upper() for ies in local_ies]
-    ansLocal = [match_name(x, ies_only, min_score) for x in local_ies]
+    ansLocal = [match_name(x, ies_only, 75) for x in local_ies]
     df_local = pd.DataFrame()
     df_local['iesLocal'] = local_ies
     df_local['iesMatchLocal'] = [x[0] for x in ansLocal]
     df_local['iesLocalScore'] = [x[1] for x in ansLocal]
     
     #TYDING UP
-    pags = pd.merge(pags, df_Nacional, left_on=['ies'], right_on=['ies'], how='left')
+    pags = pd.merge(pagsOr, df_Nacional, left_on=['ies'], right_on=['ies'], how='left')
     pags = pd.merge(pags, df_local, left_on=['iesLocal'], right_on=['iesLocal'], how='left')
     pags.iesLocal = pags.iesMatchLocal
     pags.drop(['ies','iesNacionalScore','iesMatchLocal','iesLocalScore'], axis=1, inplace=True)
@@ -124,7 +130,7 @@ def preProcessPags(min_score=0):
                     'iesLocalSigla','iesLocalUf','turma','modalidade_bolsa','dataRef','dataPag','valor','sistema','ano_referencia',
                  'mes_referencia','ano_pagamento','mes_pagamento']
     
-    return pags    
+    return pags
 
 def programaJson(minScore):
     
@@ -152,15 +158,32 @@ def programaJson(minScore):
         
     return progrmJson
 
-def bolsistasJson(minScore):
+def preProcessBolsistas(minScore):
     
     """
     """
     sei = pd.read_csv('dados\profmat_2011_2012_processosSEI.csv',sep=';',encoding='ISO-8859-1',dtype=str)
     pags = preProcessPags(75)
-    bolsistas = pd.merge(sei,pags,left_on=['cpf'],right_on=['cpf'], how='right')
     
-    bolsistas = bolsistas.groupby(['cpf','sei','nome','programa'])['iesLocalSigla','turma','modalidade_bolsa','dataRef','dataPag',
-                                                                    'valor','sistema'].apply(list).reset_index(name='pagInfo')
+    df = pd.merge(sei,pags,left_on=['cpf'],right_on=['cpf'], how='right')
+    programa = df.groupby(['cpf','sei','nome'])['programa'].apply(list).reset_index(name='programa')
+    iesNacional = df.groupby(['cpf','sei','nome'])['iesNacional'].apply(list).reset_index(name='iesNacional')
+    iesLocalSigla = df.groupby(['cpf','sei','nome'])['iesLocalSigla'].apply(list).reset_index(name='iesLocalSigla')
+    turma = df.groupby(['cpf','sei','nome'])['turma'].apply(list).reset_index(name='turma')
+    modalidade_bolsa = df.groupby(['cpf','sei','nome'])['modalidade_bolsa'].apply(list).reset_index(name='modalidade_bolsa')
+    dataRef = df.groupby(['cpf','sei','nome'])['dataRef'].apply(list).reset_index(name='dataRef')
+    dataPag = df.groupby(['cpf','sei','nome'])['dataPag'].apply(list).reset_index(name='dataPag')
+    valor = df.groupby(['cpf','sei','nome'])['valor'].apply(list).reset_index(name='valor')
+    sistema = df.groupby(['cpf','sei','nome'])['sistema'].apply(list).reset_index(name='sistema')
     
-    return pags
+    bolsistas = pd.merge(programa,iesNacional,left_on=['cpf','sei','nome'], right_on=['cpf','sei','nome'], how='outer')
+    bolsistas = pd.merge(bolsistas,iesLocalSigla,left_on=['cpf','sei','nome'], right_on=['cpf','sei','nome'], how='outer')
+    bolsistas = pd.merge(bolsistas,turma,left_on=['cpf','sei','nome'], right_on=['cpf','sei','nome'], how='outer')
+    bolsistas = pd.merge(bolsistas,modalidade_bolsa,left_on=['cpf','sei','nome'], right_on=['cpf','sei','nome'], how='outer')
+    bolsistas = pd.merge(bolsistas,dataRef,left_on=['cpf','sei','nome'], right_on=['cpf','sei','nome'], how='outer')
+    bolsistas = pd.merge(bolsistas,dataPag,left_on=['cpf','sei','nome'], right_on=['cpf','sei','nome'], how='outer')
+    bolsistas = pd.merge(bolsistas,valor,left_on=['cpf','sei','nome'], right_on=['cpf','sei','nome'], how='outer')
+    bolsistas = pd.merge(bolsistas,sistema,left_on=['cpf','sei','nome'], right_on=['cpf','sei','nome'], how='outer')    
+    
+    return bolsistas
+
