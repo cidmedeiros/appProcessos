@@ -157,8 +157,13 @@ def bolsistasJson(minScore):
     """
     """
     sei = pd.read_csv('dados\profmat_2011_2012_processosSEI.csv',sep=';',encoding='ISO-8859-1',dtype=str)
+    sei = sei[['cpf_bolsista','processo_sei']]
+    sei.columns = ['cpf','sei']
     pags = preProcessPags(75)
     
+    bolsistas = pd.merge(sei,pags,left_on=['cpf'],right_on=['cpf'], how='right')
     
+    bolsistas = bolsistas.groupby(['cpf','sei','nome','programa'])['iesLocalSigla','turma','modalidade_bolsa','dataRef','dataPag',
+                                                                    'valor','sistema'].apply(list).reset_index(name='pagInfo')
     
     return pags
