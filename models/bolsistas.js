@@ -9,6 +9,10 @@ const bolsistaSchema = new mongoose.Schema({
 	sei: String,
 	email: [{email:String, data:Date}],
 	sexo: String,
+	statusCurso: [{status: String, data: Date}],
+	conclusao: [{sit:String, data: Date}],
+	clbr: [{nome: String, data: Date}],
+	obsv: [{obs: String, data: Date}],
 	docFoto: [
 		{
 			doc: String,
@@ -21,7 +25,7 @@ const bolsistaSchema = new mongoose.Schema({
 			]
 		}
 	],
-	docRes:[
+	respostaBol: [
 		{
 			doc: String,
 			regular: [{sit:Boolean, data: Date}],
@@ -33,7 +37,7 @@ const bolsistaSchema = new mongoose.Schema({
 			]
 		}
 	],
-	respInst: [
+	respostaInst: [
 		{
 			doc: String,
 			regular: [{sit:Boolean, data: Date}],
@@ -74,7 +78,7 @@ const bolsistaSchema = new mongoose.Schema({
 			]
 		}
 	],
-	certCon: [
+	certConclusao: [
 		{
 			ies: {
 				type: mongoose.Schema.Types.ObjectId,
@@ -88,39 +92,8 @@ const bolsistaSchema = new mongoose.Schema({
 				}
 			]
 		}
-	],	
-	statusCurso: [{status: String, data: Date}],
-	conclusao: [{sit:String, data: Date}],
-	turma: [
-		{
-			tipo: String,
-			inicio: Date,
-			fim: Date
-		}
 	],
-	programa: [{
-			programa:
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Programa'
-			},
-			inicio: Date,
-			fim: Date
-		}
-	],
-	iesLocal: [
-		{
-			ies: {
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Ies'
-			},
-			inicio: Date,
-			fim: Date
-		}
-	],
-	clbr: [{nome: String, data: Date}],
-	obsv: [{obs: String, data: Date}],
-	analiseComp: [
+	analiseCompromisso: [
 		{
 			regular: [{sit:Boolean, data: Date}],
 			situacao: {tipo:String, data:Date},
@@ -161,10 +134,19 @@ const bolsistaSchema = new mongoose.Schema({
 			dataPag: mongoose.Schema.Types.Mixed,
 			sistema: String,
 			valor: Number,
+			turma: String,
+			modalidade: String,
+			programa: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Programa'
+			},
+			iesLocal: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Ies'
+			}
 		}
 	]
 });
-
 
 //the next statement uses the plural form of the string param to create (if needed) a collection on the DB.
 module.exports = mongoose.model('Bolsista', bolsistaSchema);
