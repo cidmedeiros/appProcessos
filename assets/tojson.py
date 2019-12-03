@@ -5,7 +5,7 @@ Created on Wed Nov 27 09:17:05 2019
 @author: cidm
 """
 import os
-#os.chdir(r'D:\computer-science\web-development\capesProject\assets')
+os.chdir(r'D:\computer-science\web-development\capesProject\assets')
 import json
 import pandas as pd
 import numpy as np
@@ -121,7 +121,7 @@ def preProcessPags(min_score=0):
     pags = pd.merge(pags,ies,left_on=['iesNacional'],right_on=['nome_entidade'],how='left')
     pags = pd.merge(pags,ies,left_on=['iesLocal'],right_on=['nome_entidade'], how='left')
     pags.cpf = [makeCpf(x) for x in pags.cpf]
-    
+    pags.valor = [int(x) for x in pags.valor]
     pags = pags[['cpf','nome','programa','iesNacional','cnpj_entidade_x','sigla_x','iesLocal','cnpj_entidade_y','sigla_y',
                  'uf_entidade_local','turma','modalidade_bolsa','dataRef','dataPag','valor','sistema','ano_referencia',
                  'mes_referencia','ano_pagamento','mes_pagamento']]
@@ -184,13 +184,15 @@ def preProcessBolsistas(minScore):
     bolsistas = pd.merge(bolsistas,dataPag,left_on=['cpf','sei','nome'], right_on=['cpf','sei','nome'], how='outer')
     bolsistas = pd.merge(bolsistas,valor,left_on=['cpf','sei','nome'], right_on=['cpf','sei','nome'], how='outer')
     bolsistas = pd.merge(bolsistas,sistema,left_on=['cpf','sei','nome'], right_on=['cpf','sei','nome'], how='outer')
+    bolsistas['valorBolsas'] = [sum(x) for x in bolsistas.valor]
+    bolsistas = bolsistas[bolsistas.valorBolsas > 0]
     bolsistas['colaborador'] = np.where(bolsistas.index.isin(bolsistas.iloc[0:372].index), 'André Braga', 'A definir')
     bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[372:744].index), 'Gilson Oliveira', bolsistas.colaborador)
     bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[744:1116].index), 'Débora Costa', bolsistas.colaborador)
     bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[1116:1488].index), 'Pricilla Oliveira', bolsistas.colaborador)
     bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[1488:1767].index), 'Mônica Gama', bolsistas.colaborador)
     bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[1767:2046].index), 'Mayra Gobbato', bolsistas.colaborador)
-    bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[2046:2324].index), 'Carlos Boseli', bolsistas.colaborador)
+    bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[2046:2320].index), 'Carlos Boseli', bolsistas.colaborador)
     
     return bolsistas
 
@@ -199,6 +201,36 @@ def bolsistasJson(minScore):
     """
     """
     bolsistas = preProcessBolsistas(75)
+    
+    bolJson= []
+    
+    for _id, row in bolsistas.iterrows():
+        pags = []
+        values = {'cpf':row.cpf,
+                  'nome':row.nome,
+                  'sei':row.sei,
+                  'clbr':row.colaborador,
+                  'valorBolsas':row.valorBolsas}
+        for i in range(0, len(row.programa)):
+            loopValues = {'programa':row.programa[i],
+                          'iesLocal':row.iesLocalSigla[i],
+                          'turma':row.turma[i],
+                          'modalidade':row.modalidade_bolsa[i],
+                          'dataRef':row.dataRef[i],
+                          'dataPag':row.dataPag[i],
+                          'valor':row.valor[i],
+                          'sistema':row.sistema[i]}            
+            pags.append(loopValues)
+        
+        values['pags'] = pags
+        
+        bolJson.append(values)
+    
+    with open(r'dados\bolsistas.json', 'w', encoding='utf-8') as f:
+        json.dump(bolJson, f, ensure_ascii=False, sort_keys=True, default=str)
+    
+    return bolJson
+        
     
 
 
