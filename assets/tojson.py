@@ -200,7 +200,7 @@ def bolsistasJson(minScore):
     
     """
     """
-    bolsistas = preProcessBolsistas(75)
+    bolsistas = preProcessBolsistas(minScore)
     
     bolJson= []
     
