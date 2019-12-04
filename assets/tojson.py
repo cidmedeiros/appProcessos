@@ -206,10 +206,11 @@ def bolsistasJson(minScore):
     
     for _id, row in bolsistas.iterrows():
         pags = []
+        clbr = []
         values = {'cpf':row.cpf,
                   'nome':row.nome,
                   'sei':row.sei,
-                  'clbr':row.colaborador,
+                  'clbr':clbr.append(row.colaborador),
                   'valorBolsas':row.valorBolsas}
         for i in range(0, len(row.programa)):
             loopValues = {'programa':row.programa[i],
