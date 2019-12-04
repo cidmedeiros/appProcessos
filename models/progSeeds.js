@@ -23,10 +23,8 @@ const cleanProg = function() {
 };
 
 const addProg = function(){
-    console.log(progData);
     progData.forEach(element => {
         try{
-
             Ies.findOne({nome:element.coordNacional[0].ies}, (err, foundOne) => {
                 if(err){
                     console.log(`error finding ${element.ies}`, err)
