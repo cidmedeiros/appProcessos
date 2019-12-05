@@ -5,7 +5,7 @@ Created on Wed Nov 27 09:17:05 2019
 @author: cidm
 """
 import os
-os.chdir(r'D:\computer-science\web-development\capesProject\assets')
+#os.chdir(r'D:\computer-science\web-development\capesProject\assets')
 import json
 import pandas as pd
 import numpy as np
@@ -206,11 +206,11 @@ def bolsistasJson(minScore):
     
     for _id, row in bolsistas.iterrows():
         pags = []
-        clbr = []
+        clbr = [row.colaborador]
         values = {'cpf':row.cpf,
                   'nome':row.nome,
                   'sei':row.sei,
-                  'clbr':clbr.append(row.colaborador),
+                  'clbr':clbr,
                   'valorBolsas':row.valorBolsas}
         for i in range(0, len(row.programa)):
             loopValues = {'programa':row.programa[i],
