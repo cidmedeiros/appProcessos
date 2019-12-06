@@ -10,6 +10,7 @@ import json
 import pandas as pd
 import numpy as np
 from fuzzywuzzy import fuzz
+import datetime as dt
 
 def munJson():
     
@@ -206,7 +207,9 @@ def bolsistasJson(minScore):
     
     for _id, row in bolsistas.iterrows():
         pags = []
-        clbr = [row.colaborador]
+        now = dt.date.today()
+        today = now.strftime("%d/%m/%Y")
+        clbr = [{'nome':row.colaborador, 'data':today}]
         values = {'cpf':row.cpf,
                   'nome':row.nome,
                   'sei':row.sei,
