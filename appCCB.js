@@ -24,23 +24,22 @@ mongoose.connect('mongodb://localhost:27017/testDB', {'useNewUrlParser': true, '
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-
 //Routes Definitions
 
 	//INDEX ROUTE - Lists all the related data from DB
 app.get('/', async (req, res) =>{
 	console.log('Waiting...');
 	try{
-		await Bolsista.find({}, (err, todosBolsistas)=> {
+		await Bolsista.find({'cpf':'000.119.483-61'}, (err, todosBolsistas)=> {
 			if(err){
-				aconsole.log('Error retrieving data', err);
+				console.log('Error retrieving data', err);
 			} else{
 				res.render('landing.ejs', {outBolsistas:todosBolsistas});
 				console.log('App status: nominal.');
 			}
 		});
 	} catch(error){
-		console.log('If not the same error => error rendering template',error);
+		console.log('If not the same error -> error rendering template', error);
 	}
 });
 
@@ -149,7 +148,6 @@ app.delete('/bolsista/:id', async (req, res) => {
 app.get('*', async (req, res) =>{
 	console.log('Waiting...');
 	try{
-		await wait(3 * 1000);
 		res.status(200).send("Sorry, We don't have any content here... yet :)");
 		console.log('App status: nominal.');
 	} catch(error){
