@@ -1,0 +1,50 @@
+.selectTab{
+  padding-bottom: 43px;
+}
+
+#tabs li {
+    float:left;
+	list-style:none;
+	border-top:1px solid #ccc;
+	border-left:1px solid #ccc;
+	border-right:1px solid #ccc;
+	margin-right:5px;
+	border-top-left-radius:3px;
+    border-top-right-radius:3px;
+    background-color: lightskyblue;
+	box-shadow: 0 -2px 2px #dadada;
+}
+#tabs li a {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:13px;
+	font-weight:bold;
+	color:#000000;
+	padding:7px 14px 6px 12px;
+	display:block;
+	background:#FFFFFF;
+	border-top-left-radius:3px;
+	border-top-right-radius:3px;
+	text-decoration:none;
+	background: -moz-linear-gradient(top, #ebebeb, white 10%);
+	background: -webkit-gradient(linear, 0 0, 0 10%, from(#ebebeb), to(white));
+	border-top: 1px solid white;
+	text-shadow:-1px -1px 0 #fff;
+	outline:none;
+}
+
+#tabs li a.inactive{
+	padding-top:5px;
+	padding-bottom:5px;
+	color:#666666;
+	background: -moz-linear-gradient(top, #dedede, white 75%);
+	background: -webkit-gradient(linear, 0 0, 0 75%, from(#dedede), to(white));
+	border-top: 1px solid white;
+}
+#tabs li a:hover, #tabs li a.inactive:hover {
+	border-top: 1px solid #dedede;
+	color:#000000;
+}
+
+#searchBar{
+  width: 620px;
+}
