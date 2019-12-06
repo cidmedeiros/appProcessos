@@ -8,9 +8,16 @@ Ies = require('./ies');
 Programa = require('./programa');
 Bolsista = require('./bolsistas');
 
-const fs = require('fs')
-const loadJson = async () =>{
-    let bolsData = fs.readFileSync('./assets/dados/bolsistas.json');
+const fs = require('fs');
+sPath = './assets/dados/bolsistas.json';
+
+const readFile = async (sPath) =>{
+    let bolsData = fs.readFileSync(sPath);
+    return bolsData;
+}
+
+const loadJson = async (sPath) =>{
+    let bolsData = await readFile(sPath);
     bolsData = await JSON.parse(bolsData); //it parses the string to a iterable object
     return bolsData
 }
@@ -53,11 +60,15 @@ const preProcBol = async (bolsista) => {
         let dPag = bolsista.pags[i].dataPag.split('/');
         bolsista.pags[i].dataPag = new Date(+dPag[2], dPag[1] - 1, +dPag[0]);
     }
+    let clbrDate = bolsista.clbr[0].data.split('/');
+    bolsista.clbr[0].data = new Date(+clbrDate[2], clbrDate[1] - 1, +clbrDate[0]);
+    
     return bolsista
 };
 
-const addBol = async () => {
-    const bolsData = await loadJson();
+const addBol = async (sPath) => {
+    const bolsData = await loadJson(sPath);
+    console.log(bolsData);
     refactored = [];
     try{
         for(bolsista of bolsData){
@@ -70,7 +81,7 @@ const addBol = async () => {
     if(refactored.length > 0){
         Bolsista.insertMany(refactored, (err, data) => {
             if(err){
-                console.log(`InserMany error handling ${err}`);
+                console.log(`InserMany error handling -> ${err}`);
             } else {
                 console.log('Bolsistas saved!')
             }
@@ -78,8 +89,5 @@ const addBol = async () => {
     }
 }
 
-
-
-
-
+addBol(sPath);
 
