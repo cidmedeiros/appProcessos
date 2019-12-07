@@ -234,13 +234,3 @@ def bolsistasJson(minScore):
         json.dump(bolJson, f, ensure_ascii=False, sort_keys=True, default=str)
     
     return bolJson
-
-
-
-
-
-
-
-
-
-

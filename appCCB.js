@@ -29,7 +29,12 @@ mongoose.set('useCreateIndex', true);
 	//INDEX ROUTE - Lists all the related data from DB
 app.get('/', async (req, res) =>{
 	console.log('Waiting...');
-	res.render('landing.ejs');
+	res.render('landing');
+});
+
+	//SHOW ROUTE
+app.post('/consultabolsista', async (req, res) => {
+	res.render('showBolsista', {bolCons:req.body.consulta});
 });
 
 	//SHOW ROUTE
@@ -50,40 +55,40 @@ app.get('/bolsista/:id', async (req, res) => {
 	}
 });
 
-	//EDIT ROUTE
-	app.get('/bolsista/:id/edit', async (req, res) => {
-		//retrieve bolsista with provided ID
-		try{
-			await Bolsista.findById(req.params.id, (err, foundBol) => {
-				if(err){
-					console.log('Error retrieving edit data', error);		
-				} else {
-					console.log(`${foundBol} has just been retrieved for edit`);
-					res.render('infoEdit', {outBolsista:foundBol});
-					console.log('data sent to edit template');
-				}
-			})
-		} catch(error){
-			console.log('Error retrieving edit data', error);
-		}
-	});
-	
-		//PUT ROUTE (UPDATE ROUTE)
-	app.put('/bolsista/:id', async (req, res) => {
-		try{
-			await Bolsista.findByIdAndUpdate(req.params.id,req.body.outBolsista, (err, foundBol) => {
-				if(err){
-					console.log('Error retrieving update data', err);
-					res.redirect(`/bolsista/:${req.params.id}/edit`);
-				} else {
-					console.log('Data Saved',foundBol,req.body.outBolsista);
-					res.redirect('/');
-				}
-			});
-		} catch(error) {
-			console.log('Error retrieving update data', error);
-		}
-	});
+//EDIT ROUTE
+app.get('/bolsista/:id/edit', async (req, res) => {
+	//retrieve bolsista with provided ID
+	try{
+		await Bolsista.findById(req.params.id, (err, foundBol) => {
+			if(err){
+				console.log('Error retrieving edit data', error);		
+			} else {
+				console.log(`${foundBol} has just been retrieved for edit`);
+				res.render('infoEdit', {outBolsista:foundBol});
+				console.log('data sent to edit template');
+			}
+		})
+	} catch(error){
+		console.log('Error retrieving edit data', error);
+	}
+});
+
+	//PUT ROUTE (UPDATE ROUTE)
+app.put('/bolsista/:id', async (req, res) => {
+	try{
+		await Bolsista.findByIdAndUpdate(req.params.id, req.body.outBolsista, (err, foundBol) => {
+			if(err){
+				console.log('Error retrieving update data', err);
+				res.redirect(`/bolsista/:${req.params.id}/edit`);
+			} else {
+				console.log('Data Saved',foundBol,req.body.outBolsista);
+				res.redirect('/');
+			}
+		});
+	} catch(error) {
+		console.log('Error retrieving update data', error);
+	}
+});
 
 //CREATE ROUTE - Save Data into DB
 app.post('/', async (req, res) =>{

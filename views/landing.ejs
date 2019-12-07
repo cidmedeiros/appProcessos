@@ -4,7 +4,7 @@
 <div class="container container-fluid" id="body">
     <p id="boxInfo" class="border border-light">Use um dos atalhos abaixo ou as demais opcoes da barra de navegacao para iniciar</p>
     <div class="row justify-content-center border border-dark rounded">
-        <form action="/bolsista/:id" method="GET" class="col-5 border border-warning rounded">
+        <form action="/consultabolsista" method="POST" class="col-5 border border-warning rounded">
             <div class="form-group">
                 <label for="consulta">Consultar Bolsista</label>
                 <input class="form-control" type="text" name="consulta" id="consulta" placeholder="consultar">
@@ -12,7 +12,7 @@
                 <button type="submit" class="btn btn-primary">Ir</button>
             </div>
         </form>
-        <form action="/clbr" method="GET" class="col-5 border border-info rounded">
+        <form action="/clbrbolsistas" method="POST" class="col-5 border border-info rounded">
             <div class="form-group">
                 <label for="clbrselect">Consultar Bolsistas Atribuídos</label>
                 <select class="form-control" name="clbrselect" id="clbrselect">
