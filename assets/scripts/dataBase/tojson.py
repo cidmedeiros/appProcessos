@@ -5,7 +5,7 @@ Created on Wed Nov 27 09:17:05 2019
 @author: cidm
 """
 import os
-#os.chdir(r'D:\computer-science\web-development\capesProject\assets')
+os.chdir(r'D:\computer-science\web-development\capesProject\assets')
 import json
 import pandas as pd
 import numpy as np
@@ -230,15 +230,10 @@ def bolsistasJson(minScore):
         
         bolJson.append(values)
     
-    with open(r'dados\bolsistas.json', 'w', encoding='utf-8') as f:
+    with open(r'D:\computer-science\web-development\capesProject\assets\dados\bolsistas.json', 'w', encoding='utf-8') as f:
         json.dump(bolJson, f, ensure_ascii=False, sort_keys=True, default=str)
     
     return bolJson
-        
-    
-
-
-
 
 
 

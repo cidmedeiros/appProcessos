@@ -32,7 +32,60 @@ app.get('/', async (req, res) =>{
 	res.render('landing.ejs');
 });
 
-	//CREATE ROUTE - Save Data into DB
+	//SHOW ROUTE
+app.get('/bolsista/:id', async (req, res) => {
+	//find bolsista with provided ID
+	try{
+		await Bolsista.findById(req.params.id, (err,foundBol) => {
+			if(err){
+				console.log('Error retrieving data', err);
+			} else{
+				console.log(`${foundBol} has just been retrieved`);
+				res.render('showBolsista', {outBolsista:foundBol});
+				console.log('data sent to template');
+			}
+		});
+	} catch(error) {
+		console.log('Error retrieving data', error);
+	}
+});
+
+	//EDIT ROUTE
+	app.get('/bolsista/:id/edit', async (req, res) => {
+		//retrieve bolsista with provided ID
+		try{
+			await Bolsista.findById(req.params.id, (err, foundBol) => {
+				if(err){
+					console.log('Error retrieving edit data', error);		
+				} else {
+					console.log(`${foundBol} has just been retrieved for edit`);
+					res.render('infoEdit', {outBolsista:foundBol});
+					console.log('data sent to edit template');
+				}
+			})
+		} catch(error){
+			console.log('Error retrieving edit data', error);
+		}
+	});
+	
+		//PUT ROUTE (UPDATE ROUTE)
+	app.put('/bolsista/:id', async (req, res) => {
+		try{
+			await Bolsista.findByIdAndUpdate(req.params.id,req.body.outBolsista, (err, foundBol) => {
+				if(err){
+					console.log('Error retrieving update data', err);
+					res.redirect(`/bolsista/:${req.params.id}/edit`);
+				} else {
+					console.log('Data Saved',foundBol,req.body.outBolsista);
+					res.redirect('/');
+				}
+			});
+		} catch(error) {
+			console.log('Error retrieving update data', error);
+		}
+	});
+
+//CREATE ROUTE - Save Data into DB
 app.post('/', async (req, res) =>{
 	console.log('Saving...');
 	try{
@@ -49,58 +102,7 @@ app.post('/', async (req, res) =>{
 	}
 });
 
-	//SHOW ROUTE
-app.get('/bolsista/:id', async (req, res) => {
-	//find bolsista with provided ID
-	try{
-		await Bolsista.findById(req.params.id, (err,foundBol) => {
-			if(err){
-				console.log('Error retrieving data', err);
-			} else{
-				console.log(`${foundBol} has just been retrieved`);
-				res.render('show', {outBolsista:foundBol});
-				console.log('data sent to template');
-			}
-		});
-	} catch(error) {
-		console.log('Error retrieving data', error);
-	}
-});
 
-	//EDIT ROUTE
-app.get('/bolsista/:id/edit', async (req, res) => {
-	//retrieve bolsista with provided ID
-	try{
-		await Bolsista.findById(req.params.id, (err, foundBol) => {
-			if(err){
-				console.log('Error retrieving edit data', error);		
-			} else {
-				console.log(`${foundBol} has just been retrieved for edit`);
-				res.render('infoEdit', {outBolsista:foundBol});
-				console.log('data sent to edit template');
-			}
-		})
-	} catch(error){
-		console.log('Error retrieving edit data', error);
-	}
-});
-
-	//PUT ROUTE (UPDATE ROUTE)
-app.put('/bolsista/:id', async (req, res) => {
-	try{
-		await Bolsista.findByIdAndUpdate(req.params.id,req.body.outBolsista, (err, foundBol) => {
-			if(err){
-				console.log('Error retrieving update data', err);
-				res.redirect(`/bolsista/:${req.params.id}/edit`);
-			} else {
-				console.log('Data Saved',foundBol,req.body.outBolsista);
-				res.redirect('/');
-			}
-		});
-	} catch(error) {
-		console.log('Error retrieving update data', error);
-	}
-});
 
 app.delete('/bolsista/:id', async (req, res) => {
 	try{
