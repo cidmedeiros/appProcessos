@@ -34,7 +34,10 @@ app.get('/', async (req, res) =>{
 
 	//SHOW ROUTE
 app.post('/consultabolsista', async (req, res) => {
-	res.render('showBolsista', {bolCons:req.body.consulta});
+	let input = req.body.consulta;
+	input = await tools.treatInput(input);
+	tools.formatNumber(input);
+	res.render('showBolsista', {bolCons:input[1]});
 });
 
 	//SHOW ROUTE
