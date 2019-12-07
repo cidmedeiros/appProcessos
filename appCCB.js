@@ -43,22 +43,6 @@ app.get('/', async (req, res) =>{
 	}
 });
 
-/* 	//ROUTE test users
-app.get('/testusers', async (req, res) =>{
-	try{
-		await User.find({}, (err, inUser) =>{
-			if(err){
-				console.log('Error retrieving users', err);
-			} else {
-				res.render('users', {outUser:inUser});
-				console.log('App status: nominal.');
-			}
-		});
-	} catch(error) {
-		console.error('Error retrieving users', error);
-	}
-}); */
-
 	//CREATE ROUTE - Save Data into DB
 app.post('/', async (req, res) =>{
 	console.log('Saving...');
