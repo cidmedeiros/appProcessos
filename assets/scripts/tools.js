@@ -10,6 +10,14 @@ function getLocalIp() {
     }
 };
 
+function treatInput(input){
+    const numbers = /^[0-9]+$/;
+	input = input.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+	input = input.replace(/[^a-zA-Z0-9 ]/g, "");
+	return input;
+};
+
 module.exports = {
-    getLocalIp:getLocalIp
+    getLocalIp:getLocalIp,
+    treatInput:treatInput
 }
