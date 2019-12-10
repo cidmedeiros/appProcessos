@@ -1,6 +1,26 @@
 <% include partials/header %>
-    <link rel="stylesheet" href="showBolsistaStyle.css">
+    <link rel="stylesheet" href="showBolsista.css">
 <% include partials/headerBottom %>
-<h1><%= bolCons %></h1>
-
+<div class="container container-fluid border border-dark rounded mt-3 mb-3 px-5 py-2">
+    <h4>Dados Pessoais</h4>
+    <div class="row">
+        <div class="card col-12 border border-warning my-3 py-3 px-3">
+            <div class="border border-success rounded-bottom my-1">
+                <h5>Nome:</h5><h6><%=bolCons[0].nome%></h6>
+            </div>
+             <div class="border border-success rounded-bottom my-1">
+                <h5>CPF:</h5><h6><%=bolCons[0].cpf%></h6>
+            </div>
+             <div class="border border-success rounded-bottom my-1">
+                <h5>SEI:</h5><h6><%=bolCons[0].sei%></h6>
+            </div>
+             <div class="border border-success rounded-bottom my-1">
+                <h5>E-mail:</h5><h6><%=bolCons[0].email%></h6>
+            </div>
+             <div class="border border-success rounded-bottom my-1">
+                <h5>Sexo:</h5><h6><%=bolCons[0].sexo%></h6>
+            </div>
+        </div>
+    </div>
+</div>
 <% include partials/footer %>
