@@ -43,8 +43,8 @@ app.post('/consultabolsista', async (req, res) => {
 				if(err){
 					console.log(`Error tryng to find ${input[1]}, ${err}`)
 				} else {
-					res.render('showBolsista', {bolCons:input[1]});
-					console.log(`${input[1]} is CPF`);
+					res.render('showBolsista', {bolCons:foundBol});
+					console.log(foundBol);
 				}
 			});
 		} else if(input[0] === 'sei'){
@@ -52,8 +52,8 @@ app.post('/consultabolsista', async (req, res) => {
 				if(err){
 					console.log(`Error tryng to find ${input[1]}, ${err}`)
 				} else {
-					res.render('showBolsista', {bolCons:input[1]});
-					console.log(`${input[1]} is SEI`);
+					res.render('showBolsista', {bolCons:foundBol});
+					console.log(foundBol);
 				}
 			});
 		} else if(input[0] === 'nome'){
@@ -61,13 +61,18 @@ app.post('/consultabolsista', async (req, res) => {
 				if(err){
 					console.log(`Error tryng to find ${input[1]}, ${err}`)
 				} else {
-					res.render('showBolsista', {bolCons:input[1]});
-					console.log(`${input[1]} is nome`);
+					if(foundBol.lenght === 1){
+						res.render('showBolsista', {bolCons:foundBol});
+						console.log(foundBol);
+					} else {
+						res.render('showResultados', {bolCons:foundBol});
+						console.log(foundBol);
+					}
 				}
 			});
 		} else{
-			res.render('showBolsista', {bolCons:input[1]});
-			console.log(input[0]);
+			res.render('landing');
+			alert(input[0]);
 		}
 	} catch(error){
 		console.log(`Error trying to find ${input[1]}, ${error} by catch`)
