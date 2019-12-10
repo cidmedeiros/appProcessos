@@ -1,7 +1,12 @@
-h5{
+h5, footer{
     color: lightslategrey;
 }
 
 h6{
     color: rgba(rgb(0, 0, 0), 0.4);
+}
+
+.btn{
+    width: 73px;
+    float: right;
 }
