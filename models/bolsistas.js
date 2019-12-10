@@ -18,14 +18,22 @@ const bolsistaSchema = new mongoose.Schema({
 	docFoto: [
 		{
 			doc: String,
-			regular: [{sit:Boolean, data: Date}],
+			regular: [{sit:String, data: Date}],
+			motivo: [{tipo: String,	data: Date}],
+			user: String
+		}
+	],
+	docRes: [
+		{
+			doc: String,
+			regular: [{sit:String, data: Date}],
 			motivo: [{tipo: String,	data: Date}],
 			user: String
 		}
 	],
 	termo: [
 		{
-			regular: [{sit:Boolean, data: Date}],
+			regular: [{sit:String, data: Date}],
 			motivo: [{tipo: String,	data: Date}],
 			user: String
 		}
@@ -39,7 +47,7 @@ const bolsistaSchema = new mongoose.Schema({
 				}
 			},
 			permanencia: Number,
-			regular: [{sit:Boolean, data: Date}],
+			regular: [{sit:String, data: Date}],
 			motivo: [{tipo: String, data: Date}],
 			user: String
 		}
@@ -50,17 +58,17 @@ const bolsistaSchema = new mongoose.Schema({
 				type: mongoose.Schema.Types.ObjectId,
 				ref: 'Ies'
 			},
-			regular: [{sit:Boolean, data: Date}],
+			regular: [{sit:String, data: Date}],
 			motivo: [{tipo: String,	data: Date}],
 			user: String
 		}
 	],
 	analiseCompromisso: {
-		regular: [{sit:Boolean, data: Date, user: String}],
+		regular: [{sit:String, data: Date, user: String}],
 		motivo: [{tipo:String, data:Date, user: String}]
 	},
 	pad: {
-		regular: [{sit:Boolean, data: Date, user: String}],
+		regular: [{sit:String, data: Date, user: String}],
 		obsv: [{obs: String, data: Date, user: String}],
 		tramite: [
 			{
