@@ -41,6 +41,7 @@
     "method-override": "^3.0.0",
     "mongodb": "^3.3.4",
     "mongoose": "^5.7.11",
+    "mongoose-fuzzy-searching": "^1.1.8",
     "popper.js": "^1.16.0",
     "underscore": "^1.9.1",
     "yargs": "^15.0.1"

@@ -1,4 +1,5 @@
 mongoose = require('mongoose');
+mongoose_fuzzy_searching = require('mongoose-fuzzy-searching');
 Municipio = require('./municipios');
 Ies = require('./ies');
 Programa = require('./programa');
@@ -6,6 +7,7 @@ Programa = require('./programa');
 const bolsistaSchema = new mongoose.Schema({
 	cpf: String,
 	nome: String,
+	nome_display: String,
 	sei: String,
 	email: [{email:String, data:Date}],
 	sexo: String,
@@ -90,6 +92,8 @@ const bolsistaSchema = new mongoose.Schema({
 		}
 	]
 });
+
+bolsistaSchema.plugin(mongoose_fuzzy_searching, {fields: ['nome']});
 
 //the next statement uses the plural form of the string param to create (if needed) a collection on the DB.
 module.exports = mongoose.model('Bolsista', bolsistaSchema);

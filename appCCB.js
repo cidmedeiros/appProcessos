@@ -4,6 +4,7 @@ express = require('express');
 http = require("http");
 bodyParser = require('body-parser');
 mongoose = require('mongoose');
+mongoose_fuzzy_searching = require('mongoose-fuzzy-searching');
 methodOverride = require('method-override');
 expressSanitizer = require('express-sanitizer');
 tools = require('./assets/scripts/tools');
@@ -36,7 +37,41 @@ app.get('/', async (req, res) =>{
 app.post('/consultabolsista', async (req, res) => {
 	let input = req.body.consulta;
 	input = await tools.treatInput(input);
-	input = res.render('showBolsista', {bolCons:input[1]});
+	try{
+		if(input[0] === 'cpf'){
+			await Bolsista.find({cpf:input[1]}, (err, foundBol) => {
+				if(err){
+					console.log(`Error tryng to find ${input[1]}, ${err}`)
+				} else {
+					res.render('showBolsista', {bolCons:input[1]});
+					console.log(`${input[1]} is CPF`);
+				}
+			});
+		} else if(input[0] === 'sei'){
+			await Bolsista.find({sei:input[1]}, (err, foundBol) => {
+				if(err){
+					console.log(`Error tryng to find ${input[1]}, ${err}`)
+				} else {
+					res.render('showBolsista', {bolCons:input[1]});
+					console.log(`${input[1]} is SEI`);
+				}
+			});
+		} else if(input[0] === 'nome'){
+			await Bolsista.fuzzySearch({nome:input[1]}, (err, foundBol) => {
+				if(err){
+					console.log(`Error tryng to find ${input[1]}, ${err}`)
+				} else {
+					res.render('showBolsista', {bolCons:input[1]});
+					console.log(`${input[1]} is nome`);
+				}
+			});
+		} else{
+			res.render('showBolsista', {bolCons:input[1]});
+			console.log(input[0]);
+		}
+	} catch(error){
+		console.log(`Error trying to find ${input[1]}, ${error} by catch`)
+	}
 });
 
 	//SHOW ROUTE
