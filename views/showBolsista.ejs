@@ -1,26 +1,29 @@
 <% include partials/header %>
     <link rel="stylesheet" href="showBolsista.css">
 <% include partials/headerBottom %>
-<div class="container container-fluid border border-dark rounded mt-3 mb-3 px-5 py-2">
+<h2>Consulta  Bolsista</h2>
+<div class="container container-fluid border border-dark rounded mt-3 mb-3 ml-2 px-5 py-2">
     <h4>Dados Pessoais</h4>
-    <div class="row">
-        <div class="card col-12 border border-warning my-3 py-3 px-3">
-            <div class="border border-success rounded-bottom my-1">
-                <h5>Nome:</h5><h6><%=bolCons[0].nome%></h6>
-            </div>
-             <div class="border border-success rounded-bottom my-1">
-                <h5>CPF:</h5><h6><%=bolCons[0].cpf%></h6>
-            </div>
-             <div class="border border-success rounded-bottom my-1">
-                <h5>SEI:</h5><h6><%=bolCons[0].sei%></h6>
-            </div>
-             <div class="border border-success rounded-bottom my-1">
-                <h5>E-mail:</h5><h6><%=bolCons[0].email%></h6>
-            </div>
-             <div class="border border-success rounded-bottom my-1">
-                <h5>Sexo:</h5><h6><%=bolCons[0].sexo%></h6>
-            </div>
+    <div class="card border border-warning my-3 py-3 px-3">
+        <div class="border border-success rounded-bottom my-1 py-.25 pl-.5">
+            <h5 class="my-1 ml-1">Nome</h5><h6 class="my-1 ml-1"><%=bolCons[0].nome%></h6>
         </div>
+            <div class="border border-success rounded-bottom my-1 py-.25 pl-.5">
+            <h5 class="my-1 ml-1">CPF</h5><h6 class="my-1 ml-1"><%=bolCons[0].cpf%></h6>
+        </div>
+            <div class="border border-success rounded-bottom my-1 py-.25 pl-.5">
+            <h5 class="my-1 ml-1">SEI</h5><h6 class="my-1 ml-1"><%=bolCons[0].sei%></h6>
+        </div>
+            <div class="border border-success rounded-bottom my-1 py-.25 pl-.5">
+            <h5 class="my-1 ml-1">E-mail</h5><h6 class="my-1 ml-1"><%=bolCons[0].email%></h6>
+        </div>
+            <div class="border border-success rounded-bottom my-1 py-.25 pl-.5">
+            <h5 class="my-1 ml-1">Sexo</h5><h6 class="my-1 ml-1"><%=bolCons[0].sexo%></h6>
+        </div>
+        <a href="/editarBolsista" class="btn btn-primary mx-auto">Editar</a>
+        <%let clbr = bolCons[0].clbr[((bolCons[0].clbr).length-1)].nome%>
+        <%let data = bolCons[0].clbr[((bolCons[0].clbr).length-1)].data%> 
+        <footer>Bolsista atribuído(a) para <%=clbr%> em: <%=data.getDate()%>/<%=data.getMonth()+1%>/<%=data.getFullYear()%></footer>
     </div>
 </div>
 <% include partials/footer %>
