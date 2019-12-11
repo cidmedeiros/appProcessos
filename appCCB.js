@@ -39,21 +39,20 @@ app.post('/consultabolsista', async (req, res) => {
 	input = await tools.treatInput(input);
 	try{
 		if(input[0] === 'cpf'){
-			await Bolsista.find({cpf:input[1]}, (err, foundBol) => {
+			await Bolsista.findOne({cpf:input[1]}).populate('pags.iesLocal').populate('pags.programa').exec((err, foundBol) => {
 				if(err){
-					console.log(`Error tryng to find ${input[1]}, ${err}`)
+					console.log(`Bolsista ${input[1]} not found! ${err}`)
 				} else {
+					console.log(foundBol.pags);
 					res.render('showBolsista', {bolCons:foundBol});
-					console.log(foundBol);
 				}
 			});
 		} else if(input[0] === 'sei'){
-			await Bolsista.find({sei:input[1]}, (err, foundBol) => {
+			await Bolsista.findOne({sei:input[1]}).populate('pags.iesLocal').populate('pags.programa').exec((err, foundBol) => {
 				if(err){
 					console.log(`Error tryng to find ${input[1]}, ${err}`)
 				} else {
 					res.render('showBolsista', {bolCons:foundBol});
-					console.log(foundBol);
 				}
 			});
 		} else if(input[0] === 'nome'){
@@ -62,8 +61,17 @@ app.post('/consultabolsista', async (req, res) => {
 					console.log(`Error tryng to find ${input[1]}, ${err}`)
 				} else {
 					if(foundBol.lenght === 1){
-						res.render('showBolsista', {bolCons:foundBol});
-						console.log(foundBol);
+						let foundCpf = foundBol[0]['cpf'];
+						async () => {
+							await Bolsista.findOne({cpf:foundCpf}).populate('pags.iesLocal').populate('pags.programa').exec((err, foundOne) => {
+								if(err){
+									console.log(`Bolsista ${input[1]} not found! ${err}`)
+								} else {
+									console.log(foundOne.pags);
+									res.render('showBolsista', {bolCons:foundOne});
+								}
+							});
+						}
 					} else {
 						res.render('showResultados', {bolCons:foundBol});
 						console.log(foundBol);
