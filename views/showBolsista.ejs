@@ -1,7 +1,14 @@
 <% include partials/header %>
     <link rel="stylesheet" href="showBolsista.css">
 <% include partials/headerBottom %>
-<h1>Consulta Bolsista</h1>
+<div class="row mt-2">
+    <div class="col-1"></div>
+    <div class="col-3">
+        <h1>Consulta Bolsista</h1>
+    </div>
+    <div class="col-8"></div>
+</div>
+
 <div class="row mb-3 dadosPessoais">
     <div class="col-1">
     </div>
@@ -273,8 +280,50 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
+    </div>
+
+    <div class="col-1">
+    </div>
+</div>
+
+<div class="row mb-3 pagamentos">
+    <div class="col-1">
+    </div>
+
+    <div class="col-10 border border-dark rounded mt-3 mb-3 ml-2 px-5 py-2">
+        <h3>Pagamentos</h3>
+        <h5 class="my-1 ml-1"><%=bolCons[0].nome%> <span class="ml-5">CPF: <%=bolCons[0].cpf%></span> </h5>
+        <table class="table table-sm table-bordered table-striped table-dark table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Programa</th>
+                    <th scope="col">Entidade Nacional</th>
+                    <th scope="col">Referência</th>
+                    <th scope="col">Data de Pagamento</th>
+                    <th scope="col">Turma</th>
+                    <th scope="col">Entidade Local</th>
+                    <th scope="col">Modalidade</th>
+                    <th scope="col">Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% let pags = bolCons[0].pags %>
+                <% pags.forEach((pag) => { %>
+                    <tr>
+                    <td><%=pag.programa.nome%></td>
+                    <td>IMPA</td>
+                    <td><%=pag.dataRef%></td>
+                    <td><%=pag.dataPag%></td>
+                    <td><%=pag.turma%></td>
+                    <td><%=pag.iesLocal.sigla%></td>
+                    <td><%=pag.modalidade%></td>
+                    <td><%=pag.valor%></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
     </div>
 
     <div class="col-1">
