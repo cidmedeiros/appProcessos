@@ -65,7 +65,8 @@ const bolsistaSchema = new mongoose.Schema({
 	],
 	analiseCompromisso: {
 		regular: [{sit:String, data: Date, user: String}],
-		motivo: [{tipo:String, data:Date, user: String}]
+		motivo: [{tipo:String, data:Date, user: String}],
+		user: String
 	},
 	pad: {
 		regular: [{sit:String, data: Date, user: String}],
