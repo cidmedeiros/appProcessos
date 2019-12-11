@@ -6,7 +6,7 @@ h5, footer{
     color: lightslategrey;
 }
 
-h6{
+h6, h4{
     color: rgba(rgb(0, 0, 0), 0.4);
 }
 
