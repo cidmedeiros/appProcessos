@@ -90,12 +90,16 @@
                 </div>
             </div>
         </div>
-
-        <button class="btn btn-primary mr-5" data-toggle="modal" data-targe="#editDadosPessoais">Editar</button>
         
-        <%let colaborador = bolCons.clbr[((bolCons.clbr).length-1)].nome%>
-        <%let Adata = bolCons.clbr[((bolCons.clbr).length-1)].data%> 
-        <footer class="ml-5">Bolsista atribuído(a) para <%=colaborador%> em: <%=Adata.getDate()%>/<%=Adata.getMonth()+1%>/<%=Adata.getFullYear()%></footer>
+        <div class="row">
+            <div class="col-5"></div>
+            <button class="btn btn-md btn-primary col-1" data-toggle="modal" data-targe="#editDadosPessoais">Editar</button>
+            <div class="col-2"></div>
+            <%let colaborador = bolCons.clbr[((bolCons.clbr).length-1)].nome%>
+            <%let Adata = bolCons.clbr[((bolCons.clbr).length-1)].data%> 
+            <footer class="col-4">Bolsista atribuído(a) para <%=colaborador%> em: <%=Adata.getDate()%>/<%=Adata.getMonth()+1%>/<%=Adata.getFullYear()%></footer>
+        </div>
+
     </div>
     <div class="col-1">
     </div>
@@ -194,6 +198,14 @@
             </div>
 
         </div>
+
+        <div class="row">
+            <div class="col-5"></div>
+            <button class="btn btn-md btn-primary col-1" data-toggle="modal" data-targe="#editDadosPessoais">Editar</button>
+            <div class="col-2"></div>
+            <div class="col-4"></div>
+        </div>
+
     </div>
     <div class="col-1">
     </div>
@@ -282,6 +294,14 @@
             </div>
 
         </div>
+
+        <div class="row">
+            <div class="col-5"></div>
+            <button class="btn btn-md btn-primary col-1" data-toggle="modal" data-targe="#editDadosPessoais">Editar</button>
+            <div class="col-2"></div>
+            <div class="col-4"></div>
+        </div>
+
     </div>
 
     <div class="col-1">
@@ -296,7 +316,7 @@
         <div class="row">
             <div class="col-4"></div>
 
-            <button class="col-4 btn btn-md btn-primary btn-pags collapsed" type="submit" data-toggle="collapse" data-target="#collapsePags" aria-expanded="false" aria-controls="collapsePags">
+            <button class="col-4 btn btn-md btn-secondary btn-pags collapsed" type="submit" data-toggle="collapse" data-target="#collapsePags" aria-expanded="false" aria-controls="collapsePags">
                 <span><strong>Expandir Pagamentos</strong></span><b>Minimalizar Pagamentos</b>
             </button>
 
@@ -334,12 +354,12 @@
                     </tr>
                     <% }); %>
                     <tr>
-                        <td class="bg-danger" colspan="2">QUANTITATIVO DE BOLSAS</td>
-                        <td class="bg-danger"><strong><%=bolCons.pags.length%></strong></td>
+                        <td class="bg-primary" colspan="2">QUANTITATIVO DE BOLSAS</td>
+                        <td class="bg-primary"><strong><%=bolCons.pags.length%></strong></td>
                         <td class="table-active" colspan="2"></td>
-                        <td class="bg-danger" colspan="2">VALOR TOTAL RECEBIDO</td>
+                        <td class="bg-primary" colspan="2">VALOR TOTAL RECEBIDO</td>
                         <% let valueT = bolCons.valorBolsas.toLocaleString().replace(',','.')%>
-                        <td class="bg-danger"><strong>R$<%=valueT%>,00</strong></td>
+                        <td class="bg-primary"><strong>R$<%=valueT%>,00</strong></td>
                     </tr>
                 </tbody>
             </table>
