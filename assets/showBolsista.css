@@ -14,3 +14,17 @@ h6, h4{
     width: 73px;
     float: right;
 }
+
+.btn-pags b{display:inline}
+.btn-pags:not(.collapsed)  span{display:none}
+.btn-pags.collapsed b {display:none}
+
+.table > tbody > tr > td {
+     vertical-align: middle;
+     text-align: center;
+}
+
+.table > thead {
+     vertical-align: middle;
+     text-align: center;
+}
