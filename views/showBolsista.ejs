@@ -21,19 +21,19 @@
 
                 <div class="card my-1 py-.25 pl-.5">
                     <div class="border border-success rounded-bottom my-2 py-.5 mx-3">
-                        <h5 class="my-1 ml-1">Nome</h5><h4 class="card-text my-1 ml-1"><%=bolCons[0].nome%></h4>
+                        <h5 class="my-1 ml-1">Nome</h5><h4 class="card-text my-1 ml-1"><%=bolCons.nome%></h4>
                     </div>
                      <div class="border border-success rounded-bottom my-2 py-.5 mx-3">
-                        <h5 class="my-1 ml-1">CPF</h5><h4 class="my-1 ml-1"><%=bolCons[0].cpf%></h4>
+                        <h5 class="my-1 ml-1">CPF</h5><h4 class="my-1 ml-1"><%=bolCons.cpf%></h4>
                     </div>
                     <div class="border border-success rounded-bottom my-2 py-.5 mx-3">
-                        <h5 class="my-1 ml-1">SEI</h5><h4 class="my-1 ml-1"><%=bolCons[0].sei%></h4>
+                        <h5 class="my-1 ml-1">SEI</h5><h4 class="my-1 ml-1"><%=bolCons.sei%></h4>
                     </div>
                     <div class="border border-success rounded-bottom my-2 py-.5 mx-3">
-                        <h5 class="my-1 ml-1">E-mail</h5><h6 class="my-1 ml-1"><%=bolCons[0].email%></h6>
+                        <h5 class="my-1 ml-1">E-mail</h5><h6 class="my-1 ml-1"><%=bolCons.email%></h6>
                     </div>
                     <div class="border border-success rounded-bottom my-2 py-.5 mx-3">
-                        <h5 class="my-1 ml-1">Sexo</h5><h6 class="my-1 ml-1"><%=bolCons[0].sexo%></h6>
+                        <h5 class="my-1 ml-1">Sexo</h5><h6 class="my-1 ml-1"><%=bolCons.sexo%></h6>
                     </div>                    
                 </div>
             </div>
@@ -45,8 +45,8 @@
 
                         <h5 class="card-title"><strong>Documento Com Foto</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons[0].docFoto.length > 0){ %>
-                            <% let docuFoto = bolCons[0].docFoto[((bolCons[0].docFoto).length-1)]%> { %>
+                        <% if(bolCons.docFoto.length > 0){ %>
+                            <% let docuFoto = bolCons.docFoto[((bolCons.docFoto).length-1)]%> { %>
                             <h5 class="my-1 ml-1">Descrição</h5><h6 class="my-1 ml-1"><%=docuFoto.doc%></h6>
                             <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=docuFoto.motivo[0].tipo%></h6>
                             <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%=docuFoto.motivo[0].data%></h6>
@@ -60,8 +60,8 @@
 
                         <h5 class="card-title"><strong>Comprovante de Residência</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons[0].termo.length > 0){ %>
-                            <% let docuRes = bolCons[0].docRes[((bolCons[0].docRes).length-1)]%> { %>
+                        <% if(bolCons.termo.length > 0){ %>
+                            <% let docuRes = bolCons.docRes[((bolCons.docRes).length-1)]%> { %>
                             <h5 class="my-1 ml-1">Descrição</h5><h6 class="my-1 ml-1"><%=docuRes.doc%></h6>
                             <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=docuRes.motivo[0].tipo%></h6>
                             <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%=docuRes.motivo[0].data%></h6>
@@ -75,8 +75,8 @@
 
                         <h5 class="card-title"><strong>Termo de Compromisso do Bolsista</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons[0].termo.length > 0){ %>
-                            <% let docuTermo = bolCons[0].termo[((bolCons[0].termo).length-1)]%> { %>
+                        <% if(bolCons.termo.length > 0){ %>
+                            <% let docuTermo = bolCons.termo[((bolCons.termo).length-1)]%> { %>
                             <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=docuTermo.motivo[0].tipo%></h6>
                             <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=docuTermo.motivo[0].data%></h6>
                             <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=docuTermo.regular[0].sit%></h6>
@@ -93,8 +93,8 @@
 
         <button class="btn btn-primary mr-5" data-toggle="modal" data-targe="#editDadosPessoais">Editar</button>
         
-        <%let colaborador = bolCons[0].clbr[((bolCons[0].clbr).length-1)].nome%>
-        <%let Adata = bolCons[0].clbr[((bolCons[0].clbr).length-1)].data%> 
+        <%let colaborador = bolCons.clbr[((bolCons.clbr).length-1)].nome%>
+        <%let Adata = bolCons.clbr[((bolCons.clbr).length-1)].data%> 
         <footer class="ml-5">Bolsista atribuído(a) para <%=colaborador%> em: <%=Adata.getDate()%>/<%=Adata.getMonth()+1%>/<%=Adata.getFullYear()%></footer>
     </div>
     <div class="col-1">
@@ -114,8 +114,8 @@
                     <div class="card-body">
                         <h5 class="card-title"><strong>Situação do Curso</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons[0].statusCurso.length > 0){ %>
-                            <% let curso = bolCons[0].statusCurso[((bolCons[0].statusCurso).length-1)]%> { %>
+                        <% if(bolCons.statusCurso.length > 0){ %>
+                            <% let curso = bolCons.statusCurso[((bolCons.statusCurso).length-1)]%> { %>
                             <h5 class="my-1 ml-1">Situação do Curso</h5><h6 class="my-1 ml-1"><%=curso.status.sit%></h6>
                             <h5 class="my-1 ml-1">Data da Informação</h5><h6 class="my-1 ml-1"><%=curso.status.data%></h6>
                             <footer class="mx-auto">Informações por <%=curso.user%></footer>
@@ -132,8 +132,8 @@
                     <div class="card-body">
                         <h5 class="card-title"><strong>Certificado de Conclusão</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons[0].certConclusao.length > 0){ %>
-                            <% let certificado = bolCons[0].certConclusao[((bolCons[0].certConclusao).length-1)]%> { %>
+                        <% if(bolCons.certConclusao.length > 0){ %>
+                            <% let certificado = bolCons.certConclusao[((bolCons.certConclusao).length-1)]%> { %>
                             <h5 class="my-1 ml-1">Instituição de Ensino</h5><h6 class="my-1 ml-1"><%=certificado.ies%></h6>
                             <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=certificado.motivo[0].tipo%></h6>
                             <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=certificado.motivo[0].data%></h6>
@@ -156,8 +156,8 @@
                     <div class="card-body">
                         <h5 class="card-title"><strong>Declaração de Permanência</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons[0].declaracao.length > 0){ %>
-                            <% let declaracao = bolCons[0].declaracao[((bolCons[0].declaracao).length-1)]%> { %>
+                        <% if(bolCons.declaracao.length > 0){ %>
+                            <% let declaracao = bolCons.declaracao[((bolCons.declaracao).length-1)]%> { %>
                             <h5 class="my-1 ml-1">Município da Escola</h5><h6 class="my-1 ml-1"><%=declaracao.escola.municipio%></h6>
                             <h5 class="my-1 ml-1">Permanência</h5><h6 class="my-1 ml-1"><%=declaracao.permanencia%></h6>
                             <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=declaracao.motivo[0].tipo%></h6>
@@ -178,8 +178,8 @@
                     <div class="card-body">
                         <h5 class="card-title"><strong>Resultado da Análise</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons[0].analiseCompromisso.regular.length > 0){ %>
-                            <% let compromisso = bolCons[0].analiseCompromisso %> { %>
+                        <% if(bolCons.analiseCompromisso.regular.length > 0){ %>
+                            <% let compromisso = bolCons.analiseCompromisso %> { %>
                             <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=compromisso.motivo[0].tipo%></h6>
                             <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=compromisso.motivo[0].data%></h6>
                             <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=compromisso.regular[0].sit%></h6>
@@ -212,8 +212,8 @@
                     <div class="card-body">
                         <h5 class="card-title"><strong>Acompanhamento do Processo</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons[0].pad.tramite.length > 0){ %>
-                            <% var pad = bolCons[0].pad %>
+                        <% if(bolCons.pad.tramite.length > 0){ %>
+                            <% var pad = bolCons.pad %>
                             <h5 class="my-1 ml-1">Trâmite</h5><h6 class="my-1 ml-1"><%=pad.trâmite[0].tipo%></h6>
                              <h5 class="my-1 ml-1">Próximo Passo</h5><h6 class="my-1 ml-1"><%=pad.trâmite[0].acao%></h6>
                              <h5 class="my-1 ml-1">Início do Trâmite</h5><h6 class="my-1 ml-1"><%=pad.trâmite[0].inicioTramite%></h6>
@@ -232,7 +232,7 @@
                     <div class="card-body">
                         <h5 class="card-title"><strong>Última Observação</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons[0].pad.obsv.length > 0){ %>
+                        <% if(bolCons.pad.obsv.length > 0){ %>
                             <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=pad.obsv[0].obs%></h6>
                              <h5 class="my-1 ml-1">Registrada por</h5><h6 class="my-1 ml-1"><%=pad.obsv[0].user%></h6>
                              <h5 class="my-1 ml-1">Data do Registro</h5><h6 class="my-1 ml-1"><%=pad.obsv[0].data%></h6>
@@ -252,7 +252,7 @@
                     <div class="card-body">
                         <h5 class="card-title"><strong>Regularidade</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons[0].pad.regular.length > 0){ %>
+                        <% if(bolCons.pad.regular.length > 0){ %>
                             <h5 class="my-1 ml-1">Status</h5><h6 class="my-1 ml-1"><%=pad.regular[0].sit%></h6>
                              <h5 class="my-1 ml-1">Registrada por</h5><h6 class="my-1 ml-1"><%=pad.regular[0].user%></h6>
                              <h5 class="my-1 ml-1">Data do Registro</h5><h6 class="my-1 ml-1"><%=pad.regular[0].data%></h6>
@@ -269,7 +269,7 @@
                     <div class="card-body">
                         <h5 class="card-title"><strong>Situação do Processo</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons[0].pad.situacao > 0){ %>
+                        <% if(bolCons.pad.situacao > 0){ %>
                             <h5 class="my-1 ml-1">Situação</h5><h6 class="my-1 ml-1"><%=pad.situacao[0].tipo%></h6>
                              <h5 class="my-1 ml-1">Registrada por</h5><h6 class="my-1 ml-1"><%=pad.situacao[0].user%></h6>
                              <h5 class="my-1 ml-1">Data do Registro</h5><h6 class="my-1 ml-1"><%=pad.situacao[0].data%></h6>
@@ -294,7 +294,7 @@
 
     <div class="col-10 border border-dark rounded mt-3 mb-3 ml-2 px-5 py-2">
         <h3>Pagamentos</h3>
-        <h5 class="my-1 ml-1"><%=bolCons[0].nome%> <span class="ml-5">CPF: <%=bolCons[0].cpf%></span> </h5>
+        <h5 class="my-1 ml-1"><%=bolCons.nome%> <span class="ml-5">CPF: <%=bolCons.cpf%></span> </h5>
         <table class="table table-sm table-bordered table-striped table-dark table-hover">
             <thead class="thead-light">
                 <tr>
@@ -309,17 +309,16 @@
                 </tr>
             </thead>
             <tbody>
-                <% let pags = bolCons[0].pags %>
-                <% pags.forEach((pag) => { %>
+                <% bolCons.pags.forEach((pag) => { %>
                     <tr>
                     <td><%=pag.programa.nome%></td>
-                    <td>IMPA</td>
-                    <td><%=pag.dataRef%></td>
-                    <td><%=pag.dataPag%></td>
+                    <td><%=pag.programa.coordNacional[0].ies.sigla%></td>
+                    <td><%=pag.dataRef.getMonth()+1%>/<%=pag.dataRef.getFullYear()%></td>
+                    <td><%=pag.dataPag.getMonth()+1%>/<%=pag.dataPag.getFullYear()%></td>
                     <td><%=pag.turma%></td>
                     <td><%=pag.iesLocal.sigla%></td>
                     <td><%=pag.modalidade%></td>
-                    <td><%=pag.valor%></td>
+                    <td>R$<%=pag.valor%>,00</td>
                 </tr>
                 <% }); %>
             </tbody>
