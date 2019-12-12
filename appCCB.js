@@ -52,7 +52,6 @@ app.post('/consultabolsista', async (req, res) => {
 				if(err){
 					console.log(`Bolsista ${input[1]} not found! ${err}`)
 				} else {
-					console.log(foundBol.pags[0].programa.coordNacional.ies);
 					res.render('showBolsista', {bolCons:foundBol});
 				}
 			});
@@ -70,6 +69,7 @@ app.post('/consultabolsista', async (req, res) => {
 				if(err){
 					console.log(`Error tryng to find ${input[1]}, ${err}`)
 				} else {
+					console.log(foundBol._id)
 					res.render('showBolsista', {bolCons:foundBol});
 				}
 			});
@@ -105,48 +105,12 @@ app.post('/consultabolsista', async (req, res) => {
 					}
 				}
 			});
-		} else{
+		} else {
 			res.render('landing');
 			alert(input[0]);
 		}
 	} catch(error){
 		console.log(`Error trying to find ${input[1]}, ${error} by catch`)
-	}
-});
-
-	//SHOW ROUTE
-app.get('/bolsista/:id', async (req, res) => {
-	//find bolsista with provided ID
-	try{
-		await Bolsista.findById(req.params.id, (err,foundBol) => {
-			if(err){
-				console.log('Error retrieving data', err);
-			} else{
-				console.log(`${foundBol} has just been retrieved`);
-				res.render('showBolsista', {outBolsista:foundBol});
-				console.log('data sent to template');
-			}
-		});
-	} catch(error) {
-		console.log('Error retrieving data', error);
-	}
-});
-
-//EDIT ROUTE
-app.get('/bolsista/:id/edit', async (req, res) => {
-	//retrieve bolsista with provided ID
-	try{
-		await Bolsista.findById(req.params.id, (err, foundBol) => {
-			if(err){
-				console.log('Error retrieving edit data', error);		
-			} else {
-				console.log(`${foundBol} has just been retrieved for edit`);
-				res.render('infoEdit', {outBolsista:foundBol});
-				console.log('data sent to edit template');
-			}
-		})
-	} catch(error){
-		console.log('Error retrieving edit data', error);
 	}
 });
 
