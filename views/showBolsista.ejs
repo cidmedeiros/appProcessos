@@ -93,7 +93,7 @@
         
         <div class="row">
             <div class="col-5"></div>
-            <button class="btn btn-md btn-primary col-1" data-toggle="modal" data-targe="#editDadosPessoais">Editar</button>
+            <button class="btn btn-md btn-primary col-1" data-toggle="modal" data-target="#modalDadosPessoais">Editar</button>
             <div class="col-2"></div>
             <%let colaborador = bolCons.clbr[((bolCons.clbr).length-1)].nome%>
             <%let Adata = bolCons.clbr[((bolCons.clbr).length-1)].data%> 
@@ -201,7 +201,7 @@
 
         <div class="row">
             <div class="col-5"></div>
-            <button class="btn btn-md btn-primary col-1" data-toggle="modal" data-targe="#editDadosPessoais">Editar</button>
+            <button class="btn btn-md btn-primary col-1" data-toggle="modal" data-targe="#modalAnaliseCompromisso">Editar</button>
             <div class="col-2"></div>
             <div class="col-4"></div>
         </div>
@@ -297,7 +297,7 @@
 
         <div class="row">
             <div class="col-5"></div>
-            <button class="btn btn-md btn-primary col-1" data-toggle="modal" data-targe="#editDadosPessoais">Editar</button>
+            <button class="btn btn-md btn-primary col-1" data-toggle="modal" data-targe="#modalProcessoAdministrativo">Editar</button>
             <div class="col-2"></div>
             <div class="col-4"></div>
         </div>
@@ -337,6 +337,7 @@
                         <th scope="col">Entidade Local</th>
                         <th scope="col">Modalidade</th>
                         <th scope="col">Valor</th>
+                        <th scope="col">Sistema</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -351,6 +352,7 @@
                         <td><%=pag.modalidade%></td>
                         <% let valueB = pag.valor.toLocaleString().replace(',','.')%>
                         <td>R$<%=valueB%>,00</td>
+                        <td><%=pag.sistema%></td>
                     </tr>
                     <% }); %>
                     <tr>
@@ -359,7 +361,7 @@
                         <td class="table-active" colspan="2"></td>
                         <td class="bg-primary" colspan="2">VALOR TOTAL RECEBIDO</td>
                         <% let valueT = bolCons.valorBolsas.toLocaleString().replace(',','.')%>
-                        <td class="bg-primary"><strong>R$<%=valueT%>,00</strong></td>
+                        <td class="bg-primary" colspan="2"><strong>R$<%=valueT%>,00</strong></td>
                     </tr>
                 </tbody>
             </table>
@@ -368,5 +370,127 @@
 
     <div class="col-1">
     </div>
+
+    <!-- MODALS -->
+
+    <div class="modal fade bd-modalDadosPessoais-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalDadosPessoais" aria-hidden="true" id="modalDadosPessoais">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Dados Pessoais</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body border border-rounded border-info mx-1">
+                    <div class="container-fluid">
+                        <form action='/bolsista/id' method="POST">
+                            <div class="row">
+
+                                <div class="card col-4 border border-rounded-bottom my-1 py-.25 pl-.5">
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" placeholder="nome@examplo.com">
+                                        <label for="sexo">Sexo</label>
+                                        <select class="form-control" name="sexo" id="sexo">
+                                            <option>Selecione</option>
+                                            <option>Feminino</option>
+                                            <option>Masculino</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-1"></div>
+
+                                <div class="card col-7 border border-rounded-bottom my-1 py-.25 pl-.5">
+                                    <h5>Documento Com Foto</h5>
+                                    <div class="form-group">
+                                        <label for="tipoDocFoto">Documento</label>
+                                        <select class="form-control" name="tipoDocFoto" id="tipoDocFoto">
+                                            <option>Selecione</option>
+                                            <option>Identidade</option>
+                                            <option>Carteira de Motorista</option>
+                                        </select>
+                                        <label for="regDocFoto">Regularidade do Documento</label>
+                                        <select class="form-control" name="regDocFoto" id="regDocFoto">
+                                            <option>Selecione</option>
+                                            <option>Regular</option>
+                                            <option>Irregular</option>
+                                        </select>
+                                        <label for="motivDocFoto">Observação</label>
+                                        <select class="form-control" name="motivDocFoto" id="motivDocFoto">
+                                            <option>Selecione</option>
+                                            <option>Sem Observações</option>
+                                            <option>Ilegível</option>
+                                            <option>Ausente</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="card col border border-rounded-bottom my-1 py-.25 pl-.5">
+                                    <h5>Comprovante de Residência</h5>
+                                    <div class="form-group">
+                                        <label for="tipoDocFoto">Documento</label>
+                                        <select class="form-control" name="tipoDocFoto" id="tipoDocFoto">
+                                            <option>Selecione</option>
+                                            <option>Identidade</option>
+                                            <option>Carteira de Motorista</option>
+                                        </select>
+                                        <label for="regDocFoto">Regularidade do Documento</label>
+                                        <select class="form-control" name="regDocFoto" id="regDocFoto">
+                                            <option>Selecione</option>
+                                            <option>Regular</option>
+                                            <option>Irregular</option>
+                                        </select>
+                                        <label for="motivDocFoto">Observação</label>
+                                        <select class="form-control" name="motivDocFoto" id="motivDocFoto">
+                                            <option>Selecione</option>
+                                            <option>Sem Observações</option>
+                                            <option>Ilegível</option>
+                                            <option>Ausente</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="card col border border-rounded-bottom my-1 py-.25 pl-.5">
+                                    <h5>Termo de Compromisso do Bolsista</h5>
+                                    <div class="form-group">
+                                        <label for="tipoDocFoto">Documento</label>
+                                        <select class="form-control" name="tipoDocFoto" id="tipoDocFoto">
+                                            <option>Selecione</option>
+                                            <option>Identidade</option>
+                                            <option>Carteira de Motorista</option>
+                                        </select>
+                                        <label for="regDocFoto">Regularidade do Documento</label>
+                                        <select class="form-control" name="regDocFoto" id="regDocFoto">
+                                            <option>Selecione</option>
+                                            <option>Regular</option>
+                                            <option>Irregular</option>
+                                        </select>
+                                        <label for="motivDocFoto">Observação</label>
+                                        <select class="form-control" name="motivDocFoto" id="motivDocFoto">
+                                            <option>Selecione</option>
+                                            <option>Sem Observações</option>
+                                            <option>Ilegível</option>
+                                            <option>Ausente</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <% include partials/footer %>
