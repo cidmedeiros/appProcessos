@@ -293,42 +293,60 @@
     </div>
 
     <div class="col-10 border border-dark rounded mt-3 mb-3 ml-2 px-5 py-2">
-        <h3>Pagamentos</h3>
-        <h5 class="my-1 ml-1"><%=bolCons.nome%> <span class="ml-5">CPF: <%=bolCons.cpf%></span> </h5>
-        <table class="table table-sm table-bordered table-striped table-dark table-hover">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Programa</th>
-                    <th scope="col">Entidade Nacional</th>
-                    <th scope="col">Referência</th>
-                    <th scope="col">Data de Pagamento</th>
-                    <th scope="col">Turma</th>
-                    <th scope="col">Entidade Local</th>
-                    <th scope="col">Modalidade</th>
-                    <th scope="col">Valor</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% bolCons.pags.forEach((pag) => { %>
+        <div class="row">
+            <div class="col-4"></div>
+
+            <button class="col-4 btn btn-md btn-primary btn-pags collapsed" type="submit" data-toggle="collapse" data-target="#collapsePags" aria-expanded="false" aria-controls="collapsePags">
+                <span><strong>Expandir Pagamentos</strong></span><b>Minimalizar Pagamentos</b>
+            </button>
+
+            <div class="col-4"></div>
+        </div>
+        <div class="collapse" id="collapsePags">
+        
+            <h3>Pagamentos</h3>
+            <h5 class="my-1 ml-1"><%=bolCons.nome%> <span class="ml-5">CPF: <%=bolCons.cpf%></span> </h5>
+            <table class="table table-sm table-bordered table-striped table-dark table-hover" style="height: 100px;">
+                <thead class="thead-light">
                     <tr>
-                    <td><%=pag.programa.nome%></td>
-                    <td><%=pag.programa.coordNacional[0].ies.sigla%></td>
-                    <td><%=pag.dataRef.getMonth()+1%>/<%=pag.dataRef.getFullYear()%></td>
-                    <td><%=pag.dataPag.getMonth()+1%>/<%=pag.dataPag.getFullYear()%></td>
-                    <td><%=pag.turma%></td>
-                    <td><%=pag.iesLocal.sigla%></td>
-                    <td><%=pag.modalidade%></td>
-                    <td>R$<%=pag.valor%>,00</td>
-                </tr>
-                <% }); %>
-            </tbody>
-        </table>
+                        <th scope="col">Programa</th>
+                        <th scope="col">Entidade Nacional</th>
+                        <th scope="col">Referência</th>
+                        <th scope="col">Data de Pagamento</th>
+                        <th scope="col">Turma</th>
+                        <th scope="col">Entidade Local</th>
+                        <th scope="col">Modalidade</th>
+                        <th scope="col">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% bolCons.pags.forEach((pag) => { %>
+                        <tr>
+                        <td><%=pag.programa.nome%></td>
+                        <td><%=pag.programa.coordNacional[0].ies.sigla%></td>
+                        <td><%=pag.dataRef.getMonth()+1%>/<%=pag.dataRef.getFullYear()%></td>
+                        <td><%=pag.dataPag.getMonth()+1%>/<%=pag.dataPag.getFullYear()%></td>
+                        <td><%=pag.turma%></td>
+                        <td><%=pag.iesLocal.sigla%></td>
+                        <td><%=pag.modalidade%></td>
+                        <% let valueB = pag.valor.toLocaleString().replace(',','.')%>
+                        <td>R$<%=valueB%>,00</td>
+                    </tr>
+                    <% }); %>
+                    <tr>
+                        <td class="bg-danger" colspan="2">QUANTITATIVO DE BOLSAS</td>
+                        <td class="bg-danger"><strong><%=bolCons.pags.length%></strong></td>
+                        <td class="table-active" colspan="2"></td>
+                        <td class="bg-danger" colspan="2">VALOR TOTAL RECEBIDO</td>
+                        <% let valueT = bolCons.valorBolsas.toLocaleString().replace(',','.')%>
+                        <td class="bg-danger"><strong>R$<%=valueT%>,00</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="col-1">
     </div>
 </div>
-
-
-
 <% include partials/footer %>
