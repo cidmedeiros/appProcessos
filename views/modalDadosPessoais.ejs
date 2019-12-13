@@ -21,6 +21,9 @@
                                     <label for="email">Email</label>
                                     <% if(bolCons.email.length > 0){ %>
                                         <input type="email" class="form-control" id="email" placeholder="nome@examplo.com" value=`<%=bolCons.email%>`>
+                                    <% } else{ %>
+                                        <input type="email" class="form-control" id="email" placeholder="nome@examplo.com">
+                                    <% } %>
                                     <label for="sexo">Sexo</label>
                                     <select class="form-control" name="sexo" id="sexo">
                                         <option>Selecione</option>
