@@ -46,7 +46,7 @@
                         <h5 class="card-title"><strong>Documento Com Foto</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                         <% if(bolCons.docFoto.length > 0){ %>
-                            <% let docuFoto = bolCons.docFoto[((bolCons.docFoto).length-1)]%> { %>
+                            <% let docuFoto = bolCons.docFoto[((bolCons.docFoto).length-1)]%>
                             <h5 class="my-1 ml-1">Descrição</h5><h6 class="my-1 ml-1"><%=docuFoto.doc%></h6>
                             <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=docuFoto.motivo[0].tipo%></h6>
                             <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%=docuFoto.motivo[0].data%></h6>
@@ -57,11 +57,10 @@
                             <h5 class="my-1 ml-1">Pendente de análise</h5>
                         <% } %>
                         </div>
-
                         <h5 class="card-title"><strong>Comprovante de Residência</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                         <% if(bolCons.termo.length > 0){ %>
-                            <% let docuRes = bolCons.docRes[((bolCons.docRes).length-1)]%> { %>
+                            <% let docuRes = bolCons.docRes[((bolCons.docRes).length-1)]%>
                             <h5 class="my-1 ml-1">Descrição</h5><h6 class="my-1 ml-1"><%=docuRes.doc%></h6>
                             <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=docuRes.motivo[0].tipo%></h6>
                             <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%=docuRes.motivo[0].data%></h6>
@@ -72,11 +71,10 @@
                             <h5 class="my-1 ml-1">Pendente de análise</h5>
                         <% } %>
                         </div>
-
                         <h5 class="card-title"><strong>Termo de Compromisso do Bolsista</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                         <% if(bolCons.termo.length > 0){ %>
-                            <% let docuTermo = bolCons.termo[((bolCons.termo).length-1)]%> { %>
+                            <% let docuTermo = bolCons.termo[((bolCons.termo).length-1)]%>
                             <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=docuTermo.motivo[0].tipo%></h6>
                             <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=docuTermo.motivo[0].data%></h6>
                             <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=docuTermo.regular[0].sit%></h6>
@@ -99,27 +97,23 @@
             <%let Adata = bolCons.clbr[((bolCons.clbr).length-1)].data%> 
             <footer class="col-4">Bolsista atribuído(a) para <%=colaborador%> em: <%=Adata.getDate()%>/<%=Adata.getMonth()+1%>/<%=Adata.getFullYear()%></footer>
         </div>
-
     </div>
     <div class="col-1">
     </div>
 </div>
-
 <div class="row mb-3 analiseCompromisso">
     <div class="col-1">
     </div>
     <div class="col-10 border border-dark rounded mt-3 mb-3 ml-2 px-5 py-2">
         <h4>Análise do Compromisso</h4>
-
         <div class="row border border-warning my-3 py-3 px-3">
-
             <div class="col">
                 <div class="card my-1 py-.25 pl-.5">
                     <div class="card-body">
                         <h5 class="card-title"><strong>Situação do Curso</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                         <% if(bolCons.statusCurso.length > 0){ %>
-                            <% let curso = bolCons.statusCurso[((bolCons.statusCurso).length-1)]%> { %>
+                            <% let curso = bolCons.statusCurso[((bolCons.statusCurso).length-1)]%>
                             <h5 class="my-1 ml-1">Situação do Curso</h5><h6 class="my-1 ml-1"><%=curso.status.sit%></h6>
                             <h5 class="my-1 ml-1">Data da Informação</h5><h6 class="my-1 ml-1"><%=curso.status.data%></h6>
                             <footer class="mx-auto">Informações por <%=curso.user%></footer>
@@ -130,14 +124,13 @@
                     </div>
                 </div>
             </div>
-
             <div class="col">
                 <div class="card my-1 py-.25 pl-.5">
                     <div class="card-body">
                         <h5 class="card-title"><strong>Certificado de Conclusão</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                         <% if(bolCons.certConclusao.length > 0){ %>
-                            <% let certificado = bolCons.certConclusao[((bolCons.certConclusao).length-1)]%> { %>
+                            <% let certificado = bolCons.certConclusao[((bolCons.certConclusao).length-1)]%>
                             <h5 class="my-1 ml-1">Instituição de Ensino</h5><h6 class="my-1 ml-1"><%=certificado.ies%></h6>
                             <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=certificado.motivo[0].tipo%></h6>
                             <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=certificado.motivo[0].data%></h6>
@@ -152,16 +145,14 @@
                 </div>
             </div>
         </div>
-
         <div class="row border border-warning my-3 py-3 px-3">
-
             <div class="col">
                 <div class="card my-1 py-.25 pl-.5">
                     <div class="card-body">
                         <h5 class="card-title"><strong>Declaração de Permanência</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                         <% if(bolCons.declaracao.length > 0){ %>
-                            <% let declaracao = bolCons.declaracao[((bolCons.declaracao).length-1)]%> { %>
+                            <% let declaracao = bolCons.declaracao[((bolCons.declaracao).length-1)]%>
                             <h5 class="my-1 ml-1">Município da Escola</h5><h6 class="my-1 ml-1"><%=declaracao.escola.municipio%></h6>
                             <h5 class="my-1 ml-1">Permanência</h5><h6 class="my-1 ml-1"><%=declaracao.permanencia%></h6>
                             <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=declaracao.motivo[0].tipo%></h6>
@@ -176,14 +167,13 @@
                     </div>
                 </div>
             </div>
-
             <div class="col">
                 <div class="card my-1 py-.25 pl-.5">
                     <div class="card-body">
                         <h5 class="card-title"><strong>Resultado da Análise</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                         <% if(bolCons.analiseCompromisso.regular.length > 0){ %>
-                            <% let compromisso = bolCons.analiseCompromisso %> { %>
+                            <% let compromisso = bolCons.analiseCompromisso %>
                             <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=compromisso.motivo[0].tipo%></h6>
                             <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=compromisso.motivo[0].data%></h6>
                             <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=compromisso.regular[0].sit%></h6>
@@ -196,29 +186,23 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
         <div class="row">
             <div class="col-5"></div>
             <button class="btn btn-md btn-primary col-1" data-toggle="modal" data-targe="#modalAnaliseCompromisso">Editar</button>
             <div class="col-2"></div>
             <div class="col-4"></div>
         </div>
-
     </div>
     <div class="col-1">
     </div>
 </div>
-
 <div class="row mb-3 processoAdministrativo">
     <div class="col-1">
     </div>
     <div class="col-10 border border-dark rounded mt-3 mb-3 ml-2 px-5 py-2">
         <h4>Processo Administrativo</h4>
-
         <div class="row border border-warning my-3 py-3 px-3">
-
             <div class="col">
                 <div class="card my-1 py-.25 pl-.5">
                     <div class="card-body">
@@ -238,7 +222,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col">
                 <div class="card my-1 py-.25 pl-.5">
                     <div class="card-body">
@@ -256,9 +239,7 @@
                 </div>
             </div>
         </div>
-
         <div class="row border border-warning my-3 py-3 px-3">
-
             <div class="col">
                 <div class="card my-1 py-.25 pl-.5">
                     <div class="card-body">
@@ -275,7 +256,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col">
                 <div class="card my-1 py-.25 pl-.5">
                     <div class="card-body">
@@ -292,34 +272,26 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
         <div class="row">
             <div class="col-5"></div>
             <button class="btn btn-md btn-primary col-1" data-toggle="modal" data-targe="#modalProcessoAdministrativo">Editar</button>
             <div class="col-2"></div>
             <div class="col-4"></div>
         </div>
-
     </div>
-
     <div class="col-1">
     </div>
 </div>
-
 <div class="row mb-3 pagamentos">
     <div class="col-1">
     </div>
-
     <div class="col-10 border border-dark rounded mt-3 mb-3 ml-2 px-5 py-2">
         <div class="row">
             <div class="col-4"></div>
-
             <button class="col-4 btn btn-md btn-secondary btn-pags collapsed" type="submit" data-toggle="collapse" data-target="#collapsePags" aria-expanded="false" aria-controls="collapsePags">
                 <span><strong>Expandir Pagamentos</strong></span><b>Minimalizar Pagamentos</b>
             </button>
-
             <div class="col-4"></div>
         </div>
         <div class="collapse" id="collapsePags">
@@ -367,130 +339,12 @@
             </table>
         </div>
     </div>
-
     <div class="col-1">
     </div>
 
     <!-- MODALS -->
 
-    <div class="modal fade bd-modalDadosPessoais-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalDadosPessoais" aria-hidden="true" id="modalDadosPessoais">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Editar Dados Pessoais</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body border border-rounded border-info mx-1">
-                    <div class="container-fluid">
-                        <form action='/bolsista/id' method="POST">
-                            <div class="row">
-
-                                <div class="card col-4 border border-rounded-bottom my-1 py-.25 pl-.5">
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input type="email" class="form-control" id="email" placeholder="nome@examplo.com">
-                                        <label for="sexo">Sexo</label>
-                                        <select class="form-control" name="sexo" id="sexo">
-                                            <option>Selecione</option>
-                                            <option>Feminino</option>
-                                            <option>Masculino</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-1"></div>
-
-                                <div class="card col-7 border border-rounded-bottom my-1 py-.25 pl-.5">
-                                    <h5>Documento Com Foto</h5>
-                                    <div class="form-group">
-                                        <label for="tipoDocFoto">Documento</label>
-                                        <select class="form-control" name="tipoDocFoto" id="tipoDocFoto">
-                                            <option>Selecione</option>
-                                            <option>Identidade</option>
-                                            <option>Carteira de Motorista</option>
-                                        </select>
-                                        <label for="regDocFoto">Regularidade do Documento</label>
-                                        <select class="form-control" name="regDocFoto" id="regDocFoto">
-                                            <option>Selecione</option>
-                                            <option>Regular</option>
-                                            <option>Irregular</option>
-                                        </select>
-                                        <label for="motivDocFoto">Observação</label>
-                                        <select class="form-control" name="motivDocFoto" id="motivDocFoto">
-                                            <option>Selecione</option>
-                                            <option>Sem Observações</option>
-                                            <option>Ilegível</option>
-                                            <option>Ausente</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="row">
-
-                                <div class="card col border border-rounded-bottom my-1 py-.25 pl-.5">
-                                    <h5>Comprovante de Residência</h5>
-                                    <div class="form-group">
-                                        <label for="tipoDocFoto">Documento</label>
-                                        <select class="form-control" name="tipoDocFoto" id="tipoDocFoto">
-                                            <option>Selecione</option>
-                                            <option>Identidade</option>
-                                            <option>Carteira de Motorista</option>
-                                        </select>
-                                        <label for="regDocFoto">Regularidade do Documento</label>
-                                        <select class="form-control" name="regDocFoto" id="regDocFoto">
-                                            <option>Selecione</option>
-                                            <option>Regular</option>
-                                            <option>Irregular</option>
-                                        </select>
-                                        <label for="motivDocFoto">Observação</label>
-                                        <select class="form-control" name="motivDocFoto" id="motivDocFoto">
-                                            <option>Selecione</option>
-                                            <option>Sem Observações</option>
-                                            <option>Ilegível</option>
-                                            <option>Ausente</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="card col border border-rounded-bottom my-1 py-.25 pl-.5">
-                                    <h5>Termo de Compromisso do Bolsista</h5>
-                                    <div class="form-group">
-                                        <label for="tipoDocFoto">Documento</label>
-                                        <select class="form-control" name="tipoDocFoto" id="tipoDocFoto">
-                                            <option>Selecione</option>
-                                            <option>Identidade</option>
-                                            <option>Carteira de Motorista</option>
-                                        </select>
-                                        <label for="regDocFoto">Regularidade do Documento</label>
-                                        <select class="form-control" name="regDocFoto" id="regDocFoto">
-                                            <option>Selecione</option>
-                                            <option>Regular</option>
-                                            <option>Irregular</option>
-                                        </select>
-                                        <label for="motivDocFoto">Observação</label>
-                                        <select class="form-control" name="motivDocFoto" id="motivDocFoto">
-                                            <option>Selecione</option>
-                                            <option>Sem Observações</option>
-                                            <option>Ilegível</option>
-                                            <option>Ausente</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Salvar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <% include modalDadosPessoais %>
 
 </div>
 <% include partials/footer %>
