@@ -1,0 +1,123 @@
+<div class="modal fade bd-modalDadosPessoais-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalDadosPessoais" aria-hidden="true" id="modalDadosPessoais">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 class="modal-title">Editar Dados Pessoais</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body border border-rounded border-info mx-1 my-1">
+                <div class="container-fluid">
+                    <form action='/bolsista/id' method="POST">
+
+                        <div class="row mb-2">
+                            <div class="col-1"></div>
+
+                            <div class="card col border border-rounded-bottom mr-1 py-.25 pl-.5">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <% if(bolCons.email.length > 0){ %>
+                                        <input type="email" class="form-control" id="email" placeholder="nome@examplo.com" value=`<%=bolCons.email%>`>
+                                    <label for="sexo">Sexo</label>
+                                    <select class="form-control" name="sexo" id="sexo">
+                                        <option>Selecione</option>
+                                        <option>Feminino</option>
+                                        <option>Masculino</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-1"></div>
+                        </div>
+
+                        <div class="row mb-2">
+
+                            <div class="card col border border-rounded-bottom ml-1 py-.25 pl-.5">
+                                <h5>Documento Com Foto</h5>
+                                <div class="form-group">
+                                    <label for="tipoDocFoto">Documento</label>
+                                    <select class="form-control" name="tipoDocFoto" id="tipoDocFoto">
+                                        <option>Selecione</option>
+                                        <option>Identidade</option>
+                                        <option>Carteira de Motorista</option>
+                                    </select>
+                                    <label for="regDocFoto">Regularidade do Documento</label>
+                                    <select class="form-control" name="regDocFoto" id="regDocFoto">
+                                        <option>Selecione</option>
+                                        <option>Regular</option>
+                                        <option>Irregular</option>
+                                    </select>
+                                    <label for="motivDocFoto">Observação</label>
+                                    <select class="form-control" name="motivDocFoto" id="motivDocFoto">
+                                        <option>Selecione</option>
+                                        <option>Sem Observações</option>
+                                        <option>Ilegível</option>
+                                        <option>Ausente</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-2">
+
+                            <div class="card col border border-rounded-bottom my-1 py-.25 pl-.5">
+                                <h5>Comprovante de Residência</h5>
+                                <div class="form-group">
+                                    <label for="tipoDocFoto">Documento</label>
+                                    <select class="form-control" name="tipoDocFoto" id="tipoDocFoto">
+                                        <option>Selecione</option>
+                                        <option>Identidade</option>
+                                        <option>Carteira de Motorista</option>
+                                    </select>
+                                    <label for="regDocFoto">Regularidade do Documento</label>
+                                    <select class="form-control" name="regDocFoto" id="regDocFoto">
+                                        <option>Selecione</option>
+                                        <option>Regular</option>
+                                        <option>Irregular</option>
+                                    </select>
+                                    <label for="motivDocFoto">Observação</label>
+                                    <select class="form-control" name="motivDocFoto" id="motivDocFoto">
+                                        <option>Selecione</option>
+                                        <option>Sem Observações</option>
+                                        <option>Ilegível</option>
+                                        <option>Ausente</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="card col border border-rounded-bottom my-1 py-.25 pl-.5">
+                                <h5>Termo de Compromisso do Bolsista</h5>
+                                <div class="form-group">
+                                    <label for="regDocFoto">Regularidade do Documento</label>
+                                    <select class="form-control" name="regDocFoto" id="regDocFoto">
+                                        <option>Selecione</option>
+                                        <option>Regular</option>
+                                        <option>Irregular</option>
+                                    </select>
+                                    <label for="motivDocFoto">Observação</label>
+                                    <select class="form-control" name="motivDocFoto" id="motivDocFoto">
+                                        <option>Selecione</option>
+                                        <option>Sem Observações</option>
+                                        <option>Ilegível</option>
+                                        <option>Ausente</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
