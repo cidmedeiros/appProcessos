@@ -72,7 +72,8 @@ const addBol = async (sPath) => {
     refactored = [];
     try{
         for(bolsista of bolsData){
-            refactored.push(await preProcBol(bolsista))
+            refactored.push(await preProcBol(bolsista));
+            console.log('Saving Bolsistas...')
         }
     } catch(error){
         console.log(`Populating refactored failed: ${error}`)
@@ -89,5 +90,5 @@ const addBol = async (sPath) => {
     }
 }
 
+//cleanBols();
 addBol(sPath);
-
