@@ -7,7 +7,7 @@ Programa = require('./programa');
 const bolsistaSchema = new mongoose.Schema({
 	cpf: String,
 	nome: String,
-	nome_display: String,
+	nomeDisplay: String,
 	sei: String,
 	email: [{email:String, data:Date}],
 	sexo: String,
