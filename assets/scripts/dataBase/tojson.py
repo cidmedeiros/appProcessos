@@ -187,6 +187,7 @@ def preProcessBolsistas(minScore):
     bolsistas = pd.merge(bolsistas,sistema,left_on=['cpf','sei','nome'], right_on=['cpf','sei','nome'], how='outer')
     bolsistas['valorBolsas'] = [sum(x) for x in bolsistas.valor]
     bolsistas = bolsistas[bolsistas.valorBolsas > 0]
+    bolsistas['nomeDisplay'] = 'sem info'
     bolsistas['colaborador'] = np.where(bolsistas.index.isin(bolsistas.iloc[0:372].index), 'André Braga', 'A definir')
     bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[372:744].index), 'Gilson Oliveira', bolsistas.colaborador)
     bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[744:1116].index), 'Débora Costa', bolsistas.colaborador)
@@ -212,9 +213,19 @@ def bolsistasJson(minScore):
         clbr = [{'nome':row.colaborador, 'data':today}]
         values = {'cpf':row.cpf,
                   'nome':row.nome,
+                  'nomeDisplay':row.nomeDisplay,
                   'sei':row.sei,
+                  'email':[],
+                  'sexo':'sem info',
+                  'statusCurso':[],
                   'clbr':clbr,
-                  'valorBolsas':row.valorBolsas}
+                  'valorBolsas':row.valorBolsas,
+                  'valorDev': [],
+                  'docFoto':[],
+                  'docRes':[],
+                  'termo':[],
+                  'declaracao':[],
+                  'certConclusao':[]}
         for i in range(0, len(row.programa)):
             loopValues = {'programa':row.programa[i],
                           'iesLocal':row.iesLocalSigla[i],

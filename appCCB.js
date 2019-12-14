@@ -52,6 +52,7 @@ app.post('/consultabolsista', async (req, res) => {
 				if(err){
 					console.log(`Bolsista ${input[1]} not found! ${err}`)
 				} else {
+					console.log(foundBol)
 					res.render('showBolsista', {bolCons:foundBol});
 				}
 			});
