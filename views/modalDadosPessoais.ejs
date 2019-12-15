@@ -26,18 +26,15 @@
                                     <% } %>
                                     <label for="sexo">Sexo</label>
                                     <select class="form-control" name="sexo" id="sexo">
-                                    <!-- <% if(bolCons.sexo === ''){ %> -->
+                                    <% if(bolCons.sexo === 'sem info'){ %>
                                         <option>Selecione</option>
                                         <option>Feminino</option>
                                         <option>Masculino</option>
-                                    <!-- <% } else if(bolCons.sexo === 'Feminino') { %>
-                                        <option>Feminino</option>
+                                    <% } else if(bolCons.sexo === 'Feminino') { %>
                                         <option>Masculino</option>
-                                    <% } %> -->
-                                    <!-- <% } else { %>
-                                        <option>Masculino</option>
+                                    <% } else { %>
                                         <option>Feminino</option>
-                                    <% } %> -->
+                                    <% } %> 
                                     </select>
                                 </div>
                             </div>
@@ -52,9 +49,23 @@
                                 <div class="form-group">
                                     <label for="tipoDocFoto">Documento</label>
                                     <select class="form-control" name="tipoDocFoto" id="tipoDocFoto">
-                                        <option>Selecione</option>
-                                        <option>Identidade</option>
-                                        <option>Carteira de Motorista</option>
+                                    <% let docFotoList = ['Selecione','Identidade','Carteira de Motorista','Registro Profissional','Passaporte']; %>
+                                    <% let index = (bolCons.docFoto).length; %>
+                                    <% if(index === 0){ %>
+                                        <% docFotoList.forEach((doc) => { %>
+                                            <option><%= doc %></option>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <% let docuFoto = bolCons.docFoto[index]; %>
+                                        <% docFotoList.shift() %>;
+                                        <% docFotoList.forEach((doc) => { %>
+                                            <% if(doc === docuFoto){ %>
+                                                <option selected><%= doc %></option>
+                                            <% } else { %>
+                                                <option><%= doc %></option>
+                                            <% } %>
+                                        <% }); %>
+                                    <% } %>
                                     </select>
                                     <label for="regDocFoto">Regularidade do Documento</label>
                                     <select class="form-control" name="regDocFoto" id="regDocFoto">
