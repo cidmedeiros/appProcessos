@@ -46,39 +46,41 @@
                         <h5 class="card-title"><strong>Documento Com Foto</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                         <% if(bolCons.docFoto.length > 0){ %>
-                            <% let docuFoto = bolCons.docFoto[((bolCons.docFoto).length-1)]%>
-                            <h5 class="my-1 ml-1">Descrição</h5><h6 class="my-1 ml-1"><%=docuFoto.doc%></h6>
-                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=docuFoto.motivo[((docuFoto.motivo).length-1)].tipo%></h6>
-                            <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%=docuFoto.motivo[((docuFoto.motivo).length-1)].data%></h6>
-                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=docuFoto.regular[((docuFoto.regular).length-1)].sit%></h6>
-                            <h5 class="my-1 ml-1">Data Regularidade</h5><h6 class="my-1 ml-1"><%=docuFoto.regular[((docuFoto.regular).length-1)].data%></h6>
-                            <footer class="mx-auto">Informações por <%=docuFoto.user%></footer>
+                            <% let docuFoto = bolCons.docFoto[((bolCons.docFoto).length-1)] %>
+                            <h5 class="my-1 ml-1">Descrição</h5><h6 class="my-1 ml-1"><%= docuFoto.doc %></h6>
+                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%= docuFoto.motivo.tipo %></h6>
+                            <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%= docuFoto.motivo.data.toLocaleString() %></h6>
+                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%= docuFoto.regular.sit %></h6>
+                            <h5 class="my-1 ml-1">Data Regularidade</h5><h6 class="my-1 ml-1"><%= docuFoto.regular.data.toLocaleString() %></h6>
+                            <footer class="mx-auto">Informações por <%= docuFoto.user %></footer>
                         <% } else{ %>
                             <h5 class="my-1 ml-1">Pendente de análise</h5>
                         <% } %>
                         </div>
+
                         <h5 class="card-title"><strong>Comprovante de Residência</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons.termo.length > 0){ %>
+                        <% if(bolCons.docRes.length > 0){ %>
                             <% let docuRes = bolCons.docRes[((bolCons.docRes).length-1)]%>
                             <h5 class="my-1 ml-1">Descrição</h5><h6 class="my-1 ml-1"><%=docuRes.doc%></h6>
-                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=docuRes.motivo[((docuRes.motivo).length-1)].tipo%></h6>
-                            <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%=docuRes.motivo[((docuRes.motivo).length-1)].data%></h6>
-                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=docuRes.regular[((docuRes.regular).length-1)].sit%></h6>
-                            <h5 class="my-1 ml-1">Data Regularidade</h5><h6 class="my-1 ml-1"><%=docuRes.regular[((docuRes.regular).length-1)].data%></h6>
+                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=docuRes.motivo.tipo%></h6>
+                            <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%=docuRes.motivo.data.toLocaleString()%></h6>
+                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=docuRes.regular.sit%></h6>
+                            <h5 class="my-1 ml-1">Data Regularidade</h5><h6 class="my-1 ml-1"><%=docuRes.regular.data.toLocaleString()%></h6>
                             <footer class="mx-auto">Informações por <%=docuRes.user%></footer>
                         <% } else{ %>
                             <h5 class="my-1 ml-1">Pendente de análise</h5>
                         <% } %>
                         </div>
+
                         <h5 class="card-title"><strong>Termo de Compromisso do Bolsista</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                         <% if(bolCons.termo.length > 0){ %>
                             <% let docuTermo = bolCons.termo[((bolCons.termo).length-1)]%>
-                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=docuTermo.motivo[0].tipo%></h6>
-                            <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=docuTermo.motivo[0].data%></h6>
-                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=docuTermo.regular[0].sit%></h6>
-                            <h5 class="my-1 ml-1">Data da Regularidade</h5><h6 class="my-1 ml-1"><%=docuTermo.regular[0].data%></h6>
+                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=docuTermo.motivo.tipo%></h6>
+                            <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=docuTermo.motivo.data.toLocaleString()%></h6>
+                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=docuTermo.regular.sit%></h6>
+                            <h5 class="my-1 ml-1">Data da Regularidade</h5><h6 class="my-1 ml-1"><%=docuTermo.regular.data.toLocaleString()%></h6>
                             <footer class="mx-auto">Informações por <%=docuTermo.user%></footer>
                         <% } else{ %>
                             <h5 class="my-1 ml-1">Pendente de análise</h5>
@@ -115,7 +117,7 @@
                         <% if(bolCons.statusCurso.length > 0){ %>
                             <% let curso = bolCons.statusCurso[((bolCons.statusCurso).length-1)]%>
                             <h5 class="my-1 ml-1">Situação do Curso</h5><h6 class="my-1 ml-1"><%=curso.status.sit%></h6>
-                            <h5 class="my-1 ml-1">Data da Informação</h5><h6 class="my-1 ml-1"><%=curso.status.data%></h6>
+                            <h5 class="my-1 ml-1">Data da Informação</h5><h6 class="my-1 ml-1"><%=curso.status.dataSit%></h6>
                             <footer class="mx-auto">Informações por <%=curso.user%></footer>
                         <% } else{ %>
                             <h5 class="my-1 ml-1">Pendente de análise</h5>
@@ -124,6 +126,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col">
                 <div class="card my-1 py-.25 pl-.5">
                     <div class="card-body">
@@ -131,11 +134,11 @@
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                         <% if(bolCons.certConclusao.length > 0){ %>
                             <% let certificado = bolCons.certConclusao[((bolCons.certConclusao).length-1)]%>
-                            <h5 class="my-1 ml-1">Instituição de Ensino</h5><h6 class="my-1 ml-1"><%=certificado.ies%></h6>
-                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=certificado.motivo[0].tipo%></h6>
-                            <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=certificado.motivo[0].data%></h6>
-                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=certificado.regular[0].sit%></h6>
-                            <h5 class="my-1 ml-1">Data da Regularidade</h5><h6 class="my-1 ml-1"><%=certificado.regular[0].data%></h6>
+                            <h5 class="my-1 ml-1">Instituição de Ensino</h5><h6 class="my-1 ml-1"><%=certificado.ies.sigla%></h6>
+                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=certificado.motivo.tipo%></h6>
+                            <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=certificado.motivo.data.toLocaleString()%></h6>
+                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=certificado.regular.sit%></h6>
+                            <h5 class="my-1 ml-1">Data da Regularidade</h5><h6 class="my-1 ml-1"><%=certificado.regular.data.toLocaleString()%></h6>
                             <footer class="mx-auto">Informações por <%=certificado.user%></footer>
                         <% } else{ %>
                             <h5 class="my-1 ml-1">Pendente de análise</h5>
@@ -155,10 +158,10 @@
                             <% let declaracao = bolCons.declaracao[((bolCons.declaracao).length-1)]%>
                             <h5 class="my-1 ml-1">Município da Escola</h5><h6 class="my-1 ml-1"><%=declaracao.escola.municipio%></h6>
                             <h5 class="my-1 ml-1">Permanência</h5><h6 class="my-1 ml-1"><%=declaracao.permanencia%></h6>
-                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=declaracao.motivo[0].tipo%></h6>
-                            <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%=declaracao.motivo[0].data%></h6>
-                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=declaracao.regular[0].sit%></h6>
-                            <h5 class="my-1 ml-1">Data Regularidade</h5><h6 class="my-1 ml-1"><%=declaracao.regular[0].data%></h6>
+                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=declaracao.motivo.tipo%></h6>
+                            <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%=declaracao.motivo.data.toLocaleString()%></h6>
+                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=declaracao.regular.sit%></h6>
+                            <h5 class="my-1 ml-1">Data Regularidade</h5><h6 class="my-1 ml-1"><%=declaracao.regular.data.toLocaleString()%></h6>
                             <footer class="mx-auto">Informações por <%=declaracao.user%></footer>
                         <% } else{ %>
                             <h5 class="my-1 ml-1">Pendente de análise</h5>
@@ -172,12 +175,12 @@
                     <div class="card-body">
                         <h5 class="card-title"><strong>Resultado da Análise</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons.analiseCompromisso.regular.length > 0){ %>
+                        <% if(bolCons.analiseCompromisso.length > 0){ %>
                             <% let compromisso = bolCons.analiseCompromisso %>
-                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=compromisso.motivo[0].tipo%></h6>
-                            <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=compromisso.motivo[0].data%></h6>
-                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=compromisso.regular[0].sit%></h6>
-                            <h5 class="my-1 ml-1">Data da Regularidade</h5><h6 class="my-1 ml-1"><%=compromisso.regular[0].data%></h6>
+                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=compromisso.motivo.tipo%></h6>
+                            <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=compromisso.motivo.data.toLocaleString()%></h6>
+                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=compromisso.regular.sit%></h6>
+                            <h5 class="my-1 ml-1">Data da Regularidade</h5><h6 class="my-1 ml-1"><%=compromisso.regular.data.toLocaleString()%></h6>
                             <footer class="mx-auto">Informações por <%=compromisso.user%></footer>
                         <% } else{ %>
                             <h5 class="my-1 ml-1">Pendente de análise</h5>
@@ -208,13 +211,12 @@
                     <div class="card-body">
                         <h5 class="card-title"><strong>Acompanhamento do Processo</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons.pad.tramite.length > 0){ %>
-                            <% var pad = bolCons.pad %>
-                            <h5 class="my-1 ml-1">Trâmite</h5><h6 class="my-1 ml-1"><%=pad.trâmite[0].tipo%></h6>
-                             <h5 class="my-1 ml-1">Próximo Passo</h5><h6 class="my-1 ml-1"><%=pad.trâmite[0].acao%></h6>
-                             <h5 class="my-1 ml-1">Início do Trâmite</h5><h6 class="my-1 ml-1"><%=pad.trâmite[0].inicioTramite%></h6>
-                             <h5 class="my-1 ml-1">Prazo do Trâmite</h5><h6 class="my-1 ml-1"><%=pad.trâmite[0].fimTramite%></h6>
-                              <h5 class="my-1 ml-1">Informado por</h5><h6 class="my-1 ml-1"><%=pad.trâmite[0].user%></h6>
+                        <% if(bolCons.pad.length > 0){ %>
+                            <% let pad = bolCons.pad %>
+                            <h5 class="my-1 ml-1">Trâmite</h5><h6 class="my-1 ml-1"><%=pad.tramite.tipo%></h6>
+                             <h5 class="my-1 ml-1">Próximo Passo</h5><h6 class="my-1 ml-1"><%=pad.tramite.acao%></h6>
+                             <h5 class="my-1 ml-1">Início do Trâmite</h5><h6 class="my-1 ml-1"><%=pad.tramite.inicioTramite.toLocaleString()%></h6>
+                             <h5 class="my-1 ml-1">Prazo do Trâmite</h5><h6 class="my-1 ml-1"><%=pad.tramite.fimTramite.toLocaleString()%></h6>
                         <% } else{ %>
                             <h5 class="my-1 ml-1">Não há trâmites registrados</h5>
                         <% } %>
@@ -227,10 +229,9 @@
                     <div class="card-body">
                         <h5 class="card-title"><strong>Última Observação</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons.pad.obsv.length > 0){ %>
-                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=pad.obsv[0].obs%></h6>
-                             <h5 class="my-1 ml-1">Registrada por</h5><h6 class="my-1 ml-1"><%=pad.obsv[0].user%></h6>
-                             <h5 class="my-1 ml-1">Data do Registro</h5><h6 class="my-1 ml-1"><%=pad.obsv[0].data%></h6>
+                        <% if(bolCons.pad.length > 0){ %>
+                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=pad.obsv.obs%></h6>
+                             <h5 class="my-1 ml-1">Data do Registro</h5><h6 class="my-1 ml-1"><%=pad.obsv.toLocaleString()%></h6>
                         <% } else{ %>
                             <h5 class="my-1 ml-1">Sem observações</h5>
                         <% } %>
@@ -238,6 +239,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <div class="row border border-warning my-3 py-3 px-3">
             <div class="col">
@@ -245,10 +247,9 @@
                     <div class="card-body">
                         <h5 class="card-title"><strong>Regularidade</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons.pad.regular.length > 0){ %>
-                            <h5 class="my-1 ml-1">Status</h5><h6 class="my-1 ml-1"><%=pad.regular[0].sit%></h6>
-                             <h5 class="my-1 ml-1">Registrada por</h5><h6 class="my-1 ml-1"><%=pad.regular[0].user%></h6>
-                             <h5 class="my-1 ml-1">Data do Registro</h5><h6 class="my-1 ml-1"><%=pad.regular[0].data%></h6>
+                        <% if(bolCons.pad.length > 0){ %>
+                            <h5 class="my-1 ml-1">Status</h5><h6 class="my-1 ml-1"><%=pad.regular.sit%></h6>
+                             <h5 class="my-1 ml-1">Data do Registro</h5><h6 class="my-1 ml-1"><%=pad.regular.toLocaleString()%></h6>
                         <% } else{ %>
                             <h5 class="my-1 ml-1">Processo não iniciado</h5>
                         <% } %>
@@ -278,6 +279,9 @@
             <button class="btn btn-md btn-primary col-1" data-toggle="modal" data-targe="#modalProcessoAdministrativo">Editar</button>
             <div class="col-2"></div>
             <div class="col-4"></div>
+            <div class="col-5">
+                <h5 class="my-1 ml-1">Registrada por</h5><h6 class="my-1 ml-1"><%=pad.user%></h6>
+            </div>
         </div>
     </div>
     <div class="col-1">
