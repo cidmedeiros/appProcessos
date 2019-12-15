@@ -18,23 +18,23 @@ const bolsistaSchema = new mongoose.Schema({
 	docFoto: [
 		{
 			doc: String,
-			regular: [{sit:String, data: Date}],
-			motivo: [{tipo: String,	data: Date}],
+			regular: {sit:String, data: Date},
+			motivo: {tipo: String,	data: Date},
 			user: String
 		}
 	],
 	docRes: [
 		{
 			doc: String,
-			regular: [{sit:String, data: Date}],
-			motivo: [{tipo: String,	data: Date}],
+			regular: {sit:String, data: Date},
+			motivo: {tipo: String,	data: Date},
 			user: String
 		}
 	],
 	termo: [
 		{
-			regular: [{sit:String, data: Date}],
-			motivo: [{tipo: String,	data: Date}],
+			regular: {sit:String, data: Date},
+			motivo: {tipo: String,	data: Date},
 			user: String
 		}
 	],
@@ -47,8 +47,8 @@ const bolsistaSchema = new mongoose.Schema({
 				}
 			},
 			permanencia: Number,
-			regular: [{sit:String, data: Date}],
-			motivo: [{tipo: String, data: Date}],
+			regular: {sit:String, data: Date},
+			motivo: {tipo: String,	data: Date},
 			user: String
 		}
 	],
@@ -58,30 +58,23 @@ const bolsistaSchema = new mongoose.Schema({
 				type: mongoose.Schema.Types.ObjectId,
 				ref: 'Ies'
 			},
-			regular: [{sit:String, data: Date}],
-			motivo: [{tipo: String,	data: Date}],
+			regular: {sit:String, data: Date},
+			motivo: {tipo: String,	data: Date},
 			user: String
 		}
 	],
-	analiseCompromisso: {
-		regular: [{sit:String, data: Date, user: String}],
-		motivo: [{tipo:String, data:Date, user: String}],
+	analiseCompromisso: [{
+		regular: {sit:String, data: Date},
+		motivo: {tipo:String, data:Date},
 		user: String
-	},
-	pad: {
-		regular: [{sit:String, data: Date, user: String}],
-		obsv: [{obs: String, data: Date, user: String}],
-		tramite: [
-			{
-				tipo: String,
-				acao: String,
-				inicioTramite: Date,
-				fimTramite: Date,
-				user: String
-			}
-		],
-		situacao:[{tipo: String, data: Date, user: String}]
-	},
+	}],
+	pad: [{
+		regular: {sit:String, data: Date},
+		obsv: {obs: String, data: Date},
+		tramite: {tipo: String, acao: String, inicioTramite: Date, fimTramite: Date},
+		situacao: {tipo: String, data: Date},
+		user: String
+	}],
 	pags: [
 		{
 			dataRef: Date,
@@ -102,7 +95,7 @@ const bolsistaSchema = new mongoose.Schema({
 	]
 });
 
-bolsistaSchema.plugin(mongoose_fuzzy_searching, {fields: ['nome']});
+//bolsistaSchema.plugin(mongoose_fuzzy_searching, {fields: ['nome']});
 
 //the next statement uses the plural form of the string param to create (if needed) a collection on the DB.
 module.exports = mongoose.model('Bolsista', bolsistaSchema);
