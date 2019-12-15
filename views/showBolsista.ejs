@@ -94,10 +94,10 @@
         <div class="row">
             <div class="col-5"></div>
             <button class="btn btn-md btn-primary col-1" data-toggle="modal" data-target="#modalDadosPessoais">Editar</button>
-            <div class="col-2"></div>
+            <div class="col-1"></div>
             <%let colaborador = bolCons.clbr[((bolCons.clbr).length-1)].nome%>
             <%let Adata = bolCons.clbr[((bolCons.clbr).length-1)].data%> 
-            <footer class="col-4">Bolsista atribuído(a) para <%=colaborador%> em: <%=Adata.getDate()%>/<%=Adata.getMonth()+1%>/<%=Adata.getFullYear()%></footer>
+            <footer class="col-5">Bolsista atribuído(a) para <%=colaborador%> em: <%=Adata.getDate()%>/<%=Adata.getMonth()+1%>/<%=Adata.getFullYear()%></footer>
         </div>
     </div>
     <div class="col-1">
@@ -212,7 +212,7 @@
                         <h5 class="card-title"><strong>Acompanhamento do Processo</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                         <% if(bolCons.pad.length > 0){ %>
-                            <% let pad = bolCons.pad %>
+                            <% var pad = bolCons.pad %>
                             <h5 class="my-1 ml-1">Trâmite</h5><h6 class="my-1 ml-1"><%=pad.tramite.tipo%></h6>
                              <h5 class="my-1 ml-1">Próximo Passo</h5><h6 class="my-1 ml-1"><%=pad.tramite.acao%></h6>
                              <h5 class="my-1 ml-1">Início do Trâmite</h5><h6 class="my-1 ml-1"><%=pad.tramite.inicioTramite.toLocaleString()%></h6>
@@ -231,7 +231,7 @@
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                         <% if(bolCons.pad.length > 0){ %>
                             <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=pad.obsv.obs%></h6>
-                             <h5 class="my-1 ml-1">Data do Registro</h5><h6 class="my-1 ml-1"><%=pad.obsv.toLocaleString()%></h6>
+                             <h5 class="my-1 ml-1">Data do Registro</h5><h6 class="my-1 ml-1"><%=pad.obsv.data.toLocaleString()%></h6>
                         <% } else{ %>
                             <h5 class="my-1 ml-1">Sem observações</h5>
                         <% } %>
@@ -249,7 +249,7 @@
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                         <% if(bolCons.pad.length > 0){ %>
                             <h5 class="my-1 ml-1">Status</h5><h6 class="my-1 ml-1"><%=pad.regular.sit%></h6>
-                             <h5 class="my-1 ml-1">Data do Registro</h5><h6 class="my-1 ml-1"><%=pad.regular.toLocaleString()%></h6>
+                             <h5 class="my-1 ml-1">Data do Registro</h5><h6 class="my-1 ml-1"><%=pad.regular.data.toLocaleString()%></h6>
                         <% } else{ %>
                             <h5 class="my-1 ml-1">Processo não iniciado</h5>
                         <% } %>
@@ -263,9 +263,9 @@
                         <h5 class="card-title"><strong>Situação do Processo</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                         <% if(bolCons.pad.situacao > 0){ %>
-                            <h5 class="my-1 ml-1">Situação</h5><h6 class="my-1 ml-1"><%=pad.situacao[0].tipo%></h6>
-                             <h5 class="my-1 ml-1">Registrada por</h5><h6 class="my-1 ml-1"><%=pad.situacao[0].user%></h6>
-                             <h5 class="my-1 ml-1">Data do Registro</h5><h6 class="my-1 ml-1"><%=pad.situacao[0].data%></h6>
+                            <h5 class="my-1 ml-1">Situação</h5><h6 class="my-1 ml-1"><%=pad.situacao.tipo%></h6>
+                             <h5 class="my-1 ml-1">Registrada por</h5><h6 class="my-1 ml-1"><%=pad.situacao.user%></h6>
+                             <h5 class="my-1 ml-1">Data do Registro</h5><h6 class="my-1 ml-1"><%=pad.situacao.data%></h6>
                         <% } else{ %>
                             <h5 class="my-1 ml-1">Processo não iniciado</h5>
                         <% } %>
@@ -280,7 +280,7 @@
             <div class="col-2"></div>
             <div class="col-4"></div>
             <div class="col-5">
-                <h5 class="my-1 ml-1">Registrada por</h5><h6 class="my-1 ml-1"><%=pad.user%></h6>
+                <h5 class="my-1 ml-1">Registrada por</h5><h6 class="my-1 ml-1"><%=bolCons.pad.user%></h6>
             </div>
         </div>
     </div>
