@@ -20,7 +20,7 @@
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <% if(bolCons.email.length > 0){ %>
-                                        <input type="email" class="form-control" id="email" placeholder="nome@examplo.com" value=`<%=bolCons.email%>`>
+                                        <input type="email" class="form-control" id="email" placeholder="nome@examplo.com" value= <%= bolCons.email[(bolCons.email.length)-1].email %> >
                                     <% } else{ %>
                                         <input type="email" class="form-control" id="email" placeholder="nome@examplo.com">
                                     <% } %>
@@ -31,8 +31,10 @@
                                         <option>Feminino</option>
                                         <option>Masculino</option>
                                     <% } else if(bolCons.sexo === 'Feminino') { %>
+                                        <option selected>Feminino</option>
                                         <option>Masculino</option>
                                     <% } else { %>
+                                        <option selected>Masculino</option>
                                         <option>Feminino</option>
                                     <% } %> 
                                     </select>
@@ -49,8 +51,8 @@
                                 <div class="form-group">
                                     <label for="tipoDocFoto">Documento</label>
                                     <select class="form-control" name="tipoDocFoto" id="tipoDocFoto">
-                                    <% let docFotoList = ['Selecione','Identidade','Carteira de Motorista','Registro Profissional','Passaporte']; %>
-                                    <% let index = (bolCons.docFoto).length; %>
+                                    <%let docFotoList = ['Selecione','Identidade','Carteira de Motorista','Registro Profissional','Passaporte','Carteira de Trabalho'];%>
+                                    <% let index = (bolCons.docFoto.length)-1; %>
                                     <% if(index === 0){ %>
                                         <% docFotoList.forEach((doc) => { %>
                                             <option><%= doc %></option>
@@ -58,11 +60,11 @@
                                     <% } else { %>
                                         <% let docuFoto = bolCons.docFoto[index]; %>
                                         <% docFotoList.shift() %>;
-                                        <% docFotoList.forEach((doc) => { %>
-                                            <% if(doc === docuFoto){ %>
-                                                <option selected><%= doc %></option>
+                                        <% docFotoList.forEach((docList) => { %>
+                                            <% if(docList === docuFoto.doc){ %>
+                                                <option selected><%= docList %></option>
                                             <% } else { %>
-                                                <option><%= doc %></option>
+                                                <option><%= docList %></option>
                                             <% } %>
                                         <% }); %>
                                     <% } %>

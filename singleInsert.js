@@ -25,13 +25,27 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
 Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
+    {
+        '$push':{'email':{'email':'amora@tree.com', 'data': new Date()}},
+        'sexo': 'Masculino'
+    },
+    (err, upObejct) =>{
+        if(err){
+            console.log(err);
+        } else{
+            console.log(upObejct.email);
+            console.log('Updated!');
+        }
+});
+
+Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
     {'$push':
         {'docFoto':
             {
-                'doc':'Carteira de Trabalho',
-                'user':'Cid',
-                '$push': {'regular':{'sit':'Regular', 'data': new Date()}},
-                '$push': {'motivo':{'tipo':'Ausente', 'data': new Date()}}
+                'doc':'Identidade',
+                'user':'Deb',
+                'regular':{'sit':'Regular', 'data': new Date()},
+                'motivo':{'tipo':'Ausente', 'data': new Date()}
             }
         }
     },
@@ -39,7 +53,7 @@ Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
         if(err){
             console.log(err);
         } else{
-            console.log(upObejct.docFoto[(upObejct.docFoto.length)-1]);
+            console.log(upObejct.docFoto);
             console.log('Updated!');
         }
 });

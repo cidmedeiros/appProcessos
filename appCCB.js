@@ -52,7 +52,12 @@ app.post('/consultabolsista', async (req, res) => {
 				if(err){
 					console.log(`Bolsista ${input[1]} not found! ${err}`)
 				} else {
-					console.log(foundBol)
+					console.log(foundBol);
+					console.log('---------------------------------------------');
+					var see = foundBol.docFoto;
+					console.log(typeof see);
+					console.log('---------------------------------------------');
+					/* console.log(foundBol.docFoto[docFoto.length-1]) */
 					res.render('showBolsista', {bolCons:foundBol});
 				}
 			});
@@ -102,7 +107,6 @@ app.post('/consultabolsista', async (req, res) => {
 						}
 					} else {
 						res.render('showResultados', {bolCons:foundBol});
-						console.log(foundBol);
 					}
 				}
 			});
@@ -148,8 +152,6 @@ app.post('/', async (req, res) =>{
 		console.log('The data was not sent! Try Again.', error);
 	}
 });
-
-
 
 app.delete('/bolsista/:id', async (req, res) => {
 	try{
