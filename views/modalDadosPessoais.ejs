@@ -51,14 +51,14 @@
                                 <div class="form-group">
                                     <label for="tipoDocFoto">Documento</label>
                                     <select class="form-control" name="tipoDocFoto" id="tipoDocFoto">
-                                    <%let docFotoList = ['Selecione','Identidade','Carteira de Motorista','Registro Profissional','Passaporte','Carteira de Trabalho'];%>
-                                    <% let index = (bolCons.docFoto.length)-1; %>
-                                    <% if(index <= 0){ %>
+                                    <%var docFotoList = ['Selecione','Identidade','Carteira de Motorista','Registro Profissional','Passaporte','Carteira de Trabalho'];%>
+                                    <% var indexFoto = (bolCons.docFoto.length)-1; %>
+                                    <% if(indexFoto <= 0){ %>
                                         <% docFotoList.forEach((doc) => { %>
                                             <option><%= doc %></option>
                                         <% }); %>
                                     <% } else { %>
-                                        <% let docuFoto = bolCons.docFoto[index]; %>
+                                        <% var docuFoto = bolCons.docFoto[indexFoto]; %>
                                         <% docFotoList.shift() %>;
                                         <% docFotoList.forEach((docList) => { %>
                                             <% if(docList === docuFoto.doc){ %>
@@ -71,16 +71,35 @@
                                     </select>
                                     <label for="regDocFoto">Regularidade do Documento</label>
                                     <select class="form-control" name="regDocFoto" id="regDocFoto">
+                                    <% if(indexFoto <= 0){ %>
                                         <option>Selecione</option>
                                         <option>Regular</option>
                                         <option>Irregular</option>
+                                    <% } else if(docuFoto.regular === 'Regular') { %>
+                                        <option selected>Regular</option>
+                                        <option>Irregular</option>
+                                    <% } else { %>
+                                        <option selected>Irregular</option>
+                                        <option>Regular</option>
+                                    <% } %>
                                     </select>
-                                    <label for="motivDocFoto">Observação</label>
-                                    <select class="form-control" name="motivDocFoto" id="motivDocFoto">
-                                        <option>Selecione</option>
-                                        <option>Sem Observações</option>
-                                        <option>Ilegível</option>
-                                        <option>Ausente</option>
+                                    <label for="obsvDocFoto">Observação</label>
+                                    <select class="form-control" name="obsvDocFoto" id="obsvDocFoto">
+                                        <%var obsvFotoList = ['Selecione','Ausente','Cópia Ilegível','Sem Assinatura','Sem Observação','Sem Foto','Vencida'];%>
+                                        <% if(indexFoto <= 0){ %>
+                                            <% obsvFotoList.forEach((obsvList) => { %>
+                                                <option><%= obsvList %></option>
+                                            <% }); %>
+                                        <% } else { %>
+                                            <% obsvFotoList.shift() %>;
+                                            <% obsvFotoList.forEach((obsvList) => { %>
+                                                <% if(obsvList === docuFoto.obsv){ %>
+                                                    <option selected><%= obsvList %></option>
+                                                <% } else { %>
+                                                    <option><%= obsvList %></option>
+                                                <% } %>
+                                            <% }); %>
+                                        <% } %>
                                     </select>
                                 </div>
                             </div>
@@ -92,20 +111,42 @@
                             <div class="card col border border-rounded-bottom my-1 py-.25 pl-.5">
                                 <h5>Comprovante de Residência</h5>
                                 <div class="form-group">
-                                    <label for="tipoDocFoto">Documento</label>
-                                    <select class="form-control" name="tipoDocFoto" id="tipoDocFoto">
-                                        <option>Selecione</option>
-                                        <option>Identidade</option>
-                                        <option>Carteira de Motorista</option>
+                                    <label for="tipoDocRes">Documento</label>
+                                    <select class="form-control" name="tipoDocRes" id="tipoDocRes">
+                                        <%var docResList = ['Selecione','Conta de Água','Conta de Luz','Conta de Telefone','Correspondência Bancária','Correspondência Comercial'];%>
+                                        <% var indexRes = (bolCons.docRes.length)-1; %>
+                                        <% if(indexRes <= 0){ %>
+                                            <% docResList.forEach((doc) => { %>
+                                                <option><%= doc %></option>
+                                            <% }); %>
+                                        <% } else { %>
+                                            <% var docuRes = bolCons.docRes[indexRes]; %>
+                                            <% docResList.shift() %>;
+                                            <% docResList.forEach((docList) => { %>
+                                                <% if(docList === docuRes.doc){ %>
+                                                    <option selected><%= docList %></option>
+                                                <% } else { %>
+                                                    <option><%= docList %></option>
+                                                <% } %>
+                                            <% }); %>
+                                        <% } %>
                                     </select>
-                                    <label for="regDocFoto">Regularidade do Documento</label>
-                                    <select class="form-control" name="regDocFoto" id="regDocFoto">
+                                    <label for="regDocRes">Regularidade do Documento</label>
+                                    <select class="form-control" name="regDocRes" id="regDocRes">
+                                    <% if(indexRes <= 0){ %>
                                         <option>Selecione</option>
                                         <option>Regular</option>
                                         <option>Irregular</option>
+                                    <% } else if(docuRes.regular === 'Regular') { %>
+                                        <option selected>Regular</option>
+                                        <option>Irregular</option>
+                                    <% } else { %>
+                                        <option selected>Irregular</option>
+                                        <option>Regular</option>
+                                    <% } %>
                                     </select>
-                                    <label for="motivDocFoto">Observação</label>
-                                    <select class="form-control" name="motivDocFoto" id="motivDocFoto">
+                                    <label for="obsvDocRes">Observação</label>
+                                    <select class="form-control" name="obsvDocRes" id="obsvDocRes">
                                         <option>Selecione</option>
                                         <option>Sem Observações</option>
                                         <option>Ilegível</option>
