@@ -26,8 +26,7 @@ mongoose.set('useCreateIndex', true);
 
 Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
     {
-        '$push':{'email':{'email':'amora@tree.com', 'data': new Date()}},
-        'sexo': 'Masculino'
+        '$push':{'email':{'email':'cranbery@oister.com', 'data': new Date()}},
     },
     (err, upObejct) =>{
         if(err){
@@ -43,9 +42,10 @@ Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
         {'docFoto':
             {
                 'doc':'Identidade',
-                'user':'Deb',
-                'regular':{'sit':'Regular', 'data': new Date()},
-                'motivo':{'tipo':'Ausente', 'data': new Date()}
+                'regular':'Regular',
+                'obsv':'Ausente',
+                'data': new Date(),
+                'user':'Deb'
             }
         }
     },
@@ -53,7 +53,7 @@ Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
         if(err){
             console.log(err);
         } else{
-            console.log(upObejct.docFoto);
+            console.log(upObejct.docFoto[upObejct.docFoto.length -1]);
             console.log('Updated!');
         }
 });
