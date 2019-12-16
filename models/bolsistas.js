@@ -11,31 +11,34 @@ const bolsistaSchema = new mongoose.Schema({
 	sei: String,
 	email: [{email:String, data:Date}],
 	sexo: String,
-	statusCurso: [{status:{sit:String, dataSit: Date}, data: Date, user: String}],
+	statusCurso: [{status:String, data: Date, user: String}],
 	clbr: [{nome: String, data: Date}],
 	valorBolsas: Number,
 	valorDev: [{valor: Number, data: Date, user: String}],
 	docFoto: [
 		{
 			doc: String,
-			regular: {sit:String, data: Date},
-			motivo: {tipo: String,	data: Date},
-			user: String
+			regular: String,
+			obsv: String,
+			user: String,
+			data: Date,
 		}
 	],
 	docRes: [
 		{
 			doc: String,
-			regular: {sit:String, data: Date},
-			motivo: {tipo: String,	data: Date},
-			user: String
+			regular: String,
+			obsv: String,
+			user: String,
+			data: Date,
 		}
 	],
 	termo: [
 		{
-			regular: {sit:String, data: Date},
-			motivo: {tipo: String,	data: Date},
-			user: String
+			regular: String,
+			obsv: String,
+			user: String,
+			data: Date,
 		}
 	],
 	declaracao: [
@@ -47,9 +50,10 @@ const bolsistaSchema = new mongoose.Schema({
 				}
 			},
 			permanencia: Number,
-			regular: {sit:String, data: Date},
-			motivo: {tipo: String,	data: Date},
-			user: String
+			regular: String,
+			obsv: String,
+			user: String,
+			data: Date,
 		}
 	],
 	certConclusao: [
@@ -58,23 +62,30 @@ const bolsistaSchema = new mongoose.Schema({
 				type: mongoose.Schema.Types.ObjectId,
 				ref: 'Ies'
 			},
-			regular: {sit:String, data: Date},
-			motivo: {tipo: String,	data: Date},
-			user: String
+			regular: String,
+			obsv: String,
+			user: String,
+			data: Date,
 		}
 	],
-	analiseCompromisso: [{
-		regular: {sit:String, data: Date},
-		motivo: {tipo:String, data:Date},
-		user: String
-	}],
-	pad: [{
-		regular: {sit:String, data: Date},
-		obsv: {obs: String, data: Date},
+	analiseCompromisso: [
+		{
+			regular: String,
+			obsv: String,
+			user: String,
+			data: Date,
+		}
+	],
+	pad: [
+		{
 		tramite: {tipo: String, acao: String, inicioTramite: Date, fimTramite: Date},
-		situacao: {tipo: String, data: Date},
-		user: String
-	}],
+		situacao: String,
+		regular: String,
+		obsv: String,
+		user: String,
+		data: Date
+		}
+	],
 	pags: [
 		{
 			dataRef: Date,
