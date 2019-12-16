@@ -1,264 +1,329 @@
 <% include partials/header %>
     <link rel="stylesheet" href="showBolsista.css">
 <% include partials/headerBottom %>
-<div class="row mt-2">
-    <div class="col-1"></div>
-    <div class="col-3">
-        <h1>Consulta Bolsista</h1>
-    </div>
-    <div class="col-8"></div>
-</div>
 
-<div class="row mb-3 dadosPessoais">
-    <div class="col-1">
+<div class="container-fluid">
+
+    <div class="row title">
+        <div class="col-9 col-md-6">
+            <h1>Consulta Bolsista</h1>
+        </div>
+        <div class="col-md-6"></div>
     </div>
-    <div class="col-10 border border-dark rounded mt-3 mb-3 ml-2 px-5 py-2">
+
+    <div class="row dadosPessoais border border-dark rounded mt-2 mb-3 mr-2 ml-2 px-5 py-2">
+
         <h3>Dados Pessoais</h3>
 
-        <div class="row border border-warning my-3 py-3 px-3">
+        <div class="container-fluid border border-warning rounded mb-2 py-2">
 
-            <div class="col">
-
-                <div class="card my-1 py-.25 pl-.5">
-                    <div class="border border-success rounded-bottom my-2 py-.5 mx-3">
-                        <h5 class="my-1 ml-1">Nome</h5><h4 class="card-text my-1 ml-1"><%=bolCons.nome%></h4>
-                    </div>
-                     <div class="border border-success rounded-bottom my-2 py-.5 mx-3">
-                        <h5 class="my-1 ml-1">CPF</h5><h4 class="my-1 ml-1"><%=bolCons.cpf%></h4>
-                    </div>
-                    <div class="border border-success rounded-bottom my-2 py-.5 mx-3">
-                        <h5 class="my-1 ml-1">SEI</h5><h4 class="my-1 ml-1"><%=bolCons.sei%></h4>
-                    </div>
-                    <div class="border border-success rounded-bottom my-2 py-.5 mx-3">
-                        <h5 class="my-1 ml-1">E-mail</h5><h6 class="my-1 ml-1"><%=bolCons.email[(bolCons.email.length)-1].email%></h6>
-                    </div>
-                    <div class="border border-success rounded-bottom my-2 py-.5 mx-3">
-                        <h5 class="my-1 ml-1">Sexo</h5><h6 class="my-1 ml-1"><%=bolCons.sexo%></h6>
-                    </div>                    
+            <div class="row">
+                <div class="col"><div></div></div>
+                <div class="col"><div></div></div>
+                <div class="col"><div></div></div>                
+                <div class="col usuario">
+                <% if(bolCons.docFoto.length > 0){ %>
+                    <% let docuFoto = bolCons.docFoto[((bolCons.docFoto).length-1)] %>
+                    <footer class="mx-auto">
+                        Informações salvas em <%=docuFoto.motivo.data.toLocaleString()%>. Usuário: <%= docuFoto.user %>
+                    </footer>
+                <% } else { %>
+                    <footer class="mx-auto">Aguardando informações</footer>
+                <% } %>
                 </div>
             </div>
 
-            <div class="col">
+            <div class="row">
 
-                <div class="card my-1 py-.25 pl-.5">
-                    <div class="card-body">
+                <div class="col my-auto">
 
-                        <h5 class="card-title"><strong>Documento Com Foto</strong></h5>
-                        <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons.docFoto.length > 0){ %>
-                            <% let docuFoto = bolCons.docFoto[((bolCons.docFoto).length-1)] %>
-                            <h5 class="my-1 ml-1">Descrição</h5><h6 class="my-1 ml-1"><%= docuFoto.doc %></h6>
-                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%= docuFoto.motivo.tipo %></h6>
-                            <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%= docuFoto.motivo.data.toLocaleString() %></h6>
-                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%= docuFoto.regular.sit %></h6>
-                            <h5 class="my-1 ml-1">Data Regularidade</h5><h6 class="my-1 ml-1"><%= docuFoto.regular.data.toLocaleString() %></h6>
-                            <footer class="mx-auto">Informações por <%= docuFoto.user %></footer>
-                        <% } else{ %>
-                            <h5 class="my-1 ml-1">Pendente de análise</h5>
-                        <% } %>
+                    <div class="card my-1 py-.25 pl-.5">
+                        <div class="border border-success rounded-bottom my-2 py-.5 mx-3">
+                            <h5 class="my-1 ml-1">Nome</h5><h4 class="card-text my-1 ml-1"><%=bolCons.nome%></h4>
                         </div>
+                        <div class="border border-success rounded-bottom my-2 py-.5 mx-3">
+                            <h5 class="my-1 ml-1">CPF</h5><h4 class="my-1 ml-1"><%=bolCons.cpf%></h4>
+                        </div>
+                        <div class="border border-success rounded-bottom my-2 py-.5 mx-3">
+                            <h5 class="my-1 ml-1">SEI</h5><h4 class="my-1 ml-1"><%=bolCons.sei%></h4>
+                        </div>
+                        <div class="border border-success rounded-bottom my-2 py-.5 mx-3">
+                            <% if((bolCons.email.length)-1 > 0) { %>
+                                <h5 class="my-1 ml-1">E-mail</h5><h4 class="my-1 ml-1"><%=bolCons.email[(bolCons.email.length)-1].email%></h4>
+                            <% } else { %>
+                                <h5 class="my-1 ml-1">E-mail</h5><h4 class="my-1 ml-1"> email ainda não informado</h4>
+                            <% } %>
+                        </div>
+                        <div class="border border-success rounded-bottom my-2 py-.5 mx-3">
+                            <h5 class="my-1 ml-1">Sexo</h5><h4 class="my-1 ml-1"><%=bolCons.sexo%></h4>
+                        </div>                    
+                    </div>
 
-                        <h5 class="card-title"><strong>Comprovante de Residência</strong></h5>
-                        <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons.docRes.length > 0){ %>
-                            <% let docuRes = bolCons.docRes[((bolCons.docRes).length-1)]%>
-                            <h5 class="my-1 ml-1">Descrição</h5><h6 class="my-1 ml-1"><%=docuRes.doc%></h6>
-                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=docuRes.motivo.tipo%></h6>
-                            <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%=docuRes.motivo.data.toLocaleString()%></h6>
-                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=docuRes.regular.sit%></h6>
-                            <h5 class="my-1 ml-1">Data Regularidade</h5><h6 class="my-1 ml-1"><%=docuRes.regular.data.toLocaleString()%></h6>
-                            <footer class="mx-auto">Informações por <%=docuRes.user%></footer>
-                        <% } else{ %>
-                            <h5 class="my-1 ml-1">Pendente de análise</h5>
-                        <% } %>
+                    <div class="card my-1 py-.25 pl-.5">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>Comprovante de Residência</strong></h5>
+                            <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
+                            <% if(bolCons.docRes.length > 0){ %>
+                                <% let docuRes = bolCons.docRes[((bolCons.docRes).length-1)]%>
+                                <h5 class="my-1 ml-1">Descrição</h5><h6 class="my-1 ml-1"><%=docuRes.doc%></h6>
+                                <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=docuRes.motivo.tipo%></h6>
+                                <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%=docuRes.motivo.data.toLocaleString()%></h6>
+                                <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=docuRes.regular.sit%></h6>
+                                <h5 class="my-1 ml-1">Data Regularidade</h5><h6 class="my-1 ml-1"><%=docuRes.regular.data.toLocaleString()%></h6>
+                                <footer class="mx-auto">Informações por <%=docuRes.user%></footer>
+                            <% } else{ %>
+                                <h5 class="my-1 ml-1">Pendente de análise</h5>
+                            <% } %>
+                            </div>
                         </div>
+                    </div>
+                </div>
 
-                        <h5 class="card-title"><strong>Termo de Compromisso do Bolsista</strong></h5>
-                        <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons.termo.length > 0){ %>
-                            <% let docuTermo = bolCons.termo[((bolCons.termo).length-1)]%>
-                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=docuTermo.motivo.tipo%></h6>
-                            <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=docuTermo.motivo.data.toLocaleString()%></h6>
-                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=docuTermo.regular.sit%></h6>
-                            <h5 class="my-1 ml-1">Data da Regularidade</h5><h6 class="my-1 ml-1"><%=docuTermo.regular.data.toLocaleString()%></h6>
-                            <footer class="mx-auto">Informações por <%=docuTermo.user%></footer>
-                        <% } else{ %>
-                            <h5 class="my-1 ml-1">Pendente de análise</h5>
-                        <% } %>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-5"></div>
-            <button class="btn btn-md btn-primary col-1" data-toggle="modal" data-target="#modalDadosPessoais">Editar</button>
-            <div class="col-1"></div>
-            <%let colaborador = bolCons.clbr[((bolCons.clbr).length-1)].nome%>
-            <%let Adata = bolCons.clbr[((bolCons.clbr).length-1)].data%> 
-            <footer class="col-5">Bolsista atribuído(a) para <%=colaborador%> em: <%=Adata.getDate()%>/<%=Adata.getMonth()+1%>/<%=Adata.getFullYear()%></footer>
-        </div>
-    </div>
-    <div class="col-1">
-    </div>
-</div>
-<div class="row mb-3 analiseCompromisso">
-    <div class="col-1">
-    </div>
-    <div class="col-10 border border-dark rounded mt-3 mb-3 ml-2 px-5 py-2">
-        <h4>Análise do Compromisso</h4>
-        <div class="row border border-warning my-3 py-3 px-3">
-            <div class="col">
-                <div class="card my-1 py-.25 pl-.5">
-                    <div class="card-body">
-                        <h5 class="card-title"><strong>Situação do Curso</strong></h5>
-                        <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons.statusCurso.length > 0){ %>
-                            <% let curso = bolCons.statusCurso[((bolCons.statusCurso).length-1)]%>
-                            <h5 class="my-1 ml-1">Situação do Curso</h5><h6 class="my-1 ml-1"><%=curso.status.sit%></h6>
-                            <h5 class="my-1 ml-1">Data da Informação</h5><h6 class="my-1 ml-1"><%=curso.status.dataSit%></h6>
-                            <footer class="mx-auto">Informações por <%=curso.user%></footer>
-                        <% } else{ %>
-                            <h5 class="my-1 ml-1">Pendente de análise</h5>
-                        <% } %>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <div class="col my-auto">
 
-            <div class="col">
-                <div class="card my-1 py-.25 pl-.5">
-                    <div class="card-body">
-                        <h5 class="card-title"><strong>Certificado de Conclusão</strong></h5>
-                        <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons.certConclusao.length > 0){ %>
-                            <% let certificado = bolCons.certConclusao[((bolCons.certConclusao).length-1)]%>
-                            <h5 class="my-1 ml-1">Instituição de Ensino</h5><h6 class="my-1 ml-1"><%=certificado.ies.sigla%></h6>
-                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=certificado.motivo.tipo%></h6>
-                            <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=certificado.motivo.data.toLocaleString()%></h6>
-                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=certificado.regular.sit%></h6>
-                            <h5 class="my-1 ml-1">Data da Regularidade</h5><h6 class="my-1 ml-1"><%=certificado.regular.data.toLocaleString()%></h6>
-                            <footer class="mx-auto">Informações por <%=certificado.user%></footer>
-                        <% } else{ %>
-                            <h5 class="my-1 ml-1">Pendente de análise</h5>
-                        <% } %>
+                    <div class="card my-1 py-.25 pl-.5">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>Termo de Compromisso do Bolsista</strong></h5>
+                            <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
+                            <% if(bolCons.termo.length > 0){ %>
+                                <% let docuTermo = bolCons.termo[((bolCons.termo).length-1)]%>
+                                <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=docuTermo.motivo.tipo%></h6>
+                                <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=docuTermo.motivo.data.toLocaleString()%></h6>
+                                <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=docuTermo.regular.sit%></h6>
+                                <h5 class="my-1 ml-1">Data da Regularidade</h5><h6 class="my-1 ml-1"><%=docuTermo.regular.data.toLocaleString()%></h6>
+                                <footer class="mx-auto">Informações por <%=docuTermo.user%></footer>
+                            <% } else{ %>
+                                <h5 class="my-1 ml-1">Pendente de análise</h5>
+                            <% } %>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="row border border-warning my-3 py-3 px-3">
-            <div class="col">
-                <div class="card my-1 py-.25 pl-.5">
-                    <div class="card-body">
-                        <h5 class="card-title"><strong>Declaração de Permanência</strong></h5>
-                        <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons.declaracao.length > 0){ %>
-                            <% let declaracao = bolCons.declaracao[((bolCons.declaracao).length-1)]%>
-                            <h5 class="my-1 ml-1">Município da Escola</h5><h6 class="my-1 ml-1"><%=declaracao.escola.municipio%></h6>
-                            <h5 class="my-1 ml-1">Permanência</h5><h6 class="my-1 ml-1"><%=declaracao.permanencia%></h6>
-                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=declaracao.motivo.tipo%></h6>
-                            <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%=declaracao.motivo.data.toLocaleString()%></h6>
-                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=declaracao.regular.sit%></h6>
-                            <h5 class="my-1 ml-1">Data Regularidade</h5><h6 class="my-1 ml-1"><%=declaracao.regular.data.toLocaleString()%></h6>
-                            <footer class="mx-auto">Informações por <%=declaracao.user%></footer>
-                        <% } else{ %>
-                            <h5 class="my-1 ml-1">Pendente de análise</h5>
-                        <% } %>
+
+                    <div class="card my-1 py-.25 pl-.5">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>Documento Com Foto</strong></h5>
+                            <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
+                            <% if(bolCons.docFoto.length > 0){ %>
+                                <% let docuFoto = bolCons.docFoto[((bolCons.docFoto).length-1)] %>
+                                <h5 class="my-1 ml-1">Descrição</h5><h4 class="my-1 ml-1"><%= docuFoto.doc %></h4>
+                                <h5 class="my-1 ml-1">Observação</h5><h4 class="my-1 ml-1"><%= docuFoto.motivo.tipo %></h4>
+                                <h5 class="my-1 ml-1">Regularidade</h5><h4 class="my-1 ml-1"><%= docuFoto.regular.sit %></h4>
+                            <% } else{ %>
+                                <h5 class="my-1 ml-1">Pendente de análise</h5>
+                            <% } %>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card my-1 py-.25 pl-.5">
-                    <div class="card-body">
-                        <h5 class="card-title"><strong>Resultado da Análise</strong></h5>
-                        <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons.analiseCompromisso.length > 0){ %>
-                            <% let compromisso = bolCons.analiseCompromisso %>
-                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=compromisso.motivo.tipo%></h6>
-                            <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=compromisso.motivo.data.toLocaleString()%></h6>
-                            <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=compromisso.regular.sit%></h6>
-                            <h5 class="my-1 ml-1">Data da Regularidade</h5><h6 class="my-1 ml-1"><%=compromisso.regular.data.toLocaleString()%></h6>
-                            <footer class="mx-auto">Informações por <%=compromisso.user%></footer>
-                        <% } else{ %>
-                            <h5 class="my-1 ml-1">Pendente de análise</h5>
-                        <% } %>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-5"></div>
-            <button class="btn btn-md btn-primary col-1" data-toggle="modal" data-targe="#modalAnaliseCompromisso">Editar</button>
-            <div class="col-2"></div>
-            <div class="col-4"></div>
-        </div>
-    </div>
-    <div class="col-1">
-    </div>
-</div>
-<div class="row mb-3 processoAdministrativo">
-    <div class="col-1">
-    </div>
-    <div class="col-10 border border-dark rounded mt-3 mb-3 ml-2 px-5 py-2">
-        <h4>Processo Administrativo</h4>
-        <div class="row border border-warning my-3 py-3 px-3">
-            <div class="col">
-                <div class="card my-1 py-.25 pl-.5">
-                    <div class="card-body">
-                        <h5 class="card-title"><strong>Acompanhamento do Processo</strong></h5>
-                        <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons.pad.length > 0){ %>
-                            <% var pad = bolCons.pad %>
-                            <h5 class="my-1 ml-1">Trâmite</h5><h6 class="my-1 ml-1"><%=pad.tramite.tipo%></h6>
-                             <h5 class="my-1 ml-1">Próximo Passo</h5><h6 class="my-1 ml-1"><%=pad.tramite.acao%></h6>
-                             <h5 class="my-1 ml-1">Início do Trâmite</h5><h6 class="my-1 ml-1"><%=pad.tramite.inicioTramite.toLocaleString()%></h6>
-                             <h5 class="my-1 ml-1">Prazo do Trâmite</h5><h6 class="my-1 ml-1"><%=pad.tramite.fimTramite.toLocaleString()%></h6>
-                        <% } else{ %>
-                            <h5 class="my-1 ml-1">Não há trâmites registrados</h5>
-                        <% } %>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card my-1 py-.25 pl-.5">
-                    <div class="card-body">
-                        <h5 class="card-title"><strong>Última Observação</strong></h5>
-                        <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons.pad.length > 0){ %>
-                            <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=pad.obsv.obs%></h6>
-                             <h5 class="my-1 ml-1">Data do Registro</h5><h6 class="my-1 ml-1"><%=pad.obsv.data.toLocaleString()%></h6>
-                        <% } else{ %>
-                            <h5 class="my-1 ml-1">Sem observações</h5>
-                        <% } %>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
         </div>
-        <div class="row border border-warning my-3 py-3 px-3">
-            <div class="col">
-                <div class="card my-1 py-.25 pl-.5">
-                    <div class="card-body">
-                        <h5 class="card-title"><strong>Regularidade</strong></h5>
-                        <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                        <% if(bolCons.pad.length > 0){ %>
-                            <h5 class="my-1 ml-1">Status</h5><h6 class="my-1 ml-1"><%=pad.regular.sit%></h6>
-                             <h5 class="my-1 ml-1">Data do Registro</h5><h6 class="my-1 ml-1"><%=pad.regular.data.toLocaleString()%></h6>
-                        <% } else{ %>
-                            <h5 class="my-1 ml-1">Processo não iniciado</h5>
-                        <% } %>
-                        </div>
-                    </div>
+
+        <div class="container-fluid buttonEdit mb-2 py-2">
+            <div class="row">
+                <div class="col"></div>
+                <button class="btn btn-lg btn-primary col-1" data-toggle="modal" data-target="#modalDadosPessoais">Editar</button>
+                <div class="col-2"></div>
+                <%let colaborador = bolCons.clbr[((bolCons.clbr).length-1)].nome%>
+                <%let Adata = bolCons.clbr[((bolCons.clbr).length-1)].data%> 
+                <footer class="col mt-4">Bolsista atribuído(a) para <%=colaborador%> em: <%=Adata.getDate()%>/<%=Adata.getMonth()+1%>/<%=Adata.getFullYear()%></footer>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row analiseCompromisso border border-dark rounded mt-2 mb-3 mr-2 ml-2 px-5 py-2">
+    
+        <h3>Análise do Compromisso</h3>        
+        <div class="container-fluid border border-warning rounded mb-2 py-2">
+
+            <div class="row">
+                <div class="col"><div></div></div>
+                <div class="col"><div></div></div>
+                <div class="col"><div></div></div>
+                <div class="col usuario">
+                <% if(bolCons.docFoto.length > 0){ %>
+                    <% let docuFoto = bolCons.docFoto[((bolCons.docFoto).length-1)] %>
+                    <footer class="mx-auto">
+                        Informações salvas em <%=docuFoto.motivo.data.toLocaleString()%>. Usuário: <%= docuFoto.user %>
+                    </footer>
+                <% } else { %>
+                    <footer class="mx-auto">Aguardando informações</footer>
+                <% } %>
                 </div>
             </div>
-            <div class="col">
-                <div class="card my-1 py-.25 pl-.5">
+
+            <div class="row">
+                <div class="col my-auto">
+
+                    <div class="card my-1 py-.25 pl-.5">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>Situação do Curso</strong></h5>
+                            <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
+                            <% if(bolCons.statusCurso.length > 0){ %>
+                                <% let curso = bolCons.statusCurso[((bolCons.statusCurso).length-1)]%>
+                                <h5 class="my-1 ml-1">Situação do Curso</h5><h6 class="my-1 ml-1"><%=curso.status.sit%></h6>
+                                <h5 class="my-1 ml-1">Data da Informação</h5><h6 class="my-1 ml-1"><%=curso.status.dataSit%></h6>
+                                <footer class="mx-auto">Informações por <%=curso.user%></footer>
+                            <% } else{ %>
+                                <h5 class="my-1 ml-1">Pendente de análise</h5>
+                            <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card my-1 py-.25 pl-.5">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>Certificado de Conclusão</strong></h5>
+                            <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
+                            <% if(bolCons.certConclusao.length > 0){ %>
+                                <% let certificado = bolCons.certConclusao[((bolCons.certConclusao).length-1)]%>
+                                <h5 class="my-1 ml-1">Instituição de Ensino</h5><h6 class="my-1 ml-1"><%=certificado.ies.sigla%></h6>
+                                <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=certificado.motivo.tipo%></h6>
+                                <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=certificado.motivo.data.toLocaleString()%></h6>
+                                <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=certificado.regular.sit%></h6>
+                                <h5 class="my-1 ml-1">Data da Regularidade</h5><h6 class="my-1 ml-1"><%=certificado.regular.data.toLocaleString()%></h6>
+                                <footer class="mx-auto">Informações por <%=certificado.user%></footer>
+                            <% } else{ %>
+                                <h5 class="my-1 ml-1">Pendente de análise</h5>
+                            <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col my-auto">
+
+                    <div class="card my-1 py-.25 pl-.5">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>Declaração de Permanência</strong></h5>
+                            <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
+                            <% if(bolCons.declaracao.length > 0){ %>
+                                <% let declaracao = bolCons.declaracao[((bolCons.declaracao).length-1)]%>
+                                <h5 class="my-1 ml-1">Município da Escola</h5><h6 class="my-1 ml-1"><%=declaracao.escola.municipio%></h6>
+                                <h5 class="my-1 ml-1">Permanência</h5><h6 class="my-1 ml-1"><%=declaracao.permanencia%></h6>
+                                <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=declaracao.motivo.tipo%></h6>
+                                <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%=declaracao.motivo.data.toLocaleString()%></h6>
+                                <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=declaracao.regular.sit%></h6>
+                                <h5 class="my-1 ml-1">Data Regularidade</h5><h6 class="my-1 ml-1"><%=declaracao.regular.data.toLocaleString()%></h6>
+                                <footer class="mx-auto">Informações por <%=declaracao.user%></footer>
+                            <% } else{ %>
+                                <h5 class="my-1 ml-1">Pendente de análise</h5>
+                            <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card my-1 py-.25 pl-.5">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>Resultado da Análise</strong></h5>
+                            <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
+                            <% if(bolCons.analiseCompromisso.length > 0){ %>
+                                <% let compromisso = bolCons.analiseCompromisso %>
+                                <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=compromisso.motivo.tipo%></h6>
+                                <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=compromisso.motivo.data.toLocaleString()%></h6>
+                                <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=compromisso.regular.sit%></h6>
+                                <h5 class="my-1 ml-1">Data da Regularidade</h5><h6 class="my-1 ml-1"><%=compromisso.regular.data.toLocaleString()%></h6>
+                                <footer class="mx-auto">Informações por <%=compromisso.user%></footer>
+                            <% } else{ %>
+                                <h5 class="my-1 ml-1">Pendente de análise</h5>
+                            <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container-fluid buttonEdit mb-2 py-2">
+            <div class="row">
+                <div class="col"></div>
+                <button class="btn btn-lg btn-primary col-1" data-toggle="modal" data-target="#modalCompromisso">Editar</button>
+                <div class="col-2"></div>
+                <footer class="col mt-4"></footer>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row acompanhamentoProcesso border border-dark rounded mt-2 mb-3 mr-2 ml-2 px-5 py-2">
+    
+        <h3>Acompanhamento do Processo</h3>        
+        <div class="container-fluid border border-warning rounded mb-2 py-2">
+
+             <div class="row">
+                 <div class="col"><div></div></div>
+                <div class="col"><div></div></div>
+                <div class="col"><div></div></div>
+                <div class="col usuario">
+                <% if(bolCons.docFoto.length > 0){ %>
+                    <% let docuFoto = bolCons.docFoto[((bolCons.docFoto).length-1)] %>
+                    <footer class="mx-auto">
+                        Informações salvas em <%=docuFoto.motivo.data.toLocaleString()%>. Usuário: <%= docuFoto.user %>
+                    </footer>
+                <% } else { %>
+                    <footer class="mx-auto">Aguardando informações</footer>
+                <% } %>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col my-auto">
+
+                    <div class="card my-1 py-.25 pl-.5">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>Acompanhamento do Processo</strong></h5>
+                            <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
+                            <% if(bolCons.pad.length > 0){ %>
+                                <% var pad = bolCons.pad %>
+                                <h5 class="my-1 ml-1">Trâmite</h5><h6 class="my-1 ml-1"><%=pad.tramite.tipo%></h6>
+                                <h5 class="my-1 ml-1">Próximo Passo</h5><h6 class="my-1 ml-1"><%=pad.tramite.acao%></h6>
+                                <h5 class="my-1 ml-1">Início do Trâmite</h5><h6 class="my-1 ml-1"><%=pad.tramite.inicioTramite.toLocaleString()%></h6>
+                                <h5 class="my-1 ml-1">Prazo do Trâmite</h5><h6 class="my-1 ml-1"><%=pad.tramite.fimTramite.toLocaleString()%></h6>
+                            <% } else{ %>
+                                <h5 class="my-1 ml-1">Não há trâmites registrados</h5>
+                            <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card my-1 py-.25 pl-.5">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>Última Observação</strong></h5>
+                            <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
+                            <% if(bolCons.pad.length > 0){ %>
+                                <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=pad.obsv.obs%></h6>
+                                <h5 class="my-1 ml-1">Data do Registro</h5><h6 class="my-1 ml-1"><%=pad.obsv.data.toLocaleString()%></h6>
+                            <% } else{ %>
+                                <h5 class="my-1 ml-1">Sem observações</h5>
+                            <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col my-auto">
+
+                    <div class="card my-1 py-.25 pl-.5">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>Regularidade</strong></h5>
+                            <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
+                            <% if(bolCons.pad.length > 0){ %>
+                                <h5 class="my-1 ml-1">Status</h5><h6 class="my-1 ml-1"><%=pad.regular.sit%></h6>
+                                <h5 class="my-1 ml-1">Data do Registro</h5><h6 class="my-1 ml-1"><%=pad.regular.data.toLocaleString()%></h6>
+                            <% } else{ %>
+                                <h5 class="my-1 ml-1">Processo não iniciado</h5>
+                            <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card my-1 py-.25 pl-.5">
                     <div class="card-body">
                         <h5 class="card-title"><strong>Situação do Processo</strong></h5>
                         <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
@@ -272,35 +337,38 @@
                         </div>
                     </div>
                 </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container-fluid buttonEdit mb-2 py-2">
+            <div class="row">
+                <div class="col"></div>
+                <button class="btn btn-lg btn-primary col-1" data-toggle="modal" data-target="#modalProcesso">Editar</button>
+                <div class="col-2"></div>
+                <footer class="col mt-4"></footer>
             </div>
         </div>
-        <div class="row">
-            <div class="col-5"></div>
-            <button class="btn btn-md btn-primary col-1" data-toggle="modal" data-targe="#modalProcessoAdministrativo">Editar</button>
-            <div class="col-2"></div>
-            <div class="col-4"></div>
-            <div class="col-5">
-                <h5 class="my-1 ml-1">Registrada por</h5><h6 class="my-1 ml-1"><%=bolCons.pad.user%></h6>
-            </div>
-        </div>
+
     </div>
-    <div class="col-1">
-    </div>
-</div>
-<div class="row mb-3 pagamentos">
-    <div class="col-1">
-    </div>
-    <div class="col-10 border border-dark rounded mt-3 mb-3 ml-2 px-5 py-2">
-        <div class="row">
+
+    <div class="row pagamentos border border-dark rounded mt-2 mb-3 mr-2 ml-2 px-5 py-2">
+
+        <div class="container-fluid buttonPags mb-2 py-2">
+            <div class="row">
             <div class="col-4"></div>
             <button class="col-4 btn btn-md btn-secondary btn-pags collapsed" type="submit" data-toggle="collapse" data-target="#collapsePags" aria-expanded="false" aria-controls="collapsePags">
                 <span><strong>Expandir Pagamentos</strong></span><b>Minimalizar Pagamentos</b>
             </button>
             <div class="col-4"></div>
+            </div>
         </div>
-        <div class="collapse" id="collapsePags">
-        
+
+        <div class="container-fluid collapse" id="collapsePags">
             <h3>Pagamentos</h3>
+
             <h5 class="my-1 ml-1"><%=bolCons.nome%> <span class="ml-5">CPF: <%=bolCons.cpf%></span> </h5>
             <table class="table table-sm table-bordered table-striped table-dark table-hover" style="height: 100px;">
                 <thead class="thead-light">
@@ -342,13 +410,14 @@
                 </tbody>
             </table>
         </div>
+
     </div>
-    <div class="col-1">
-    </div>
+</div>
 
-    <!-- MODALS -->
+ <!-- MODALS -->
 
-    <% include modalDadosPessoais %>
+<% include modalDadosPessoais %>
 
+<!-- closing elements -->
 </div>
 <% include partials/footer %>
