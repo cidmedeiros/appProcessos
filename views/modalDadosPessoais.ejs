@@ -2,8 +2,9 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-
                 <h5 class="modal-title">Editar Dados Pessoais</h5>
+                <div></div>
+                <footer><span>CPF: <%= bolCons.cpf %></span></footer>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -12,7 +13,7 @@
             <div class="modal-body border border-rounded border-info mx-1 my-1">
                 <div class="container-fluid">
                     <form action='/salvarbolsista' method="POST">
-                        <input type = "hidden" name = "consulta" value = <%= bolCons.cpf %> >
+                        <input type = "hidden" name = "consulta" value='<%= bolCons.cpf %>'>
 
                         <div class="row mb-2">
                             <div class="col-1"></div>
