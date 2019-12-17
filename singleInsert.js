@@ -33,7 +33,8 @@ Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
         if(err){
             console.log(err);
         } else{
-            console.log(upObejct.email[upObejct.email.length-1]);
+            console.log(upObejct.email.length);
+            console.log(upObejct.email[(upObejct.email.length)-1]);
             console.log('Updated!');
         }
 });
@@ -55,7 +56,8 @@ Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
             console.log(err);
         } else{
             console.log('-------------------------------------------');
-            console.log(upObejct.docFoto[upObejct.docFoto.length-1]);
+            console.log(upObejct.docFoto.length)
+            console.log(upObejct.docFoto[(upObejct.docFoto.length)-1]);
             console.log('Updated!');
         }
 });
