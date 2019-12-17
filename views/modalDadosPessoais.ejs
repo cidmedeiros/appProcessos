@@ -12,8 +12,7 @@
 
             <div class="modal-body border border-rounded border-info mx-1 my-1">
                 <div class="container-fluid">
-                    <form action='/salvarbolsista' method="POST">
-                        <input type = "hidden" name = "consulta" value='<%= bolCons.cpf %>'>
+                    <form action='/editarbolsista/<%=bolCons.cpf%>?_method=PUT' method="POST">
 
                         <div class="row mb-2">
                             <div class="col-1"></div>
