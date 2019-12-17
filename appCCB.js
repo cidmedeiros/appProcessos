@@ -33,16 +33,41 @@ app.get('/', async (req, res) =>{
 	res.render('landing');
 });
 
-app.post('/search', (req, res) => {
-    var keyword = req.body.consulta;
-    res.redirect('/consultabolsista/'+keyword);
-})
-
 	//SHOW ROUTE
-app.get('/consultabolsista/:id', async (req, res) => {
-	let input = req.params.id;
-	console.log(input);
+app.get('/consulta/:cpf', async (req, res) => {
+	console.log(req.params.cpf);
+	input = await tools.treatInput(req.params.cpf);
+	console.log(`after handling input: ${input[1]} ${typeof input[1]}`);
+	try{
+		await Bolsista.findOne({cpf:input[1]}).populate('pags.iesLocal').populate([
+			{
+				path: 'pags.programa',
+				model:'Programa',
+				populate:{
+					path:'coordNacional.ies',
+					model:'Ies'
+				}
+			}
+		]).exec((err, foundBol) => {
+			if(err){
+				console.log(`Bolsista ${input[1]} not found! Error: ${err}`);
+			} else {
+				console.log('cpf found!');
+				console.log('redirecting to showBolsistaReload');
+				res.render('showBolsistaReload.ejs', {bolCons:foundBol});
+				console.log('End of server execution!');
+			}
+		});
+	} catch(error){
+		console.log(`Error trying to find ${input}, ${error} by catch`)
+	}
+});
+
+app.post('/consultabolsista', async (req, res) => {
+	let input = req.body.consulta;
+	console.log(`raw input: ${input}`);
 	input = await tools.treatInput(input);
+	console.log(`after handling input: ${input[1]}`);
 	try{
 		if(input[0] === 'cpf'){
 			await Bolsista.findOne({cpf:input[1]}).populate('pags.iesLocal').populate([
@@ -56,11 +81,12 @@ app.get('/consultabolsista/:id', async (req, res) => {
 				}
 			]).exec((err, foundBol) => {
 				if(err){
-					console.log(`Bolsista ${input[1]} not found! ${err}`)
+					console.log(`Bolsista ${input[1]} not found! ${err}`);
 				} else {
-					console.log('cpf found!')
-					console.log('redirecting to showBolsista')
+					console.log('cpf found!');
+					console.log('redirecting to showBolsista');
 					res.render('showBolsista', {bolCons:foundBol});
+					console.log('End of server execution!');
 				}
 			});
 		} else if(input[0] === 'sei'){
@@ -75,21 +101,27 @@ app.get('/consultabolsista/:id', async (req, res) => {
 				}
 			]).exec((err, foundBol) => {
 				if(err){
-					console.log(`Error tryng to find ${input[1]}, ${err}`)
+					console.log(`Error tryng to find ${input[1]}, ${err}`);
 				} else {
-					console.log(foundBol._id)
+					console.log('sei found!');
+					console.log('redirecting to showBolsista');
 					res.render('showBolsista', {bolCons:foundBol});
+					console.log('End of server execution!');
 				}
 			});
 		} else if(input[0] === 'nome'){
+			console.log(`nome to be passed to fuzzySearch: ${input[1]}`);
 			await Bolsista.fuzzySearch({nome:input[1]}, (err, foundBol) => {
 				if(err){
-					console.log(`Error tryng to find ${input[1]}, ${err}`)
+					console.log(`Error tryng to find ${input[1]}, ${err}`);
 				} else {
+					console.log(`Result from fuzzySearch: ${foundBol}`);
 					if(foundBol.lenght === 1){
-						let foundCpf = foundBol[0]['cpf'];
+						console.log('--------------------------------');
+						console.log('Is this getting executed?');
+						console.log('--------------------------------');
 						async () => {
-							await Bolsista.findOne({cpf:foundCpf}).populate('pags.iesLocal').populate([
+							await Bolsista.findOne({nome:foundBol}).populate('pags.iesLocal').populate([
 								{
 									path: 'pags.programa',
 									model:'Programa',
@@ -102,13 +134,21 @@ app.get('/consultabolsista/:id', async (req, res) => {
 								if(err){
 									console.log(`Bolsista ${input[1]} not found! ${err}`)
 								} else {
-									console.log(foundOne.pags);
+									console.log('nome found!');
+									console.log('redirecting to showBolsista');
 									res.render('showBolsista', {bolCons:foundOne});
+									console.log('End of server execution!');
 								}
 							});
 						}
 					} else {
+						console.log('--------------------------');
+						console.log('nomesss found!');
+						console.log(foundBol.lenght);
+						console.log(foundBol);
+						console.log('redirecting to showResultados');
 						res.render('showResultados', {bolCons:foundBol});
+						console.log('End of server execution!');
 					}
 				}
 			});
@@ -123,24 +163,8 @@ app.get('/consultabolsista/:id', async (req, res) => {
 
 	//PUT ROUTE (UPDATE ROUTE)
 app.post('/salvarbolsista', async (req, res) => {
-	var keyword = req.body.consulta;
-	res.redirect('/consultabolsista/'+keyword);
-	/* try{
-		await Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
-		{
-			'$push':{'email':{'email':'cranbery@oister.com', 'data': new Date()}},
-			'sexo': 'Masculino'
-		},
-		(err, upObejct) =>{
-			if(err){
-				console.log(err);
-			} else{
-				res.send('Post working');
-			}
-	});
-	} catch(error) {
-		console.log('Error retrieving update data', error);
-	} */
+	const cpf = req.body.consulta;
+	res.redirect(`/consulta/${cpf}`);
 });
 
 //CREATE ROUTE - Save Data into DB
