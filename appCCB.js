@@ -33,9 +33,15 @@ app.get('/', async (req, res) =>{
 	res.render('landing');
 });
 
+app.post('/search', (req, res) => {
+    var keyword = req.body.consulta;
+    res.redirect('/consultabolsista/'+keyword);
+})
+
 	//SHOW ROUTE
-app.post('/consultabolsista', async (req, res) => {
-	let input = req.body.consulta;
+app.get('/consultabolsista/:id', async (req, res) => {
+	let input = req.params.id;
+	console.log(input);
 	input = await tools.treatInput(input);
 	try{
 		if(input[0] === 'cpf'){
@@ -52,6 +58,8 @@ app.post('/consultabolsista', async (req, res) => {
 				if(err){
 					console.log(`Bolsista ${input[1]} not found! ${err}`)
 				} else {
+					console.log('cpf found!')
+					console.log('redirecting to showBolsista')
 					res.render('showBolsista', {bolCons:foundBol});
 				}
 			});
@@ -115,8 +123,8 @@ app.post('/consultabolsista', async (req, res) => {
 
 	//PUT ROUTE (UPDATE ROUTE)
 app.post('/salvarbolsista', async (req, res) => {
-	console.log(req.body);
-	res.redirect('/consultabolsista');
+	var keyword = req.body.consulta;
+	res.redirect('/consultabolsista/'+keyword);
 	/* try{
 		await Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
 		{
