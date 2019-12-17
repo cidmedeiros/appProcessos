@@ -11,7 +11,8 @@
 
             <div class="modal-body border border-rounded border-info mx-1 my-1">
                 <div class="container-fluid">
-                    <form action='/bolsista/id' method="POST">
+                    <form action='/salvarbolsista' method="POST">
+                        <input type = "hidden" name = "consulta" value = <%= bolCons.cpf %> >
 
                         <div class="row mb-2">
                             <div class="col-1"></div>
@@ -20,9 +21,9 @@
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <% if(bolCons.email.length > 0){ %>
-                                        <input type="email" class="form-control" id="email" placeholder="nome@examplo.com" value= <%= bolCons.email[(bolCons.email.length)-1].email %> >
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="nome@examplo.com" value= <%= bolCons.email[(bolCons.email.length)-1].email %> >
                                     <% } else{ %>
-                                        <input type="email" class="form-control" id="email" placeholder="nome@examplo.com">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="nome@examplo.com">
                                     <% } %>
                                     <label for="sexo">Sexo</label>
                                     <select class="form-control" name="sexo" id="sexo">
@@ -161,14 +162,14 @@
                             <div class="card col border border-rounded-bottom my-1 py-.25 pl-.5">
                                 <h5>Termo de Compromisso do Bolsista</h5>
                                 <div class="form-group">
-                                    <label for="regDocFoto">Regularidade do Documento</label>
-                                    <select class="form-control" name="regDocFoto" id="regDocFoto">
+                                    <label for="regTermo">Regularidade do Documento</label>
+                                    <select class="form-control" name="regTermo" id="regTermo">
                                         <option>Selecione</option>
                                         <option>Regular</option>
                                         <option>Irregular</option>
                                     </select>
-                                    <label for="motivDocFoto">Observação</label>
-                                    <select class="form-control" name="motivDocFoto" id="motivDocFoto">
+                                    <label for="obsvTermo">Observação</label>
+                                    <select class="form-control" name="obsvTermo" id="obsvTermo">
                                         <option>Selecione</option>
                                         <option>Sem Observações</option>
                                         <option>Ilegível</option>
@@ -178,10 +179,10 @@
                             </div>
                         </div>
 
+                        <div>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
                     </form>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-primary">Salvar</button>
                 </div>
             </div>
         </div>

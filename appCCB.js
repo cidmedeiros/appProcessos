@@ -52,12 +52,6 @@ app.post('/consultabolsista', async (req, res) => {
 				if(err){
 					console.log(`Bolsista ${input[1]} not found! ${err}`)
 				} else {
-					console.log(foundBol);
-					console.log('---------------------------------------------');
-					var see = foundBol.docFoto;
-					console.log(typeof see);
-					console.log('---------------------------------------------');
-					/* console.log(foundBol.docFoto[docFoto.length-1]) */
 					res.render('showBolsista', {bolCons:foundBol});
 				}
 			});
@@ -120,20 +114,25 @@ app.post('/consultabolsista', async (req, res) => {
 });
 
 	//PUT ROUTE (UPDATE ROUTE)
-app.put('/bolsista/:id', async (req, res) => {
-	try{
-		await Bolsista.findByIdAndUpdate(req.params.id, req.body.outBolsista, (err, foundBol) => {
+app.post('/salvarbolsista', async (req, res) => {
+	console.log(req.body);
+	res.redirect('/consultabolsista');
+	/* try{
+		await Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
+		{
+			'$push':{'email':{'email':'cranbery@oister.com', 'data': new Date()}},
+			'sexo': 'Masculino'
+		},
+		(err, upObejct) =>{
 			if(err){
-				console.log('Error retrieving update data', err);
-				res.redirect(`/bolsista/:${req.params.id}/edit`);
-			} else {
-				console.log('Data Saved',foundBol,req.body.outBolsista);
-				res.redirect('/');
+				console.log(err);
+			} else{
+				res.send('Post working');
 			}
-		});
+	});
 	} catch(error) {
 		console.log('Error retrieving update data', error);
-	}
+	} */
 });
 
 //CREATE ROUTE - Save Data into DB

@@ -27,12 +27,13 @@ mongoose.set('useCreateIndex', true);
 Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
     {
         '$push':{'email':{'email':'cranbery@oister.com', 'data': new Date()}},
+        'sexo': 'Masculino'
     },
     (err, upObejct) =>{
         if(err){
             console.log(err);
         } else{
-            console.log(upObejct.email);
+            console.log(upObejct.email[upObejct.email.length-1]);
             console.log('Updated!');
         }
 });
