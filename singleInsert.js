@@ -46,7 +46,7 @@ Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
                 'regular':'Regular',
                 'obsv':'Ausente',
                 'data': new Date(),
-                'user':'Deb'
+                'user':'tester'
             }
         }
     },
@@ -54,7 +54,8 @@ Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
         if(err){
             console.log(err);
         } else{
-            console.log(upObejct.docFoto[upObejct.docFoto.length -1]);
+            console.log('-------------------------------------------');
+            console.log(upObejct.docFoto[upObejct.docFoto.length-1]);
             console.log('Updated!');
         }
 });
