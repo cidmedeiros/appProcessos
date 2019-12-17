@@ -34,7 +34,7 @@ app.get('/', async (req, res) =>{
 });
 
 	//SHOW ROUTE
-app.get('/consulta/:cpf', async (req, res) => {
+app.get('/bolsista/:cpf', async (req, res) => {
 	console.log(req.params.cpf);
 	input = await tools.treatInput(req.params.cpf);
 	console.log(`after handling input: ${input[1]} ${typeof input[1]}`);
@@ -53,8 +53,8 @@ app.get('/consulta/:cpf', async (req, res) => {
 				console.log(`Bolsista ${input[1]} not found! Error: ${err}`);
 			} else {
 				console.log('cpf found!');
-				console.log('redirecting to showBolsistaReload');
-				res.render('showBolsistaReload.ejs', {bolCons:foundBol});
+				console.log('redirecting to showBolsista');
+				res.render('showBolsista', {bolCons:foundBol});
 				console.log('End of server execution!');
 			}
 		});
@@ -162,41 +162,47 @@ app.post('/consultabolsista', async (req, res) => {
 });
 
 	//PUT ROUTE (UPDATE ROUTE)
-app.post('/salvarbolsista', async (req, res) => {
-	const cpf = req.body.consulta;
-	res.redirect(`/consulta/${cpf}`);
-});
-
-//CREATE ROUTE - Save Data into DB
-app.post('/', async (req, res) =>{
-	console.log('Saving...');
+app.put('/editarbolsista/:cpf', async (req, res) => {
 	try{
-		await Bolsista.create(req.body.outBolsista, (err, bols) => {
+
+	} catch {
+		
+	}
+	await Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
+		{
+			'$push':{'email':{'email':, 'data': new Date()}},
+			'sexo': 'Masculino'
+		},
+		(err, upObejct) =>{
 			if(err){
-				console.log('Not Saved!', err);
+				console.log(err);
 			} else{
-				console.log(`${bols} has just been saved`);
-				res.redirect('/');
+				console.log('Updated!');
 			}
 	});
-	} catch(error){
-		console.log('The data was not sent! Try Again.', error);
-	}
-});
 
-app.delete('/bolsista/:id', async (req, res) => {
-	try{
-		await Bolsista.findByIdAndDelete(req.params.id, (err) =>{
-			if(err){
-				console.log('Error trying to delete', err);
-			} else {
-				console.log('Data deleted')
-				res.redirect('/');
-			}
-		});
-	} catch(error){
-		console.log('Error trying to delete');
-	}
+Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
+    {'$push':
+        {'docFoto':
+            {
+                'doc':'Identidade',
+                'regular':'Regular',
+                'obsv':'Ausente',
+                'data': new Date(),
+                'user':'tester'
+            }
+        }
+    },
+    (err, upObejct) =>{
+        if(err){
+            console.log(err);
+        } else{
+            console.log('-------------------------------------------');
+            console.log(upObejct.docFoto.length)
+            console.log(upObejct.docFoto[(upObejct.docFoto.length)-1]);
+            console.log('Updated!');
+        }
+});
 });
 
 	//Routes order matters! This should always be the last route!!
