@@ -10,11 +10,6 @@ h6, h4{
     color: rgba(rgb(0, 0, 0), 0.4);
 }
 
-.btn{
-    width: 73px;
-    float: right;
-}
-
 .btn-pags b{display:inline}
 .btn-pags:not(.collapsed)  span{display:none}
 .btn-pags.collapsed b {display:none}
