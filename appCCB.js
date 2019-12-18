@@ -34,7 +34,7 @@ app.get('/', async (req, res) =>{
 });
 
 	//SHOW ROUTE
-app.get('/pagbolsista/:id', async (req, res) => {
+app.get('/paginadobolsista/:id', async (req, res) => {
 	try{
 		await Bolsista.findById(req.params.id).populate('pags.iesLocal').populate([
 			{
@@ -160,7 +160,7 @@ app.post('/consultabolsista', async (req, res) => {
 });
 
 	//PUT ROUTE (UPDATE ROUTE)
-app.put('/editarbolsista/:cpf', async (req, res) => {
+app.put('/editardadospessoais/:cpf', async (req, res) => {
 	try{
 		await Bolsista.findOneAndUpdate({cpf:req.params.cpf},
 			{
@@ -171,7 +171,8 @@ app.put('/editarbolsista/:cpf', async (req, res) => {
 				if(err){
 					console.log(err);
 				} else{
-					console.log(`${upObejct.email} Updated!`);
+					console.log(`${upObejct.email} Updated 1!`);
+					console.log(`-------------------------------`);
 				}
 		});
 	} catch {
@@ -195,7 +196,7 @@ app.put('/editarbolsista/:cpf', async (req, res) => {
 					console.log(err);
 				} else{
 					console.log('-------------------------------------------');
-					console.log(`${upObejct.docFoto} Updated!`);
+					console.log(`${upObejct.docFoto} Updated 2!`);
 				}
 		});
 	} catch {
@@ -219,7 +220,7 @@ app.put('/editarbolsista/:cpf', async (req, res) => {
 					console.log(err);
 				} else{
 					console.log('-------------------------------------------');
-					console.log(`${upObejct.docFoto} Updated!`);
+					console.log(`${upObejct.docRes} Updated 3!`);
 				}
 		});
 	} catch {
@@ -242,14 +243,13 @@ app.put('/editarbolsista/:cpf', async (req, res) => {
 					console.log(err);
 				} else{
 					console.log('-------------------------------------------');
-					console.log(`${upObejct.termo} Updated!`);
-					res.redirect(`/pagbolsista/${upObejct._id}`);
+					console.log(`${upObejct.termo} Updated 4!`);
+					res.redirect(`/paginadobolsista/${upObejct._id}`);
 				}
 		});
 	} catch {
 		console.log('Error updating Termo');
 	}
-	res.redirect(`/pagbolsista/${upObejct._id}`);
 
 });
 
