@@ -34,12 +34,9 @@ app.get('/', async (req, res) =>{
 });
 
 	//SHOW ROUTE
-app.get('/bolsista/:cpf', async (req, res) => {
-	console.log(req.params.cpf);
-	input = await tools.treatInput(req.params.cpf);
-	console.log(`after handling input: ${input[1]} ${typeof input[1]}`);
+app.get('/pagbolsista/:id', async (req, res) => {
 	try{
-		await Bolsista.findOne({cpf:input[1]}).populate('pags.iesLocal').populate([
+		await Bolsista.findById(req.params.id).populate('pags.iesLocal').populate([
 			{
 				path: 'pags.programa',
 				model:'Programa',
@@ -50,16 +47,17 @@ app.get('/bolsista/:cpf', async (req, res) => {
 			}
 		]).exec((err, foundBol) => {
 			if(err){
-				console.log(`Bolsista ${input[1]} not found! Error: ${err}`);
+				console.log(`Bolsista ${req.params.cpf} not found! Error: ${err}`);
 			} else {
-				console.log('cpf found!');
+				console.log('Id found!');
+				console.log(foundBol.docFoto);
 				console.log('redirecting to showBolsista');
 				res.render('showBolsista', {bolCons:foundBol});
 				console.log('End of server execution!');
 			}
 		});
 	} catch(error){
-		console.log(`Error trying to find ${input}, ${error} by catch`)
+		console.log(`Error trying to find ${req.params.cpf}, ${error} by catch`)
 	}
 });
 
@@ -164,45 +162,95 @@ app.post('/consultabolsista', async (req, res) => {
 	//PUT ROUTE (UPDATE ROUTE)
 app.put('/editarbolsista/:cpf', async (req, res) => {
 	try{
-
+		await Bolsista.findOneAndUpdate({cpf:req.params.cpf},
+			{
+				'$push':{'email':{'email':req.body.bolsista.email, 'data': new Date()}},
+				'sexo': req.body.bolsista.sexo
+			},
+			(err, upObejct) =>{
+				if(err){
+					console.log(err);
+				} else{
+					console.log(`${upObejct.email} Updated!`);
+				}
+		});
 	} catch {
-		
+		console.log('Error updating email/sexo');
 	}
-	await Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
-		{
-			'$push':{'email':{'email':, 'data': new Date()}},
-			'sexo': 'Masculino'
-		},
-		(err, upObejct) =>{
-			if(err){
-				console.log(err);
-			} else{
-				console.log('Updated!');
-			}
-	});
+	try{
+		await Bolsista.findOneAndUpdate({cpf:req.params.cpf},
+			{'$push':
+				{'docFoto':
+					{
+						'doc': req.body.bolsista.tipoDocFoto,
+						'regular':req.body.bolsista.regDocFoto,
+						'obsv':req.body.bolsista.obsvDocFoto,
+						'data': new Date(),
+						'user':'tester'
+					}
+				}
+			},
+			(err, upObejct) =>{
+				if(err){
+					console.log(err);
+				} else{
+					console.log('-------------------------------------------');
+					console.log(`${upObejct.docFoto} Updated!`);
+				}
+		});
+	} catch {
+		console.log('Error updating docFoto');
+	}
+	try{
+		await Bolsista.findOneAndUpdate({cpf:req.params.cpf},
+			{'$push':
+				{'docRes':
+					{
+						'doc': req.body.bolsista.tipoDocRes,
+						'regular':req.body.bolsista.regDocRes,
+						'obsv':req.body.bolsista.obsvDocRes,
+						'data': new Date(),
+						'user':'tester'
+					}
+				}
+			},
+			(err, upObejct) =>{
+				if(err){
+					console.log(err);
+				} else{
+					console.log('-------------------------------------------');
+					console.log(`${upObejct.docFoto} Updated!`);
+				}
+		});
+	} catch {
+		console.log('Error updating docRes');
+	}
+	try{
+		await Bolsista.findOneAndUpdate({cpf:req.params.cpf},
+			{'$push':
+				{'termo':
+					{
+						'regular':req.body.bolsista.regTermo,
+						'obsv':req.body.bolsista.obsvTermo,
+						'data': new Date(),
+						'user':'tester'
+					}
+				}
+			},
+			(err, upObejct) =>{
+				if(err){
+					console.log(err);
+				} else{
+					console.log('-------------------------------------------');
+					console.log(`${upObejct.termo} Updated!`);
+					res.redirect(`/pagbolsista/${upObejct._id}`);
+				}
+		});
+	} catch {
+		console.log('Error updating Termo');
+	}
+	res.redirect(`/pagbolsista/${upObejct._id}`);
 
-Bolsista.findOneAndUpdate({sei:'23038.011600/2019-90'},
-    {'$push':
-        {'docFoto':
-            {
-                'doc':'Identidade',
-                'regular':'Regular',
-                'obsv':'Ausente',
-                'data': new Date(),
-                'user':'tester'
-            }
-        }
-    },
-    (err, upObejct) =>{
-        if(err){
-            console.log(err);
-        } else{
-            console.log('-------------------------------------------');
-            console.log(upObejct.docFoto.length)
-            console.log(upObejct.docFoto[(upObejct.docFoto.length)-1]);
-            console.log('Updated!');
-        }
-});
 });
 
 	//Routes order matters! This should always be the last route!!
