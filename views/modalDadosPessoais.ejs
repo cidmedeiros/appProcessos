@@ -12,7 +12,7 @@
 
             <div class="modal-body border border-rounded border-info mx-1 my-1">
                 <div class="container-fluid">
-                    <form action='/editarbolsista/<%=bolCons.cpf%>?_method=PUT' method="POST">
+                    <form action='/editardadospessoais/<%=bolCons.cpf%>?_method=PUT' method="POST">
 
                         <div class="row mb-2">
                             <div class="col-1"></div>
@@ -148,10 +148,21 @@
                                     </select>
                                     <label for="obsvDocRes">Observação</label>
                                     <select class="form-control" name='bolsista[obsvDocRes]' id='bolsista[obsvDocRes]'>
-                                        <option>Selecione</option>
-                                        <option>Sem Observações</option>
-                                        <option>Ilegível</option>
-                                        <option>Ausente</option>
+                                    <%var obsvResList = ['Selecione','Ilegível','Ausente','Sem Observações'];%>
+                                    <% if(indexRes <= 0){ %>
+                                        <% obsvResList.forEach((obsvList) => { %>
+                                            <option><%= obsvList %></option>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <% obsvResList.shift() %>;
+                                        <% obsvResList.forEach((obsvList) => { %>
+                                            <% if(obsvList === docuRes.obsv){ %>
+                                                <option selected><%= obsvList %></option>
+                                            <% } else { %>
+                                                <option><%= obsvList %></option>
+                                            <% } %>
+                                        <% }); %>
+                                    <% } %>
                                     </select>
                                 </div>
                             </div>
@@ -164,16 +175,37 @@
                                 <div class="form-group">
                                     <label for="regTermo">Regularidade do Documento</label>
                                     <select class="form-control" name='bolsista[regTermo]' id='bolsista[regTermo]'>
+                                    <% var indexTermo = (bolCons.termo.length)-1; %>
+                                    <% var termo = bolCons.termo[indexTermo]; %>
+                                    <% if(indexTermo <= 0){ %>
                                         <option>Selecione</option>
                                         <option>Regular</option>
                                         <option>Irregular</option>
+                                    <% } else if(termo.regular === 'Regular') { %>
+                                        <option selected>Regular</option>
+                                        <option>Irregular</option>
+                                    <% } else { %>
+                                        <option selected>Irregular</option>
+                                        <option>Regular</option>
+                                    <% } %>
                                     </select>
                                     <label for="obsvTermo">Observação</label>
                                     <select class="form-control" name='bolsista[obsvTermo]' id='bolsista[obsvTermo]'>
-                                        <option>Selecione</option>
-                                        <option>Sem Observações</option>
-                                        <option>Ilegível</option>
-                                        <option>Ausente</option>
+                                    <%var obsvTermoList = ['Selecione','Assinado Após Pagamento','Ausente','Ilegível','Sem Assinatura','Sem Observações'];%>
+                                    <% if(indexTermo <= 0){ %>
+                                        <% obsvTermoList.forEach((obsvList) => { %>
+                                            <option><%= obsvList %></option>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <% obsvTermoList.shift() %>;
+                                        <% obsvTermoList.forEach((obsvList) => { %>
+                                            <% if(obsvList === termo.obsv){ %>
+                                                <option selected><%= obsvList %></option>
+                                            <% } else { %>
+                                                <option><%= obsvList %></option>
+                                            <% } %>
+                                        <% }); %>
+                                    <% } %>
                                     </select>
                                 </div>
                             </div>
