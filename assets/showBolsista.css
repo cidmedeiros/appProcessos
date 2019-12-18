@@ -23,3 +23,8 @@ h6, h4{
      vertical-align: middle;
      text-align: center;
 }
+
+li {
+    background-color: #d5feff;
+    background-image: linear-gradient(215deg, #d5feff 0%, #fffcff 74%);
+}
