@@ -21,12 +21,12 @@
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <% if(bolCons.email.length > 0){ %>
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="nome@examplo.com" value= <%= bolCons.email[(bolCons.email.length)-1].email %> >
+                                        <input type="email" class="form-control" id='bolsista[email]' name='bolsista[email]' placeholder="nome@examplo.com" value= <%= bolCons.email[(bolCons.email.length)-1].email %> >
                                     <% } else{ %>
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="nome@examplo.com">
+                                        <input type="email" class="form-control" id='bolsista[email]' name='bolsista[email]' placeholder="nome@examplo.com">
                                     <% } %>
                                     <label for="sexo">Sexo</label>
-                                    <select class="form-control" name="sexo" id="sexo">
+                                    <select class="form-control" name='bolsista[sexo]' id='bolsista[sexo]'>
                                     <% if(bolCons.sexo === 'sem info'){ %>
                                         <option>Selecione</option>
                                         <option>Feminino</option>
@@ -51,7 +51,7 @@
                                 <h5>Documento Com Foto</h5>
                                 <div class="form-group">
                                     <label for="tipoDocFoto">Documento</label>
-                                    <select class="form-control" name="tipoDocFoto" id="tipoDocFoto">
+                                    <select class="form-control" name='bolsista[tipoDocFoto]' id='bolsista[tipoDocFoto]'>
                                     <%var docFotoList = ['Selecione','Identidade','Carteira de Motorista','Registro Profissional','Passaporte','Carteira de Trabalho'];%>
                                     <% var indexFoto = (bolCons.docFoto.length)-1; %>
                                     <% if(indexFoto <= 0){ %>
@@ -71,7 +71,7 @@
                                     <% } %>
                                     </select>
                                     <label for="regDocFoto">Regularidade do Documento</label>
-                                    <select class="form-control" name="regDocFoto" id="regDocFoto">
+                                    <select class="form-control" name='bolsista[regDocFoto]' id='bolsista[regDocFoto]'>
                                     <% if(indexFoto <= 0){ %>
                                         <option>Selecione</option>
                                         <option>Regular</option>
@@ -85,7 +85,7 @@
                                     <% } %>
                                     </select>
                                     <label for="obsvDocFoto">Observação</label>
-                                    <select class="form-control" name="obsvDocFoto" id="obsvDocFoto">
+                                    <select class="form-control" name='bolsista[obsvDocFoto]' id='bolsista[obsvDocFoto]'>
                                         <%var obsvFotoList = ['Selecione','Ausente','Cópia Ilegível','Sem Assinatura','Sem Observação','Sem Foto','Vencida'];%>
                                         <% if(indexFoto <= 0){ %>
                                             <% obsvFotoList.forEach((obsvList) => { %>
@@ -113,7 +113,7 @@
                                 <h5>Comprovante de Residência</h5>
                                 <div class="form-group">
                                     <label for="tipoDocRes">Documento</label>
-                                    <select class="form-control" name="tipoDocRes" id="tipoDocRes">
+                                    <select class="form-control" name='bolsista[tipoDocRes]' id='bolsista[tipoDocRes]'>
                                         <%var docResList = ['Selecione','Conta de Água','Conta de Luz','Conta de Telefone','Correspondência Bancária','Correspondência Comercial'];%>
                                         <% var indexRes = (bolCons.docRes.length)-1; %>
                                         <% if(indexRes <= 0){ %>
@@ -133,7 +133,7 @@
                                         <% } %>
                                     </select>
                                     <label for="regDocRes">Regularidade do Documento</label>
-                                    <select class="form-control" name="regDocRes" id="regDocRes">
+                                    <select class="form-control" name='bolsista[regDocRes]' id='bolsista[regDocRes]'>
                                     <% if(indexRes <= 0){ %>
                                         <option>Selecione</option>
                                         <option>Regular</option>
@@ -147,7 +147,7 @@
                                     <% } %>
                                     </select>
                                     <label for="obsvDocRes">Observação</label>
-                                    <select class="form-control" name="obsvDocRes" id="obsvDocRes">
+                                    <select class="form-control" name='bolsista[obsvDocRes]' id='bolsista[obsvDocRes]'>
                                         <option>Selecione</option>
                                         <option>Sem Observações</option>
                                         <option>Ilegível</option>
@@ -163,13 +163,13 @@
                                 <h5>Termo de Compromisso do Bolsista</h5>
                                 <div class="form-group">
                                     <label for="regTermo">Regularidade do Documento</label>
-                                    <select class="form-control" name="regTermo" id="regTermo">
+                                    <select class="form-control" name='bolsista[regTermo]' id='bolsista[regTermo]'>
                                         <option>Selecione</option>
                                         <option>Regular</option>
                                         <option>Irregular</option>
                                     </select>
                                     <label for="obsvTermo">Observação</label>
-                                    <select class="form-control" name="obsvTermo" id="obsvTermo">
+                                    <select class="form-control" name='bolsista[obsvTermo]' id='bolsista[obsvTermo]'>
                                         <option>Selecione</option>
                                         <option>Sem Observações</option>
                                         <option>Ilegível</option>
