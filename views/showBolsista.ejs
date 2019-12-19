@@ -206,8 +206,6 @@
                             <% if(bolCons.statusCurso.length > 0){ %>
                                 <% let curso = bolCons.statusCurso[((bolCons.statusCurso).length-1)]%>
                                 <h5 class="my-1 ml-1">Situação do Curso</h5><h6 class="my-1 ml-1"><%=curso.status.sit%></h6>
-                                <h5 class="my-1 ml-1">Data da Informação</h5><h6 class="my-1 ml-1"><%=curso.status.dataSit%></h6>
-                                <footer class="mx-auto">Informações por <%=curso.user%></footer>
                             <% } else{ %>
                                 <h5 class="my-1 ml-1">Pendente de análise</h5>
                             <% } %>
@@ -285,7 +283,7 @@
             <div class="row justify-content-md-center">
                 <div class="col-5"></div>
                 <div class="col-1">
-                    <button type="button" class="btn btn-primary btn-md btn-block active" data-toggle="modal" data-target="#modalCompromisso">Editar</button>
+                    <button type="button" id="btnEditCompromisso" class="btn btn-primary btn-md btn-block active" data-toggle="modal" data-target="#modalCompromisso">Editar</button>
                 </div>
                 <div class="col-3 mx-auto my-auto"></div>
                 <div class="col-3 mx-auto my-auto"></div>
