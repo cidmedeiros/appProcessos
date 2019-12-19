@@ -11,9 +11,10 @@
                 <h5 class="ml-3"> <%= bolCons.nome %> CPF: <%= bolCons.cpf %> </h5>
             </div>
             <div class="modal-body border border-rounded border-info mx-1 my-1">
-                <form action='/editarcomrpomisso/<%=bolCons.cpf%>?_method=PUT' method="POST">
+                <form action='/editarcompromisso/<%=bolCons.cpf%>?_method=PUT' method="POST">
 
                     <div class="card my-1 py-.25 pl-.5">
+
                         <div class="card-body">
                             <h5 class="card-title"><strong>Situação do Curso</strong></h5>
                             <div class="form-group">
@@ -53,7 +54,31 @@
                         <div class="card-body">
                             <h5 class="card-title"><strong>Certificado de Conclusão</strong></h5>
                             <div class="form-group">
-                                <input class="mx-auto" type="month" id="start" name="start" min="2011-03" value=''>
+                                <h4>Informações da Entidade Emissora</h4>
+                                <% let allUf = [] %>
+                                <% municipios.forEach((mun) =>{ %>
+                                        <% allUf.push(mun.uf) %>
+                                <% }); %>
+                                <% var uf = [...new Set(allUf)] %>
+                                <% var indexCert = (bolCons.certConclusao.length)-1; %>
+                                <% var certConclusao = bolCons.certConclusao[indexCert]; %>
+                                <label for="bolsista[ufIesCert]">Unidade Federativa</label>
+                                <select class="form-control" name='bolsista[ufIesCert]' id='bolsista[ufIesCert]'>
+                                <% if(indexCert <= 0){ %>
+                                    <option>Selecione</option>
+                                    <% uf.forEach((estado) =>{ %>
+                                        <option><%= estado %></option>
+                                    <% }); %>
+                                <% } else { %>
+                                    <% uf.forEach((estado) => { %>
+                                        <% if(estado === certConclusao.ies.municipio.uf){ %>
+                                            <option selected><%= estado %></option>
+                                        <% } else { %>
+                                            <option><%= estado %></option>
+                                        <% } %>
+                                    <% }); %>
+                                <% } %>
+                                </select>
                             </div>
                         </div>
                     </div>
