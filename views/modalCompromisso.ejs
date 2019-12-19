@@ -11,211 +11,58 @@
                 <h5 class="ml-3"> <%= bolCons.nome %> CPF: <%= bolCons.cpf %> </h5>
             </div>
             <div class="modal-body border border-rounded border-info mx-1 my-1">
-                <div class="container-fluid">
-                    <form action='/editarcompromisso/<%=bolCons.cpf%>?_method=PUT' method="POST">
+                <form action='/editarcomrpomisso/<%=bolCons.cpf%>?_method=PUT' method="POST">
 
-                        <div class="row mb-2">
-                            <div class="col-1"></div>
-
-                            <div class="card col border border-rounded-bottom mr-1 py-.25 pl-.5">
-                                <div class="form-group">
-                                    <label for="status">Situação do Curso</label>
-                                    <select class="form-control" name='bolsista[status]' id='bolsista[status]'>
-                                    <%var statusList = ['Selecione','Identidade','Carteira de Motorista','Registro Profissional','Passaporte','Carteira de Trabalho'];%>
-                                    <% var indexStatus = (bolCons.statusCurso.length)-1; %>
-                                    <% if(indexStatus <= 0){ %>
-                                        <% statusList.forEach((stat) => { %>
-                                            <option><%= stat %></option>
-                                        <% }); %>
-                                    <% } else { %>
-                                        <% var statusCurso = bolCons.statusCurso[indexStatus]; %>
-                                        <% statusList.shift() %>;
-                                        <% statusList.forEach((statList) => { %>
-                                            <% if(statList === statusCurso.status){ %>
-                                                <option selected><%= docList %></option>
-                                            <% } else { %>
-                                                <option><%= statList %></option>
-                                            <% } %>
-                                        <% }); %>
-                                    <% } %>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-1"></div>
-                        </div>
-
-                        <div class="row mb-2">
-
-                            <div class="card col border border-rounded-bottom ml-1 py-.25 pl-.5">
-                                <h5>Documento Com Foto</h5>
-                                <div class="form-group">
-                                    <label for="tipoDocFoto">Documento</label>
-                                    <select class="form-control" name='bolsista[tipoDocFoto]' id='bolsista[tipoDocFoto]'>
-                                    <%var docFotoList = ['Selecione','Identidade','Carteira de Motorista','Registro Profissional','Passaporte','Carteira de Trabalho'];%>
-                                    <% var indexFoto = (bolCons.docFoto.length)-1; %>
-                                    <% if(indexFoto <= 0){ %>
-                                        <% docFotoList.forEach((doc) => { %>
-                                            <option><%= doc %></option>
-                                        <% }); %>
-                                    <% } else { %>
-                                        <% var docuFoto = bolCons.docFoto[indexFoto]; %>
-                                        <% docFotoList.shift() %>;
-                                        <% docFotoList.forEach((docList) => { %>
-                                            <% if(docList === docuFoto.doc){ %>
-                                                <option selected><%= docList %></option>
-                                            <% } else { %>
-                                                <option><%= docList %></option>
-                                            <% } %>
-                                        <% }); %>
-                                    <% } %>
-                                    </select>
-                                    <label for="regDocFoto">Regularidade do Documento</label>
-                                    <select class="form-control" name='bolsista[regDocFoto]' id='bolsista[regDocFoto]'>
-                                    <% if(indexFoto <= 0){ %>
-                                        <option>Selecione</option>
-                                        <option>Regular</option>
-                                        <option>Irregular</option>
-                                    <% } else if(docuFoto.regular === 'Regular') { %>
-                                        <option selected>Regular</option>
-                                        <option>Irregular</option>
-                                    <% } else { %>
-                                        <option selected>Irregular</option>
-                                        <option>Regular</option>
-                                    <% } %>
-                                    </select>
-                                    <label for="obsvDocFoto">Observação</label>
-                                    <select class="form-control" name='bolsista[obsvDocFoto]' id='bolsista[obsvDocFoto]'>
-                                        <%var obsvFotoList = ['Selecione','Ausente','Cópia Ilegível','Sem Assinatura','Sem Observação','Sem Foto','Vencida'];%>
-                                        <% if(indexFoto <= 0){ %>
-                                            <% obsvFotoList.forEach((obsvList) => { %>
-                                                <option><%= obsvList %></option>
-                                            <% }); %>
+                    <div class="card my-1 py-.25 pl-.5">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>Situação do Curso</strong></h5>
+                            <div class="form-group">
+                                <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[status]' id='bolsista[status]'>
+                                <%var statusList = ['Selecione','Concluído','Desligado','Abandonou o Curso','Cursando (Reingresso)'];%>
+                                <% var indexStatus = (bolCons.statusCurso.length)-1; %>
+                                <% if(indexStatus <= 0){ %>
+                                    <% statusList.forEach((stat) => { %>
+                                        <option><%= stat %></option>
+                                    <% }); %>
+                                <% } else { %>
+                                    <% var statusCurso = bolCons.statusCurso[indexStatus]; %>
+                                    <% statusList.shift() %>;
+                                    <% statusList.forEach((statList) => { %>
+                                        <% if(statList === statusCurso.status){ %>
+                                            <option selected><%= statList %></option>
                                         <% } else { %>
-                                            <% obsvFotoList.shift() %>;
-                                            <% obsvFotoList.forEach((obsvList) => { %>
-                                                <% if(obsvList === docuFoto.obsv){ %>
-                                                    <option selected><%= obsvList %></option>
-                                                <% } else { %>
-                                                    <option><%= obsvList %></option>
-                                                <% } %>
-                                            <% }); %>
+                                            <option><%= statList %></option>
                                         <% } %>
-                                    </select>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row mb-2">
-
-                            <div class="card col border border-rounded-bottom my-1 py-.25 pl-.5">
-                                <h5>Comprovante de Residência</h5>
-                                <div class="form-group">
-                                    <label for="tipoDocRes">Documento</label>
-                                    <select class="form-control" name='bolsista[tipoDocRes]' id='bolsista[tipoDocRes]'>
-                                        <%var docResList = ['Selecione','Conta de Água','Conta de Luz','Conta de Telefone','Correspondência Bancária','Correspondência Comercial'];%>
-                                        <% var indexRes = (bolCons.docRes.length)-1; %>
-                                        <% if(indexRes <= 0){ %>
-                                            <% docResList.forEach((doc) => { %>
-                                                <option><%= doc %></option>
-                                            <% }); %>
-                                        <% } else { %>
-                                            <% var docuRes = bolCons.docRes[indexRes]; %>
-                                            <% docResList.shift() %>;
-                                            <% docResList.forEach((docList) => { %>
-                                                <% if(docList === docuRes.doc){ %>
-                                                    <option selected><%= docList %></option>
-                                                <% } else { %>
-                                                    <option><%= docList %></option>
-                                                <% } %>
-                                            <% }); %>
-                                        <% } %>
-                                    </select>
-                                    <label for="regDocRes">Regularidade do Documento</label>
-                                    <select class="form-control" name='bolsista[regDocRes]' id='bolsista[regDocRes]'>
-                                    <% if(indexRes <= 0){ %>
-                                        <option>Selecione</option>
-                                        <option>Regular</option>
-                                        <option>Irregular</option>
-                                    <% } else if(docuRes.regular === 'Regular') { %>
-                                        <option selected>Regular</option>
-                                        <option>Irregular</option>
-                                    <% } else { %>
-                                        <option selected>Irregular</option>
-                                        <option>Regular</option>
-                                    <% } %>
-                                    </select>
-                                    <label for="obsvDocRes">Observação</label>
-                                    <select class="form-control" name='bolsista[obsvDocRes]' id='bolsista[obsvDocRes]'>
-                                    <%var obsvResList = ['Selecione','Ilegível','Ausente','Sem Observações'];%>
-                                    <% if(indexRes <= 0){ %>
-                                        <% obsvResList.forEach((obsvList) => { %>
-                                            <option><%= obsvList %></option>
-                                        <% }); %>
-                                    <% } else { %>
-                                        <% obsvResList.shift() %>;
-                                        <% obsvResList.forEach((obsvList) => { %>
-                                            <% if(obsvList === docuRes.obsv){ %>
-                                                <option selected><%= obsvList %></option>
-                                            <% } else { %>
-                                                <option><%= obsvList %></option>
-                                            <% } %>
-                                        <% }); %>
-                                    <% } %>
-                                    </select>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row mb-2">
-                            <div class="card col border border-rounded-bottom my-1 py-.25 pl-.5">
-                                <h5>Termo de Compromisso do Bolsista</h5>
-                                <div class="form-group">
-                                    <label for="regTermo">Regularidade do Documento</label>
-                                    <select class="form-control" name='bolsista[regTermo]' id='bolsista[regTermo]'>
-                                    <% var indexTermo = (bolCons.termo.length)-1; %>
-                                    <% var termo = bolCons.termo[indexTermo]; %>
-                                    <% if(indexTermo <= 0){ %>
-                                        <option>Selecione</option>
-                                        <option>Regular</option>
-                                        <option>Irregular</option>
-                                    <% } else if(termo.regular === 'Regular') { %>
-                                        <option selected>Regular</option>
-                                        <option>Irregular</option>
-                                    <% } else { %>
-                                        <option selected>Irregular</option>
-                                        <option>Regular</option>
-                                    <% } %>
-                                    </select>
-                                    <label for="obsvTermo">Observação</label>
-                                    <select class="form-control" name='bolsista[obsvTermo]' id='bolsista[obsvTermo]'>
-                                    <%var obsvTermoList = ['Selecione','Assinado Após Pagamento','Ausente','Ilegível','Sem Assinatura','Sem Observações'];%>
-                                    <% if(indexTermo <= 0){ %>
-                                        <% obsvTermoList.forEach((obsvList) => { %>
-                                            <option><%= obsvList %></option>
-                                        <% }); %>
-                                    <% } else { %>
-                                        <% obsvTermoList.shift() %>;
-                                        <% obsvTermoList.forEach((obsvList) => { %>
-                                            <% if(obsvList === termo.obsv){ %>
-                                                <option selected><%= obsvList %></option>
-                                            <% } else { %>
-                                                <option><%= obsvList %></option>
-                                            <% } %>
-                                        <% }); %>
-                                    <% } %>
-                                    </select>
-                                </div>
+                                    <% }); %>
+                                <% } %>
+                                </select>
                             </div>
                         </div>
+                    </div>
 
-                        <div>
-                            <button type="submit" class="btn btn-primary my-auto">Salvar</button>
+                    <div class="card mt-2 mb-3 my-1 py-.25 pl-.5">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>Data de Conclusão do Curso</strong></h5>
+                            <div class="form-group">
+                                <input class="mx-auto" type="month" id="start" name="start" min="2011-03" value=''>
+                            </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+
+                    <div class="card mt-2 mb-3 my-1 py-.25 pl-.5">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>Certificado de Conclusão</strong></h5>
+                            <div class="form-group">
+                                <input class="mx-auto" type="month" id="start" name="start" min="2011-03" value=''>
+                            </div>
+                        </div>
+                    </div>
+                    
+                     <div>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+                
             </div>
         </div>
     </div>
