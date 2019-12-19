@@ -11,7 +11,7 @@
         <div class="col-md-6"></div>
     </div>
 
-    <div class="row justify-content-md-center dadosPessoais border border-dark rounded mt-2 mb-3 mr-2 ml-2 px-5 py-2">
+    <div class="row justify-content-start dadosPessoais border border-dark rounded mt-2 mb-3 mr-2 ml-2 px-5 py-2">
 
         <h2>Dados Pessoais</h2>
 
@@ -100,8 +100,8 @@
                                     <% if(bolCons.docFoto.length > 0){ %>
                                         <% let docuFoto = bolCons.docFoto[((bolCons.docFoto).length-1)] %>
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><h5 class="my-1 ml-1">Descrição</h5><h4 class="my-1 ml-1"><%= docuFoto.doc %></h4></li>
-                                            <li class="list-group-item"><h5 class="my-1 ml-1">Observação</h5><h4 class="my-1 ml-1"><%= docuFoto.obsv %></h4></li>
+                                            <li class="list-group-item border-success"><h5 class="my-1 ml-1">Descrição</h5><h4 class="my-1 ml-1"><%= docuFoto.doc %></h4></li>
+                                            <li class="list-group-item border-success"><h5 class="my-1 ml-1">Observação</h5><h4 class="my-1 ml-1"><%= docuFoto.obsv %></h4></li>
                                             <% if(docuFoto.regular === 'Regular'){ %>
                                                 <li class="list-group-item border-success"><h5 class="my-1 ml-1">Regularidade</h5><h4 class="my-1 ml-1" style="color:darkgreen"><strong>Regular</strong></h4></li>
                                             <% } else { %>
@@ -127,7 +127,7 @@
                                     <% if(bolCons.termo.length > 0){ %>
                                         <% let docuTermo = bolCons.termo[((bolCons.termo).length-1)]%>
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><h5 class="my-1 ml-1">Observação</h5><h4 class="my-1 ml-1"><%=docuTermo.obsv%></h4></li>
+                                            <li class="list-group-item border-success"><h5 class="my-1 ml-1">Observação</h5><h4 class="my-1 ml-1"><%=docuTermo.obsv%></h4></li>
                                             <% if(docuTermo.regular === 'Regular'){ %>
                                                 <li class="list-group-item border-success"><h5 class="my-1 ml-1">Regularidade</h5><h4 class="my-1 ml-1" style="color:darkgreen"><strong>Regular</strong></h4></li>
                                             <% } else { %>
@@ -453,5 +453,4 @@
 <% include modalDadosPessoais %>
 
 <!-- closing elements -->
-</div>
 <% include partials/footer %>
