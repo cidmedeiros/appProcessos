@@ -37,7 +37,7 @@
                 <div class="col mx-auto my-auto">
                     <div class="card border-secondary my-1 py-.25 pl-.5">
                         <div class="card-body">
-                            <h5 class="card-title"><strong>Identificação</strong></h5>
+                            <h3 class="card-title"><strong>Identificação</strong></h3>
 
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item border-success">
@@ -48,6 +48,18 @@
                                 </li>
                                 <li class="list-group-item border-success">
                                     <h5 class="my-1 ml-1">SEI</h5><h4 class="my-1 ml-1"><%=bolCons.sei%></h4>
+                                </li>
+                                <li class="list-group-item border-success">
+                                    <% let pags = bolCons.pags[(bolCons.pags.length)-1] %>
+                                    <% let programa = pags.programa %>
+                                    <% let cNac = programa.coordNacional[(programa.coordNacional.length)-1].ies.sigla %>
+                                    <h5 class="my-1 ml-1">Programa</h5><h4 class="my-1 ml-1"><%= programa.nome %></h4>
+                                </li>
+                                <li class="list-group-item border-success">
+                                    <h5 class="my-1 ml-1">Entidade Nacional</h5><h4 class="my-1 ml-1"><%= cNac %></h4>
+                                </li>
+                                <li class="list-group-item border-success">
+                                    <h5 class="my-1 ml-1">Entidade Local</h5><h4 class="my-1 ml-1"><%= pags.iesLocal.sigla %></h4>
                                 </li>
                                 <li class="list-group-item border-success">
                                 <% if((bolCons.email.length)-1 > 0) { %>
@@ -166,7 +178,7 @@
 
     <div class="row analiseCompromisso border border-dark rounded mt-2 mb-3 mr-2 ml-2 px-5 py-2">
     
-        <h3>Análise do Compromisso</h3>        
+        <h2>Análise do Compromisso</h2>        
         <div class="container-fluid border border-warning rounded mb-2 py-2">
 
             <div class="row">
@@ -284,7 +296,7 @@
 
     <div class="row acompanhamentoProcesso border border-dark rounded mt-2 mb-3 mr-2 ml-2 px-5 py-2">
     
-        <h3>Acompanhamento do Processo</h3>        
+        <h2>Acompanhamento do Processo</h2>        
         <div class="container-fluid border border-warning rounded mb-2 py-2">
 
              
@@ -401,7 +413,7 @@
         </div>
 
         <div class="container-fluid collapse" id="collapsePags">
-            <h3>Pagamentos</h3>
+            <h2>Pagamentos</h2>
 
             <h5 class="my-1 ml-1"><%=bolCons.nome%> <span class="ml-5">CPF: <%=bolCons.cpf%></span> </h5>
             <table class="table table-sm table-bordered table-striped table-dark table-hover" style="height: 100px;">
@@ -451,6 +463,8 @@
  <!-- MODALS -->
 
 <% include modalDadosPessoais %>
+
+<% include modalCompromisso %>
 
 <!-- closing elements -->
 <% include partials/footer %>
