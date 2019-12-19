@@ -9,6 +9,8 @@ methodOverride = require('method-override');
 expressSanitizer = require('express-sanitizer');
 tools = require('./assets/scripts/tools');
 Bolsista = require('./models/bolsistas');
+Ies = require('./models/ies');
+Municipio = require('./models/municipios');
 
 //App Variable
 const app = express();
@@ -45,15 +47,25 @@ app.get('/paginadobolsista/:id', async (req, res) => {
 					model:'Ies'
 				}
 			}
-		]).exec((err, foundBol) => {
+		]).exec(async (err, foundBol) => {
 			if(err){
 				console.log(`Bolsista ${req.params.cpf} not found! Error: ${err}`);
 			} else {
 				console.log('Id found!');
-				console.log(foundBol.docFoto);
-				console.log('redirecting to showBolsista');
-				res.render('showBolsista', {bolCons:foundBol});
-				console.log('End of server execution!');
+				await Ies.find({}, async (err, entidades) =>{
+					if(err){
+						console.log(`Error fetching Ies collection in Id -> ${err}`)
+					} else {
+						await Municipio.find({}, async (err, municipios) => {
+							if(err){
+								console.log(`Error fetching Municipios collection in Id -> ${err}`)
+							} else{
+								res.render('showBolsista', {bolCons:foundBol, entidades:entidades, municipios:municipios});
+								console.log('End of server execution!');
+							}
+						})						
+					}
+				});
 			}
 		});
 	} catch(error){
@@ -63,9 +75,7 @@ app.get('/paginadobolsista/:id', async (req, res) => {
 
 app.post('/consultabolsista', async (req, res) => {
 	let input = req.body.consulta;
-	console.log(`raw input: ${input}`);
 	input = await tools.treatInput(input);
-	console.log(`after handling input: ${input[1]}`);
 	try{
 		if(input[0] === 'cpf'){
 			await Bolsista.findOne({cpf:input[1]}).populate('pags.iesLocal').populate([
@@ -77,14 +87,23 @@ app.post('/consultabolsista', async (req, res) => {
 						model:'Ies'
 					}
 				}
-			]).exec((err, foundBol) => {
+			]).exec(async (err, foundBol) => {
 				if(err){
 					console.log(`Bolsista ${input[1]} not found! ${err}`);
 				} else {
-					console.log('cpf found!');
-					console.log('redirecting to showBolsista');
-					res.render('showBolsista', {bolCons:foundBol});
-					console.log('End of server execution!');
+					await Ies.find({}, async (err, entidades) =>{
+						if(err){
+							console.log(`Error fetching Ies collection in CPF -> ${err}`)
+						} else {
+							await Municipio.find({}, async (err, municipios) => {
+								if(err){
+									console.log(`Error fetching Municipios collection in CPF -> ${err}`)
+								} else{
+									res.render('showBolsista', {bolCons:foundBol, entidades:entidades, municipios:municipios});
+								}
+							})						
+						}
+					});
 				}
 			});
 		} else if(input[0] === 'sei'){
@@ -97,14 +116,23 @@ app.post('/consultabolsista', async (req, res) => {
 						model:'Ies'
 					}
 				}
-			]).exec((err, foundBol) => {
+			]).exec(async (err, foundBol) => {
 				if(err){
 					console.log(`Error tryng to find ${input[1]}, ${err}`);
 				} else {
-					console.log('sei found!');
-					console.log('redirecting to showBolsista');
-					res.render('showBolsista', {bolCons:foundBol});
-					console.log('End of server execution!');
+					await Ies.find({}, async (err, entidades) =>{
+						if(err){
+							console.log(`Error fetching Ies collection in SEI -> ${err}`)
+						} else {
+							await Municipio.find({}, async (err, municipios) => {
+								if(err){
+									console.log(`Error fetching Municipios collection in SEI -> ${err}`)
+								} else{
+									res.render('showBolsista', {bolCons:foundBol, entidades:entidades, municipios:municipios});
+								}
+							})						
+						}
+					});
 				}
 			});
 		} else if(input[0] === 'nome'){
@@ -128,14 +156,23 @@ app.post('/consultabolsista', async (req, res) => {
 										model:'Ies'
 									}
 								}
-							]).exec((err, foundOne) => {
+							]).exec(async (err, foundOne) => {
 								if(err){
 									console.log(`Bolsista ${input[1]} not found! ${err}`)
 								} else {
-									console.log('nome found!');
-									console.log('redirecting to showBolsista');
-									res.render('showBolsista', {bolCons:foundOne});
-									console.log('End of server execution!');
+									await Ies.find({}, async (err, entidades) =>{
+										if(err){
+											console.log(`Error fetching Ies collection in NOME -> ${err}`)
+										} else {
+											await Municipio.find({}, async (err, municipios) => {
+												if(err){
+													console.log(`Error fetching Municipios collection in NOME -> ${err}`)
+												} else{
+													res.render('showBolsista', {bolCons:foundBol, entidades:entidades, municipios:municipios});
+												}
+											})						
+										}
+									});									
 								}
 							});
 						}
@@ -171,7 +208,6 @@ app.put('/editardadospessoais/:cpf', async (req, res) => {
 				if(err){
 					console.log(err);
 				} else{
-					console.log(`${upObejct.email} Updated 1!`);
 					console.log(`-------------------------------`);
 				}
 		});
@@ -196,7 +232,6 @@ app.put('/editardadospessoais/:cpf', async (req, res) => {
 					console.log(err);
 				} else{
 					console.log('-------------------------------------------');
-					console.log(`${upObejct.docFoto} Updated 2!`);
 				}
 		});
 	} catch {
@@ -220,7 +255,6 @@ app.put('/editardadospessoais/:cpf', async (req, res) => {
 					console.log(err);
 				} else{
 					console.log('-------------------------------------------');
-					console.log(`${upObejct.docRes} Updated 3!`);
 				}
 		});
 	} catch {
@@ -243,7 +277,6 @@ app.put('/editardadospessoais/:cpf', async (req, res) => {
 					console.log(err);
 				} else{
 					console.log('-------------------------------------------');
-					console.log(`${upObejct.termo} Updated 4!`);
 					res.redirect(`/paginadobolsista/${upObejct._id}`);
 				}
 		});
