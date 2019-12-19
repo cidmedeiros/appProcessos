@@ -286,6 +286,25 @@ app.put('/editardadospessoais/:cpf', async (req, res) => {
 
 });
 
+app.put('/editarcompromisso/:cpf', async (req, res) =>{
+	try{
+		await Bolsista.findOneAndUpdate({cpf:req.params.cpf},
+			{
+				'$push':{'email':{'email':req.body.bolsista.email, 'data': new Date()}},
+				'sexo': req.body.bolsista.sexo
+			},
+			(err, upObejct) =>{
+				if(err){
+					console.log(err);
+				} else{
+					console.log(`-------------------------------`);
+				}
+		});
+	} catch {
+		console.log('Error updating email/sexo');
+	}
+});
+
 	//Routes order matters! This should always be the last route!!
 app.get('*', async (req, res) =>{
 	console.log('Waiting...');
