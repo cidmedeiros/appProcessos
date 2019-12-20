@@ -62,23 +62,48 @@
                                 <% var uf = [...new Set(allUf)] %>
                                 <% var indexCert = (bolCons.certConclusao.length)-1; %>
                                 <% var certConclusao = bolCons.certConclusao[indexCert]; %>
-                                <label for="bolsista[ufIesCert]">Unidade Federativa</label>
-                                <select class="form-control" name='bolsista[ufIesCert]' id='bolsista[ufIesCert]'>
-                                <% if(indexCert <= 0){ %>
-                                    <option>Selecione</option>
-                                    <% uf.forEach((estado) =>{ %>
-                                        <option><%= estado %></option>
-                                    <% }); %>
-                                <% } else { %>
-                                    <% uf.forEach((estado) => { %>
-                                        <% if(estado === certConclusao.ies.municipio.uf){ %>
-                                            <option selected><%= estado %></option>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label for="bolsista[ufIesCert]">Unidade Federativa</label>
+                                        <select class="form-control" name='bolsista[ufIesCert]' id='bolsista[ufIesCert]'>
+                                        <% if(indexCert <= 0){ %>
+                                            <option>Selecione</option>
+                                            <% uf.forEach((estado) =>{ %>
+                                                <option><%= estado %></option>
+                                            <% }); %>
                                         <% } else { %>
-                                            <option><%= estado %></option>
+                                            <% uf.forEach((estado) => { %>
+                                                <% if(estado === certConclusao.ies.municipio.uf){ %>
+                                                    <option selected><%= estado %></option>
+                                                <% } else { %>
+                                                    <option><%= estado %></option>
+                                                <% } %>
+                                            <% }); %>
                                         <% } %>
-                                    <% }); %>
-                                <% } %>
-                                </select>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label for="bolsista[ufIesCert]">Instituição de Ensino</label>
+                                        <select class="form-control" name='bolsista[ufIesCert]' id='bolsista[ufIesCert]'>
+                                        <% if(indexCert <= 0){ %>
+                                            <option>Selecione</option>
+                                            <% uf.forEach((estado) =>{ %>
+                                                <option><%= estado %></option>
+                                            <% }); %>
+                                        <% } else { %>
+                                            <% uf.forEach((estado) => { %>
+                                                <% if(estado === certConclusao.ies.municipio.uf){ %>
+                                                    <option selected><%= estado %></option>
+                                                <% } else { %>
+                                                    <option><%= estado %></option>
+                                                <% } %>
+                                            <% }); %>
+                                        <% } %>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
