@@ -8,6 +8,9 @@ Municipio = require('./municipios');
 munData = require('../assets/dados/municipios.json'); //it returns a string
 munData = JSON.parse(munData); //it parses the string to a iterable object
 
+MunicipioDisplay = require('./munDisplay');
+mundataDisplay = require('../assets/dados/munDisplay.json');
+mundataDisplay = JSON.parse(mundataDisplay);
 
 const cleanMun = function(){
     try{
@@ -37,9 +40,18 @@ const addMun = function() {
     }
 };
 
-const seedMun = function(){
-    cleanMun();
-    addMun();
+const addMunDisplay = function() {
+    try{
+        MunicipioDisplay.insertMany(mundataDisplay, (err, data) =>{
+            if(err){
+                console.log(`Error 1 trying to save municipio ${err}`);
+            } else{
+                console.log('Municipios Display saved!');
+            }
+        });
+    } catch(error){
+        console.log(`Error 2 trying to save ies ${error}`);
+    }
 };
 
 //seedMun();
