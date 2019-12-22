@@ -52,11 +52,11 @@
                                 <li class="list-group-item border-success">
                                     <% let pags = bolCons.pags[(bolCons.pags.length)-1] %>
                                     <% let programa = pags.programa %>
-                                    <% let cNac = programa.coordNacional[(programa.coordNacional.length)-1].ies.sigla %>
+                                    <% let cNac = programa.coordNacional[(programa.coordNacional.length)-1].ies %>
                                     <h5 class="my-1 ml-1">Programa</h5><h4 class="my-1 ml-1"><%= programa.nome %></h4>
                                 </li>
                                 <li class="list-group-item border-success">
-                                    <h5 class="my-1 ml-1">Entidade Nacional</h5><h4 class="my-1 ml-1"><%= cNac %></h4>
+                                    <h5 class="my-1 ml-1">Entidade Nacional</h5><h4 class="my-1 ml-1"><%= cNac.sigla %></h4>
                                 </li>
                                 <li class="list-group-item border-success">
                                     <h5 class="my-1 ml-1">Entidade Local</h5><h4 class="my-1 ml-1"><%= pags.iesLocal.sigla %></h4>
@@ -65,7 +65,7 @@
                                 <% if((bolCons.email.length)-1 > 0) { %>
                                     <h5 class="my-1 ml-1">E-mail</h5><h4 class="my-1 ml-1"><%=bolCons.email[(bolCons.email.length)-1].email%></h4>
                                 <% } else { %>
-                                    <h5 class="my-1 ml-1">E-mail</h5><h4 class="my-1 ml-1"> email ainda não informado</h4>
+                                    <h5 class="my-1 ml-1">E-mail</h5><h4 class="my-1 ml-1"> Email ainda não informado</h4>
                                 <% } %>
                                 </li>
                                 <li class="list-group-item border-success">
@@ -464,5 +464,19 @@
 
 <% include modalCompromisso %>
 
+<script>
+    const ufSelector = document.getElementById('bolsista[ufCert]');
+    let municipiosDOM = document.getElementById('getMun');
+    let munObj = municipiosDOM.value;
+    let munArray = [];
+    munArray.push(munObj.slice(0,113));
+    munArray.push(munObj.slice(114,214));
+    munArray.push(munObj.slice(215,312));
+    
+    ufSelector.addEventListener('input', () => {
+        const munSelector = document.getElementById('bolsista[munCert]');
+        munSelector.options[munSelector.selectedIndex].text = ufSelector.options[ufSelector.selectedIndex].text;
+    });
+</script>
 <!-- closing elements -->
 <% include partials/footer %>

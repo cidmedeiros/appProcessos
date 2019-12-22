@@ -61,7 +61,6 @@ app.get('/paginadobolsista/:id', async (req, res) => {
 								console.log(`Error fetching Municipios collection in Id -> ${err}`)
 							} else{
 								res.render('showBolsista', {bolCons:foundBol, entidades:entidades, municipios:municipios});
-								console.log('End of server execution!');
 							}
 						})						
 					}
