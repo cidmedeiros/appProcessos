@@ -20,16 +20,41 @@ def munJson():
     municipios = municipios[['Codmun','NomeMunic','UF']].copy()
     municipios.columns = ['ibge','nome','uf']
     
-    mun_json = []
+    munList = []
 
     for _id, row in municipios.iterrows():
         values = {'ibge':row.ibge,'nome':row.nome,'uf':row.uf}
-        mun_json.append(values)
+        munList.append(values)
     
     with open('dados\municipios.json', 'w', encoding='utf-8') as f:
-        json.dump(mun_json, f, ensure_ascii=False)
+        json.dump(munList, f, ensure_ascii=False)
         
-    return mun_json
+    return munList
+
+def munJsonDisplay():
+    
+    """
+    """
+    municipios = pd.read_csv('dados\ibge_mun.csv',sep=';',encoding='ISO-8859-1',dtype=str)
+    municipios = municipios[['Codmun','NomeMunic','UF']].copy()
+    municipios.columns = ['ibge','nome','uf']
+    
+    municipiosJson = []
+    ufList = municipios.uf.unique()
+    
+    for uf in ufList:
+        ufDict = {'uf':uf}
+        munList = []
+        for _id, row in municipios.iterrows():
+            if row.uf == uf:
+                munList.append({'ibge':row.ibge, 'nome':row.nome})
+        ufDict['municipios'] = munList
+        municipiosJson.append(ufDict)
+        
+    with open('dados\munDisplay.json', 'w', encoding='utf-8') as f:
+        json.dump(municipiosJson, f, ensure_ascii=False)
+        
+    return municipiosJson
 
 def iesJson():
     
