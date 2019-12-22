@@ -1,0 +1,58 @@
+<div class="form-group">
+    <h4>Município da Escola Emissora</h4>
+    <% let allUf = [] %>
+    <% municipios.forEach((mun) =>{ %>
+            <% allUf.push(mun.uf) %>
+    <% }); %>
+    <% var uf = [...new Set(allUf)] %>
+    <% var indexDecl = (bolCons.declaracao.length)-1; %>
+    <% var declaracao = bolCons.declaracao[indexDecl]; %>
+    <div class="form-row">
+        <div class="col">
+            <label for="bolsista[ufCert]">Unidade Federativa</label>
+            <select class="form-control" name='bolsista[ufCert]' id='bolsista[ufCert]'>
+            <% if(indexDecl <= 0){ %>
+                <option>Selecione</option>
+                <% uf.forEach((estado) =>{ %>
+                    <option><%= estado %></option>
+                <% }); %>
+            <% } else { %>
+                <% uf.forEach((estado) => { %>
+                    <% if(estado === declaracao.escola.municipio.uf){ %>
+                        <option selected><%= estado %></option>
+                    <% } else { %>
+                        <option><%= estado %></option>
+                    <% } %>
+                <% }); %>
+            <% } %>
+            </select>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% var munFiltered = municipios;%>
+<% if(indexDecl <= 0){ %>
+    <option>Selecione</option>
+    <% munFiltered.forEach((mun) =>{ %>
+        <option><%= mun.nome %></option>
+    <% }); %>
+<% } else { %>
+    <% munFiltered.forEach((mun) => { %>
+        <% if(mun.ibge === declaracao.ies.municipio.ibge){ %>
+            <option selected><%= mun.nome %></option>
+        <% } else { %>
+            <option><%= mun.nome %></option>
+        <% } %>
+    <% }); %>
+<% } %>
