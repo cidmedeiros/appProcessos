@@ -6,7 +6,7 @@ mongoose.set('useCreateIndex', true);
 
 Municipio = require('./municipios');
 munData = require('../assets/dados/municipios.json'); //it returns a string
-munData = JSON.parse(munData); //it parses the string to a iterable object
+
 
 const cleanMun = function(){
     try{
@@ -36,4 +36,4 @@ const addMun = function() {
     }
 };
 
-//seedMun();
+//addMun();

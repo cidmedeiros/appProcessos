@@ -67,11 +67,11 @@ def iesJson():
     ies_json = []
     
     for _id, row in ies.iterrows():
-        values = {'sigla':row.siglaIes,'nome':row.nome_entidade,'nomeUf':row.uf,'cnpj':row.cnpj_entidade,
-                  'uf':row.siglaUf,'regiao':row.regiao}
+        values = {'cnpj':row.cnpj_entidade,'sigla':row.siglaIes,'nome':row.nome_entidade,'nomeUf':row.uf,'uf':row.siglaUf,
+                  'regiao':row.regiao}
         ies_json.append(values)
         
-    with open('dados\ies.json', 'w') as f:
+    with open('dados\ies.json', 'w', encoding='utf-8') as f:
         json.dump(ies_json, f, ensure_ascii=False)
         
     return ies_json

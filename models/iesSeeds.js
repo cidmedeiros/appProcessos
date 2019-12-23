@@ -42,4 +42,4 @@ const seedIES = function(){
     addIes();
 };
 
-//seedIES();
+addIes();
