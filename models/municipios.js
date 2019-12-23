@@ -1,9 +1,16 @@
 mongoose = require('mongoose');
 
 const municipioSchema = new mongoose.Schema({
-	ibge: String,
-	nome: String,
-	uf: String
+	agrpUf: String,
+	municipios:[
+		{
+			nome: String,
+			nomeUf: String,
+			'uf': String,
+			'ibge': String,
+			'regiao': String
+		}
+	]
 });
 
 module.exports = mongoose.model('Municipio', municipioSchema);

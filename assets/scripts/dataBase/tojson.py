@@ -41,46 +41,6 @@ def munJson():
                            np.where(municipios.siglaUf.isin(['MS','MT','GO','DF']),'Centro-Oeste','teste')))))
     
     
-    munList = []
-
-    for _id, row in municipios.iterrows():
-        values = {'ibge':row.ibge,'nome':row.nome,'uf':row.uf}
-        munList.append(values)
-    
-    with open('dados\municipios.json', 'w', encoding='utf-8') as f:
-        json.dump(munList, f, ensure_ascii=False)
-        
-    return munList
-
-def munJsonDisplay():
-    
-    """
-    """
-    municipios = pd.read_csv('dados\ibge_mun.csv',sep=';',encoding='ISO-8859-1',dtype=str)
-    municipios = municipios[['Codmun','NomeMunic','UF']].copy()
-    municipios.columns = ['ibge','nome','uf']
-    municipios['siglaUf'] = np.where(municipios.uf == 'Rondônia','RO',np.where(municipios.uf == 'Acre','AC',
-                            np.where(municipios.uf == 'Amazonas','AM',np.where(municipios.uf == 'Roraima','RR',
-                            np.where(municipios.uf == 'Pará','PA',np.where(municipios.uf == 'Amapá','AP',
-                            np.where(municipios.uf == 'Tocantins','TO',np.where(municipios.uf == 'Maranhão','MA',
-                            np.where(municipios.uf == 'Piauí','PI',np.where(municipios.uf == 'Ceará','CE',
-                            np.where(municipios.uf == 'Rio Grande do Norte','RN',np.where(municipios.uf == 'Paraíba','PB',
-                            np.where(municipios.uf == 'Pernambuco','PE',np.where(municipios.uf == 'Alagoas','AL',
-                            np.where(municipios.uf == 'Sergipe','SE',np.where(municipios.uf == 'Bahia','BA',
-                            np.where(municipios.uf == 'Minas Gerais','MG',np.where(municipios.uf == 'Espírito Santo','ES',
-                            np.where(municipios.uf == 'Rio de Janeiro','RJ',np.where(municipios.uf == 'São Paulo','SP',
-                            np.where(municipios.uf == 'Paraná','PR',np.where(municipios.uf == 'Santa Catarina','SC',
-                            np.where(municipios.uf == 'Rio Grande do Sul','RS',np.where(municipios.uf == 'Mato Grosso do Sul','MS',
-                            np.where(municipios.uf == 'Mato Grosso','MT',np.where(municipios.uf == 'Goiás','GO',
-                            np.where(municipios.uf == 'Distrito Federal','DF','teste')))))))))))))))))))))))))))
-    
-    municipios['regiao'] = np.where(municipios.siglaUf.isin(['RO','AC','AM','RR','PA','AP','TO']),'Norte',
-                           np.where(municipios.siglaUf.isin(['MA','PI','CE','RN','PB','PE','AL','SE','BA']),'Nordeste',
-                           np.where(municipios.siglaUf.isin(['MG','ES','RJ','SP']),'Sudeste',
-                           np.where(municipios.siglaUf.isin(['PR','SC','RS']),'Sul',
-                           np.where(municipios.siglaUf.isin(['MS','MT','GO','DF']),'Centro-Oeste','teste')))))
-    
-    
     municipiosJson = []
     ufList = municipios.siglaUf.unique()
     
@@ -89,11 +49,11 @@ def munJsonDisplay():
         munList = []
         for _id, row in municipios.iterrows():
             if row.siglaUf == siglaUf:
-                munList.append({'nome':row.nome,'uf':row.siglaUf,'ibge':row.ibge,'regiao':row.regiao})
+                munList.append({'nome':row.nome,'nomeUf':row.uf,'uf':row.siglaUf,'ibge':row.ibge,'regiao':row.regiao})
         ufDict['municipios'] = munList
         municipiosJson.append(ufDict)
         
-    with open('dados\munDisplay.json', 'w', encoding='utf-8') as f:
+    with open('dados\municipios.json', 'w', encoding='utf-8') as f:
         json.dump(municipiosJson, f, ensure_ascii=False)
         
     return municipiosJson
@@ -107,7 +67,8 @@ def iesJson():
     ies_json = []
     
     for _id, row in ies.iterrows():
-        values = {'sigla':row.siglaIes,'nome':row.nome_entidade,'cnpj':row.cnpj_entidade,'uf':row.siglaUf,'regiao':row.regiao}
+        values = {'sigla':row.siglaIes,'nome':row.nome_entidade,'nomeUf':row.uf,'cnpj':row.cnpj_entidade,
+                  'uf':row.siglaUf,'regiao':row.regiao}
         ies_json.append(values)
         
     with open('dados\ies.json', 'w') as f:
