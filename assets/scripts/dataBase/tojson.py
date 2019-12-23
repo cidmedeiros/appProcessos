@@ -106,7 +106,6 @@ def makeCpf(string):
     
     return ans
     
-
 def preProcessPags(min_score=0):
     
     """
