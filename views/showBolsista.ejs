@@ -465,27 +465,7 @@
 <% include modalCompromisso %>
 
 <script>
-    const ufSelector = document.getElementById('bolsista[ufCert]');
-    let municipiosDOM = document.getElementById('getMun');
-    let munObj = municipiosDOM.value;
-
-    /* let munArray = [];
-    let example = { _id: '5de2e320c24d643b5c87fd6d',
-                    ibge: '110001',
-                    nome: 'ALTA FLORESTA D\'OESTE',
-                    uf: 'Rondônia', __v: 0 }
-    munArray.push(example);
-    munArray.push(munObj.slice(0,113));
-    munArray.push(munObj.slice(114,214));
-    munArray.push(munObj.slice(215,312)); */
     
-    ufSelector.addEventListener('input', () => {
-        const munSelector = document.getElementById('bolsista[munCert]');
-        munSelector.options[munSelector.selectedIndex].text = ufSelector.options[ufSelector.selectedIndex].text;
-        console.log(typeof munObj);
-        console.log(munObj);
-        console.log(munObj[0]);
-    });
 </script>
 <!-- closing elements -->
 <% include partials/footer %>
