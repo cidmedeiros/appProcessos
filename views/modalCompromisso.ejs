@@ -64,27 +64,41 @@
                                         <% var declaracao = bolCons.declaracao[indexDecl]; %>
                                         <% if(indexDecl <= 0){ %>
                                             <option>Selecione</option>
-                                            <option value="">UF</option>
                                             <% municipios.forEach(mun => { %>
-
-                                            <% }) %>
-
-                                        } %>
-                                            
-                                            <optgroup label="<%= mun.agrpUf %>" ></optgroup>
-                                                <% mun.municipios.forEach(munInt => { %>
-                                                    <option> <%= munInt.nome %> </option>
-                                                <% }); %>
-                                            </optgroup>
-                                        <% )} else { %>
-                                            <option selected><%= bolCons.declaracao.escola.municipio.nome %></option>
-                                            <option value="">UF</option>
+                                                <option value="<%= mun.agrpUf %>"><%= mun.agrpUf %></option>
+                                            <% }); %>
+                                        <% } else{ %>
                                             <% municipios.forEach(mun => { %>
-                                            <optgroup label="<%= mun.agrpUf %>" >
+                                                <% if(mun.agrpUf == declaracao.escola.municipio.uf){ %>
+                                                    <option value="<%= mun.agrpUf %>" selected><%= mun.agrpUf %></option>
+                                                <% } else { %>
+                                                    <option value="<%= mun.agrpUf %>" selected><%= mun.agrpUf %></option>
+                                                <% } %>
+                                            <% }); %>
+                                        <% } %>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label for="bolsista[ufCert]">Município</label>
+                                        <select class="form-control" name='bolsista[munCert]' id='bolsista[munCert]'>
+                                        <% if(indexDecl <= 0){ %>
+                                            <option>Selecione</option>
+                                            <% municipios.forEach(mun => { %>
                                                 <% mun.municipios.forEach(munInt => { %>
-                                                    <option> <%= munInt.nome %> </option>
+                                                    <option value= <%= [munInt.uf, munInt.nome] %> > <%= munInt.nome %> </option>
+                                                <% }) %>
+                                            <% }); %>
+                                        <% } else { %>
+                                            <% municipios.forEach(mun => { %>
+                                                <% mun.municipios.forEach(munInt => { %>
+                                                    <% if(munInt.ibge == declaracao.escola.municipio.ibge){ %>
+                                                    <option value= <%= [munInt.uf, munInt.nome] %> selected><%= munInt.nome %></option>
+                                                    <% } else { %>
+                                                        <option value= <%= [munInt.uf, munInt.nome] %> > <%= munInt.nome %></option>
+                                                    <% } %>
                                                 <% }); %>
-                                            </optgroup>
+                                            <% }); %>
                                         <% } %>
                                         </select>
                                     </div>
