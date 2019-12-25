@@ -465,25 +465,29 @@
 <% include modalCompromisso %>
 
 <script>
-
     var ufSelect = document.getElementById('bolsista[ufCert]');
-    var munSelect = document.getElementById('bolsista[munCert]')
+    var noDisplay = document.getElementById('noDisplay')
+    var munSelect = document.getElementById('bolsista[munCert]');
 
     ufSelect.addEventListener('input', () => {
-        munSelect.selectedIndex = 0;
+        //clear the select box
+        $(munSelect)
+        .find('option')
+        .remove()
+        .end();
+
+        let selecioneOpt = `<option>Selecione</option>`
+        munSelect.insertAdjacentHTML("beforeend", selecioneOpt);
         let ufValue = ufSelect.options.item(ufSelect.selectedIndex).value;
-        let lenMun = (munSelect.length)-1;
+        let lenMun = (noDisplay.length)-1;
 
         for(var i = 0; i <= lenMun; i++){
-            if(ufValue == munSelect.options.item(i).value.slice(0,2)){
-                munSelect.options.item(i).style.display = "inline";
-                console.log(munSelect.options.item(i).text);
-            } else {
-                munSelect.options.item(i).style.display = "none";
-            }
+            if(ufValue == noDisplay.options.item(i).value){
+                let opt = `<option>${noDisplay.options.item(i).text}</option>`
+                munSelect.insertAdjacentHTML("beforeend", opt);
+            } 
         }
     });
-
 </script>
 <!-- closing elements -->
 <% include partials/footer %>

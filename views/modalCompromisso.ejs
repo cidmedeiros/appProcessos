@@ -79,26 +79,23 @@
                                         </select>
                                     </div>
 
+                                    <div class="col-1">
+                                        <select style="display: none;" class="form-control" id='noDisplay'>
+                                            <% municipios.forEach(mun => { %>
+                                                <% mun.municipios.forEach(munInt => { %>
+                                                    <option value= <%= munInt.uf %> > <%= munInt.nome %> </option>
+                                                <% }); %>
+                                            <% }); %>
+                                        </select>
+                                    </div>
+
                                     <div class="col">
                                         <label for="bolsista[ufCert]">Município</label>
                                         <select class="form-control" name='bolsista[munCert]' id='bolsista[munCert]'>
                                         <% if(indexDecl <= 0){ %>
                                             <option>Selecione</option>
-                                            <% municipios.forEach(mun => { %>
-                                                <% mun.municipios.forEach(munInt => { %>
-                                                    <option value= <%= [munInt.uf, munInt.nome] %> > <%= munInt.nome %> </option>
-                                                <% }) %>
-                                            <% }); %>
                                         <% } else { %>
-                                            <% municipios.forEach(mun => { %>
-                                                <% mun.municipios.forEach(munInt => { %>
-                                                    <% if(munInt.ibge == declaracao.escola.municipio.ibge){ %>
-                                                    <option value= <%= [munInt.uf, munInt.nome] %> selected><%= munInt.nome %></option>
-                                                    <% } else { %>
-                                                        <option value= <%= [munInt.uf, munInt.nome] %> > <%= munInt.nome %></option>
-                                                    <% } %>
-                                                <% }); %>
-                                            <% }); %>
+                                            <option> <%= declaracao.escola.municipio.nome %> </option>
                                         <% } %>
                                         </select>
                                     </div>
