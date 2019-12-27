@@ -47,11 +47,12 @@ app.get('/paginadobolsista/:id', async (req, res) => {
 					model:'Ies'
 				}
 			}
-		]).exec(async (err, foundBol) => {
+		]).populate('declaracao.municipioEscola').exec(async (err, foundBol) => {
 			if(err){
 				console.log(`Bolsista ${req.params.cpf} not found! Error: ${err}`);
 			} else {
 				console.log('Id found!');
+				console.log(foundBol.declaracao[(foundBol.declaracao.length)-1]);
 				await Ies.find({}, async (err, entidades) =>{
 					if(err){
 						console.log(`Error fetching Ies collection in Id -> ${err}`)
@@ -232,12 +233,16 @@ app.put('/editarcompromisso/:cpf', async (req, res) =>{
 	try{
 		await Bolsista.findOneAndUpdate({cpf:req.params.cpf},
 			{
-				'$push':{'declaracao':{escola:municipioUpdate, permanencia:req.body.bolsista.perm,regular:req.body.bolsista.regDecl,obsv:req.body.bolsista.obsvDecl, data: new Date(), user:'teste'}},
+				'$push':{'declaracao':{municipioEscola:municipioUpdate, permanencia:req.body.bolsista.perm,regular:req.body.bolsista.regDecl,obsv:req.body.bolsista.obsvDecl, data: new Date(), user:'teste'}},
 			},
 			(err, upObejct) =>{
 				if(err){
 					console.log(err);
 				} else{
+					console.log(`-------------------------------`);
+					console.log(`Data used to update declaracao`);
+					console.log(municipioUpdate);
+					console.log(upObejct.declaracao[(upObejct.declaracao.length)-1]);
 					console.log(`-------------------------------`);
 				}
 		});
@@ -254,7 +259,6 @@ app.put('/editarcompromisso/:cpf', async (req, res) =>{
 				if(err){
 					console.log(err);
 				} else{
-					console.log(`-------------------------------`);
 					res.redirect(`/paginadobolsista/${upObejct._id}`)
 				}
 		});
