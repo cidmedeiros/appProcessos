@@ -49,7 +49,7 @@ const bolsistaSchema = new mongoose.Schema({
 					ref: 'Municipio'
 				}
 			},
-			permanencia: Number,
+			permanencia: mongoose.Schema.Types.Mixed,
 			regular: String,
 			obsv: String,
 			user: String,

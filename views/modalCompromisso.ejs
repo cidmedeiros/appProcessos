@@ -13,41 +13,46 @@
             <div class="modal-body border border-rounded border-info mx-1 my-1">
                 <form action='/editarcompromisso/<%=bolCons.cpf%>?_method=PUT' method="POST">
 
-                    <div class="card my-1 py-.25 pl-.5">
+                    <div class="form-row justify-content-center">
 
-                        <div class="card-body">
-                            <h5 class="card-title"><strong>Situação do Curso</strong></h5>
-                            <div class="form-group">
-                                <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[status]' id='bolsista[status]'>
-                                <%var statusList = ['Selecione','Concluído','Desligado','Abandonou o Curso','Cursando (Reingresso)'];%>
-                                <% var indexStatus = (bolCons.statusCurso.length)-1; %>
-                                <% if(indexStatus <= 0){ %>
-                                    <% statusList.forEach((stat) => { %>
-                                        <option><%= stat %></option>
-                                    <% }); %>
-                                <% } else { %>
-                                    <% var statusCurso = bolCons.statusCurso[indexStatus]; %>
-                                    <% statusList.shift() %>;
-                                    <% statusList.forEach((statList) => { %>
-                                        <% if(statList === statusCurso.status){ %>
-                                            <option selected><%= statList %></option>
-                                        <% } else { %>
-                                            <option><%= statList %></option>
-                                        <% } %>
-                                    <% }); %>
-                                <% } %>
-                                </select>
+                        <div class="col-5 card my-1 mr-.5 py-.25 pl-.5">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>Situação do Curso</strong></h5>
+                                <div class="form-group">
+                                    <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[status]' id='bolsista[status]'>
+                                    <%var statusList = ['Selecione','Concluído','Desligado','Abandonou o Curso','Cursando (Reingresso)'];%>
+                                    <% var indexStatus = (bolCons.statusCurso.length)-1; %>
+                                    <% if(indexStatus <= 0){ %>
+                                        <% statusList.forEach((stat) => { %>
+                                            <option><%= stat %></option>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <% var statusCurso = bolCons.statusCurso[indexStatus]; %>
+                                        <% statusList.shift() %>;
+                                        <% statusList.forEach((statList) => { %>
+                                            <% if(statList === statusCurso.status){ %>
+                                                <option selected><%= statList %></option>
+                                            <% } else { %>
+                                                <option><%= statList %></option>
+                                            <% } %>
+                                        <% }); %>
+                                    <% } %>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="card mt-2 mb-3 my-1 py-.25 pl-.5">
-                        <div class="card-body">
-                            <h5 class="card-title"><strong>Data de Conclusão do Curso</strong></h5>
-                            <div class="form-group">
-                                <input class="mx-auto" type="month" id="start" name="start" min="2011-03" value=''>
+                        <div class="col-1"></div>
+
+                        <div class="col-6 card mt-2 mb-3 my-1 ml-.5 py-.25 pl-.5">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>Data de Conclusão do Curso</strong></h5>
+                                <div class="form-group">
+                                    <input class="mx-auto" type="month" id="start" name="bolsista[dataConcl]" min="2011-03" value=''>
+                                </div>
                             </div>
                         </div>
+
                     </div>
 
                     <div class="card mt-2 mb-3 my-1 py-.25 pl-.5">
@@ -72,7 +77,7 @@
                                                 <% if(mun.agrpUf == declaracao.escola.municipio.uf){ %>
                                                     <option value="<%= mun.agrpUf %>" selected><%= mun.agrpUf %></option>
                                                 <% } else { %>
-                                                    <option value="<%= mun.agrpUf %>" selected><%= mun.agrpUf %></option>
+                                                    <option value="<%= mun.agrpUf %>"><%= mun.agrpUf %></option>
                                                 <% } %>
                                             <% }); %>
                                         <% } %>
@@ -105,8 +110,51 @@
                             </div>
                         </div>
                     </div>
-                    
-                     <div>
+
+                    <div class="form-row">
+
+                        <div class=" col-4 card mt-2 mb-3 my-1 py-.25 pl-.5">
+                            <div class="card-body">
+                                <h5 class="card-title mb-.25"><strong>Permanência (meses)</strong></h5>
+                                <div class="form-group mb-0">
+                                    <select class="form-control mx-auto" name="bolsista[perm]" id="bolsista[perm]">
+                                        <% if(indexDecl <= 0){ %>
+                                            <option>Selecione</option>
+                                            <% for(var mes = 0; mes <= 95; mes++){ %>
+                                                <option><%=mes%></option>
+                                            <% } %>
+                                            <option>96+</option>
+                                        <% } else { %>
+                                            <option> <%= declaracao.permanencia %> </option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-1"></div>
+
+                        <div class=" col card mt-2 mb-3 my-1 py-.25 pl-.5">
+                            <div class="card-body">
+                                <h5 class="card-title mb-.25"><strong>Regularidade do Compromisso</strong></h5>
+                                <div class="form-group mb-0">
+                                    <select class="form-control mx-auto" name="bolsista[perm]" id="bolsista[perm]">
+                                        <<% if(indexDecl <= 0){ %>
+                                            <option>Selecione</option>
+                                            <option>Regular</option>
+                                            <option>Irregular</option>
+                                        <% } else if(indexDecl.regular === 'Regular') { %>
+                                            <option selected>Regular</option>
+                                            <option>Irregular</option>
+                                        <% } else { %>
+                                            <option selected>Irregular</option>
+                                            <option>Regular</option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Salvar</button>
                     </div>
                 </form>
