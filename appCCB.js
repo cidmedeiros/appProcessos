@@ -289,8 +289,7 @@ app.put('/editarcompromisso/:cpf', async (req, res) =>{
 	try{
 		await Bolsista.findOneAndUpdate({cpf:req.params.cpf},
 			{
-				'$push':{'email':{'email':req.body.bolsista.email, 'data': new Date()}},
-				'sexo': req.body.bolsista.sexo
+				'$push':{'statusCurso':{status:req.body.bolsista.status,data: new Date(req.body.bolsista.dataConcl),user:'teste'}},
 			},
 			(err, upObejct) =>{
 				if(err){
@@ -300,7 +299,22 @@ app.put('/editarcompromisso/:cpf', async (req, res) =>{
 				}
 		});
 	} catch {
-		console.log('Error updating email/sexo');
+		console.log('Error updating status do curso');
+	}
+	try{
+		await Bolsista.findOneAndUpdate({cpf:req.params.cpf},
+			{
+				'$push':{'statusCurso':{status:req.body.bolsista.status,data: new Date(req.body.bolsista.dataConcl),user:'teste'}},
+			},
+			(err, upObejct) =>{
+				if(err){
+					console.log(err);
+				} else{
+					console.log(`-------------------------------`);
+				}
+		});
+	} catch {
+		console.log('Error updating declaracao da escola');
 	}
 });
 
