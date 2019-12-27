@@ -13,7 +13,6 @@ const bolsistaSchema = new mongoose.Schema({
 	sexo: String,
 	statusCurso: [{status:String, data: Date, user: String}],
 	permanenciaTotal: Number,
-	resCompromisso: String,
 	clbr: [{nome: String, data: Date}],
 	valorBolsas: Number,
 	valorDev: [{valor: Number, data: Date, user: String}],

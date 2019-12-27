@@ -150,7 +150,7 @@ def preProcessPags(min_score=0):
     pags = pd.merge(pags,ies,left_on=['iesLocal'],right_on=['nome_entidade'], how='left')
     pags.cpf = [makeCpf(x) for x in pags.cpf]
     pags.valor = [int(x) for x in pags.valor]
-    pags = pags[['cpf','nome','programa','iesNacional','cnpj_entidade_x','sigla_x','iesLocal','cnpj_entidade_y','sigla_y',
+    pags = pags[['cpf','nome','programa','iesNacional','cnpj_entidade_x','siglaIes_x','iesLocal','cnpj_entidade_y','siglaIes_y',
                  'uf_entidade_local','turma','modalidade_bolsa','dataRef','dataPag','valor','sistema','ano_referencia',
                  'mes_referencia','ano_pagamento','mes_pagamento']]
     
@@ -252,7 +252,10 @@ def bolsistasJson(minScore):
                   'docRes':[],
                   'termo':[],
                   'declaracao':[],
-                  'certConclusao':[]}
+                  'certConclusao':[],
+                  'permanenciaTotal':0,
+                  'analiseCompromisso':[],
+                  'pad':[]}
         for i in range(0, len(row.programa)):
             loopValues = {'programa':row.programa[i],
                           'iesLocal':row.iesLocalSigla[i],
