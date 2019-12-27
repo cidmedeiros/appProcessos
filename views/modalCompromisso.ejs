@@ -136,7 +136,9 @@
 
                         <div class=" col card mt-2 mb-3 my-1 py-.25 pl-.5">
                             <div class="card-body">
-                                <h5 class="card-title mb-.25"><strong>Regularidade da Declaração</strong></h5>
+                                <h5 class="card-title mb-.25"><strong>Regularidade da Declaração
+
+                                </strong></h5>
                                 <div class="form-group mb-0">
                                     <select class="form-control mx-auto" name="bolsista[regDecl]" id="bolsista[regDecl]">
                                         <<% if(indexDecl <= 0){ %>
@@ -160,8 +162,8 @@
                         <div class="card-body">
                             <h5 class="card-title"><strong>Observação da Declaração</strong></h5>
                             <div class="form-group">
-                                <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[status]' id='bolsista[status]'>
-                                <%var obsvDeclList = ['Selecione','Ausente','Cópia Ilegível','Sem Assinatura','Sem Observação'];%>
+                                <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvDecl]' id='bolsista[obsvDecl]'>
+                                <%var obsvDeclList = ['Selecione','Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações'];%>
                                 <% if(indexDecl <= 0){ %>
                                     <% obsvDeclList.forEach((obs) => { %>
                                         <option><%= obs %></option>

@@ -86,7 +86,7 @@
                                     </select>
                                     <label for="obsvDocFoto">Observação</label>
                                     <select class="form-control" name='bolsista[obsvDocFoto]' id='bolsista[obsvDocFoto]'>
-                                        <%var obsvFotoList = ['Selecione','Ausente','Cópia Ilegível','Sem Assinatura','Sem Observação','Sem Foto','Vencida'];%>
+                                        <%var obsvFotoList = ['Selecione','Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações','Sem Foto','Vencida'];%>
                                         <% if(indexFoto <= 0){ %>
                                             <% obsvFotoList.forEach((obsvList) => { %>
                                                 <option><%= obsvList %></option>
