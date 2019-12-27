@@ -74,7 +74,7 @@
                                             <% }); %>
                                         <% } else{ %>
                                             <% municipios.forEach(mun => { %>
-                                                <% if(mun.agrpUf == declaracao.escola.municipio.uf){ %>
+                                                <% if(mun.agrpUf == 0){ %>
                                                     <option value="<%= mun.agrpUf %>" selected><%= mun.agrpUf %></option>
                                                 <% } else { %>
                                                     <option value="<%= mun.agrpUf %>"><%= mun.agrpUf %></option>
@@ -100,7 +100,7 @@
                                         <% if(indexDecl <= 0){ %>
                                             <option>Selecione</option>
                                         <% } else { %>
-                                            <option> <%= declaracao.escola.municipio.nome %> </option>
+                                            <option> <%= 0 %> </option>
                                         <% } %>
                                         </select>
                                     </div>

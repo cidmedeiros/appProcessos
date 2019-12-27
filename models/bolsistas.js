@@ -12,6 +12,8 @@ const bolsistaSchema = new mongoose.Schema({
 	email: [{email:String, data:Date}],
 	sexo: String,
 	statusCurso: [{status:String, data: Date, user: String}],
+	permanenciaTotal: Number,
+	resCompromisso: String,
 	clbr: [{nome: String, data: Date}],
 	valorBolsas: Number,
 	valorDev: [{valor: Number, data: Date, user: String}],
@@ -43,11 +45,9 @@ const bolsistaSchema = new mongoose.Schema({
 	],
 	declaracao: [
 		{
-			escola: {
-				municipio: {
-					type: mongoose.Schema.Types.ObjectId,
-					ref: 'Municipio'
-				}
+			municipioEscola: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Municipio'
 			},
 			permanencia: mongoose.Schema.Types.Mixed,
 			regular: String,
@@ -106,7 +106,15 @@ const bolsistaSchema = new mongoose.Schema({
 	]
 });
 
-//bolsistaSchema.plugin(mongoose_fuzzy_searching, {fields: ['nome']});
+bolsistaSchema.pre('save', function(next){
+	this.permanenciaTotal = 0;
+	 this.declaracao.forEach(declara => {
+		this.permanenciaTotal = this.permanenciaTotal + declara.permanencia
+	 })
+	next();
+  });
+
+bolsistaSchema.plugin(mongoose_fuzzy_searching, {fields: ['nome']});
 
 //the next statement uses the plural form of the string param to create (if needed) a collection on the DB.
 module.exports = mongoose.model('Bolsista', bolsistaSchema);
