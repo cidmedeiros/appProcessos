@@ -136,9 +136,9 @@
 
                         <div class=" col card mt-2 mb-3 my-1 py-.25 pl-.5">
                             <div class="card-body">
-                                <h5 class="card-title mb-.25"><strong>Regularidade do Compromisso</strong></h5>
+                                <h5 class="card-title mb-.25"><strong>Regularidade da Declaração</strong></h5>
                                 <div class="form-group mb-0">
-                                    <select class="form-control mx-auto" name="bolsista[perm]" id="bolsista[perm]">
+                                    <select class="form-control mx-auto" name="bolsista[regDecl]" id="bolsista[regDecl]">
                                         <<% if(indexDecl <= 0){ %>
                                             <option>Selecione</option>
                                             <option>Regular</option>
@@ -154,9 +154,34 @@
                                 </div>
                             </div>
                         </div>
-
-                        <button type="submit" class="btn btn-primary">Salvar</button>
                     </div>
+
+                    <div class="card my-1 mr-.5 py-.25 pl-.5">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>Observação da Declaração</strong></h5>
+                            <div class="form-group">
+                                <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[status]' id='bolsista[status]'>
+                                <%var obsvDeclList = ['Selecione','Ausente','Cópia Ilegível','Sem Assinatura','Sem Observação'];%>
+                                <% if(indexDecl <= 0){ %>
+                                    <% obsvDeclList.forEach((obs) => { %>
+                                        <option><%= obs %></option>
+                                    <% }); %>
+                                <% } else { %>
+                                    <% obsvDeclList.shift() %>;
+                                    <% obsvDeclList.forEach((obs) => { %>
+                                        <% if(obs === declaracao.obsv){ %>
+                                            <option selected><%= obs %></option>
+                                        <% } else { %>
+                                            <option><%= obs %></option>
+                                        <% } %>
+                                    <% }); %>
+                                <% } %>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Salvar</button>
                 </form>
                 
             </div>
