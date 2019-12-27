@@ -77,61 +77,19 @@ app.post('/consultabolsista', async (req, res) => {
 	input = await tools.treatInput(input);
 	try{
 		if(input[0] === 'cpf'){
-			await Bolsista.findOne({cpf:input[1]}).populate('pags.iesLocal').populate([
-				{
-					path: 'pags.programa',
-					model:'Programa',
-					populate:{
-						path:'coordNacional.ies',
-						model:'Ies'
-					}
-				}
-			]).exec(async (err, foundBol) => {
+			await Bolsista.findOne({cpf:input[1]}, async (err, foundBol) => {
 				if(err){
 					console.log(`Bolsista ${input[1]} not found! ${err}`);
 				} else {
-					await Ies.find({}, async (err, entidades) =>{
-						if(err){
-							console.log(`Error fetching Ies collection in CPF -> ${err}`)
-						} else {
-							await Municipio.find({}, async (err, municipios) => {
-								if(err){
-									console.log(`Error fetching Municipios collection in CPF -> ${err}`)
-								} else{
-									res.render('showBolsista', {bolCons:foundBol, entidades:entidades, municipios:municipios});
-								}
-							})						
-						}
-					});
+					res.redirect(`/paginadobolsista/${foundBol._id}`);
 				}
 			});
 		} else if(input[0] === 'sei'){
-			await Bolsista.findOne({sei:input[1]}).populate('pags.iesLocal').populate([
-				{
-					path: 'pags.programa',
-					model:'Programa',
-					populate:{
-						path:'coordNacional.ies',
-						model:'Ies'
-					}
-				}
-			]).exec(async (err, foundBol) => {
+			await Bolsista.findOne({sei:input[1]}, async (err, foundBol) => {
 				if(err){
 					console.log(`Error tryng to find ${input[1]}, ${err}`);
 				} else {
-					await Ies.find({}, async (err, entidades) =>{
-						if(err){
-							console.log(`Error fetching Ies collection in SEI -> ${err}`)
-						} else {
-							await Municipio.find({}, async (err, municipios) => {
-								if(err){
-									console.log(`Error fetching Municipios collection in SEI -> ${err}`)
-								} else{
-									res.render('showBolsista', {bolCons:foundBol, entidades:entidades, municipios:municipios});
-								}
-							})						
-						}
-					});
+					res.redirect(`/paginadobolsista/${foundBol._id}`);
 				}
 			});
 		} else if(input[0] === 'nome'){
@@ -142,39 +100,7 @@ app.post('/consultabolsista', async (req, res) => {
 				} else {
 					console.log(`Result from fuzzySearch: ${foundBol}`);
 					if(foundBol.lenght === 1){
-						console.log('--------------------------------');
-						console.log('Is this getting executed?');
-						console.log('--------------------------------');
-						async () => {
-							await Bolsista.findOne({nome:foundBol}).populate('pags.iesLocal').populate([
-								{
-									path: 'pags.programa',
-									model:'Programa',
-									populate:{
-										path:'coordNacional.ies',
-										model:'Ies'
-									}
-								}
-							]).exec(async (err, foundOne) => {
-								if(err){
-									console.log(`Bolsista ${input[1]} not found! ${err}`)
-								} else {
-									await Ies.find({}, async (err, entidades) =>{
-										if(err){
-											console.log(`Error fetching Ies collection in NOME -> ${err}`)
-										} else {
-											await Municipio.find({}, async (err, municipios) => {
-												if(err){
-													console.log(`Error fetching Municipios collection in NOME -> ${err}`)
-												} else{
-													res.render('showBolsista', {bolCons:foundBol, entidades:entidades, municipios:municipios});
-												}
-											})						
-										}
-									});									
-								}
-							});
-						}
+						res.redirect(`/paginadobolsista/${foundBol._id}`);
 					} else {
 						console.log('--------------------------');
 						console.log('nomesss found!');
@@ -286,35 +212,54 @@ app.put('/editardadospessoais/:cpf', async (req, res) => {
 });
 
 app.put('/editarcompromisso/:cpf', async (req, res) =>{
+	var municipioUpdate = '';
+	 try {
+		await Municipio.findOne({agrpUf:req.body.bolsista.ufCert}, (err, foundUf) => {
+			if(err){
+				console.log('Error finding UF');
+			} else{
+				foundUf.municipios.forEach(mun =>{
+					if(mun.nome == req.body.bolsista.munCert){
+						municipioUpdate = mun;
+					}
+				})
+			}
+		});
+	} catch(error) {
+		console.log(`Error finding municipio ${error}`);
+	}
+
 	try{
 		await Bolsista.findOneAndUpdate({cpf:req.params.cpf},
 			{
-				'$push':{'statusCurso':{status:req.body.bolsista.status,data: new Date(req.body.bolsista.dataConcl),user:'teste'}},
+				'$push':{'declaracao':{escola:municipioUpdate, permanencia:req.body.bolsista.perm,regular:req.body.bolsista.regDecl,obsv:req.body.bolsista.obsvDecl, data: new Date(), user:'teste'}},
 			},
 			(err, upObejct) =>{
 				if(err){
 					console.log(err);
 				} else{
 					console.log(`-------------------------------`);
+				}
+		});
+	} catch {
+		console.log('Error updating declaracao de permanencia');
+	}
+
+	try{
+		await Bolsista.findOneAndUpdate({cpf:req.params.cpf},
+			{
+				'$push':{'statusCurso':{status:req.body.bolsista.status, data: new Date(req.body.bolsista.dataConcl), user:'teste'}},
+			},
+			(err, upObejct) =>{
+				if(err){
+					console.log(err);
+				} else{
+					console.log(`-------------------------------`);
+					res.redirect(`/paginadobolsista/${upObejct._id}`)
 				}
 		});
 	} catch {
 		console.log('Error updating status do curso');
-	}
-	try{
-		await Bolsista.findOneAndUpdate({cpf:req.params.cpf},
-			{
-				'$push':{'statusCurso':{status:req.body.bolsista.status,data: new Date(req.body.bolsista.dataConcl),user:'teste'}},
-			},
-			(err, upObejct) =>{
-				if(err){
-					console.log(err);
-				} else{
-					console.log(`-------------------------------`);
-				}
-		});
-	} catch {
-		console.log('Error updating declaracao da escola');
 	}
 });
 
