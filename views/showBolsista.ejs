@@ -205,7 +205,7 @@
                             <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                             <% if(bolCons.statusCurso.length > 0){ %>
                                 <% let curso = bolCons.statusCurso[((bolCons.statusCurso).length-1)]%>
-                                <h5 class="my-1 ml-1">Situação do Curso</h5><h6 class="my-1 ml-1"><%=curso.status.sit%></h6>
+                                <h5 class="my-1 ml-1">Situação do Curso</h5><h6 class="my-1 ml-1"><%=curso.status%></h6>
                             <% } else{ %>
                                 <h5 class="my-1 ml-1">Pendente de análise</h5>
                             <% } %>
@@ -242,12 +242,11 @@
                             <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                             <% if(bolCons.declaracao.length > 0){ %>
                                 <% let declaracao = bolCons.declaracao[((bolCons.declaracao).length-1)]%>
-                                <h5 class="my-1 ml-1">Município da Escola</h5><h6 class="my-1 ml-1"><%=declaracao.escola.municipio%></h6>
+                                <h5 class="my-1 ml-1">Município da Escola</h5><h6 class="my-1 ml-1"><%=declaracao.municipioEscola%></h6>
                                 <h5 class="my-1 ml-1">Permanência</h5><h6 class="my-1 ml-1"><%=declaracao.permanencia%></h6>
-                                <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=declaracao.motivo.tipo%></h6>
-                                <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%=declaracao.motivo.data.toLocaleString()%></h6>
-                                <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=declaracao.regular.sit%></h6>
-                                <h5 class="my-1 ml-1">Data Regularidade</h5><h6 class="my-1 ml-1"><%=declaracao.regular.data.toLocaleString()%></h6>
+                                <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=declaracao.obsv%></h6>
+                                <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%=declaracao.data.toLocaleString()%></h6>
+                                <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=declaracao.regular%></h6>
                                 <footer class="mx-auto">Informações por <%=declaracao.user%></footer>
                             <% } else{ %>
                                 <h5 class="my-1 ml-1">Pendente de análise</h5>
