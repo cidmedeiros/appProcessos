@@ -52,7 +52,6 @@ app.get('/paginadobolsista/:id', async (req, res) => {
 				console.log(`Bolsista ${req.params.cpf} not found! Error: ${err}`);
 			} else {
 				console.log('Id found!');
-				console.log(foundBol.declaracao[(foundBol.declaracao.length)-1]);
 				await Ies.find({}, async (err, entidades) =>{
 					if(err){
 						console.log(`Error fetching Ies collection in Id -> ${err}`)
@@ -202,7 +201,6 @@ app.put('/editardadospessoais/:cpf', async (req, res) => {
 				if(err){
 					console.log(err);
 				} else{
-					console.log('-------------------------------------------');
 					res.redirect(`/paginadobolsista/${upObejct._id}`);
 				}
 		});
@@ -213,43 +211,53 @@ app.put('/editardadospessoais/:cpf', async (req, res) => {
 });
 
 app.put('/editarcompromisso/:cpf', async (req, res) =>{
-	var municipioUpdate = '';
-	 try {
-		await Municipio.findOne({agrpUf:req.body.bolsista.ufCert}, (err, foundUf) => {
+	//Ies (Certificado)
+	try{
+		var iesUpdate;
+		await Ies.findOne({sigla:req.body.bolsista.iesCert}, (err, foundIes) => {
 			if(err){
-				console.log('Error finding UF');
+				console.log('------------------------------------');
+				console.log(`First Promise Internal error finding Ies ${err}`)
+				console.log('------------------------------------');
+			} else{
+				iesUpdate = foundIes._id;
+			}
+		});
+	} catch(error){
+		console.log('------------------------------------');
+		console.log(`First Promise External error finding Ies ${error}`);
+		console.log('------------------------------------');
+	}
+	console.log('------------------------------------');
+	console.log(`First promise ies Id: ${iesUpdate}`);
+	console.log('------------------------------------');
+
+	//Município da Escola (Declaração)
+	 try {
+		var municipioUpdate;
+		await Municipio.findOne({agrpUf:req.body.bolsista.ufDecl}, (err, foundUf) => {
+			if(err){
+				console.log('------------------------------------');
+				console.log(`Second Promise Internal error finding UF ${err}`);
+				console.log('------------------------------------');
 			} else{
 				foundUf.municipios.forEach(mun =>{
-					if(mun.nome == req.body.bolsista.munCert){
-						municipioUpdate = mun;
+					if(mun.nome == req.body.bolsista.munDecl){
+						municipioUpdate = mun._id;
 					}
 				})
 			}
 		});
 	} catch(error) {
-		console.log(`Error finding municipio ${error}`);
+		console.log('------------------------------------');
+		console.log(`Second Promise External error finding municipio ${error}`);
+		console.log('------------------------------------');
 	}
+	console.log('------------------------------------');
+	console.log(`Second promise municipio Id: ${municipioUpdate}`);
+	console.log('------------------------------------');
 
-	try{
-		await Bolsista.findOneAndUpdate({cpf:req.params.cpf},
-			{
-				'$push':{'declaracao':{municipioEscola:municipioUpdate, permanencia:req.body.bolsista.perm,regular:req.body.bolsista.regDecl,obsv:req.body.bolsista.obsvDecl, data: new Date(), user:'teste'}},
-			},
-			(err, upObejct) =>{
-				if(err){
-					console.log(err);
-				} else{
-					console.log(`-------------------------------`);
-					console.log(`Data used to update declaracao`);
-					console.log(municipioUpdate);
-					console.log(upObejct.declaracao[(upObejct.declaracao.length)-1]);
-					console.log(`-------------------------------`);
-				}
-		});
-	} catch {
-		console.log('Error updating declaracao de permanencia');
-	}
-
+	//Status do Curso
 	try{
 		await Bolsista.findOneAndUpdate({cpf:req.params.cpf},
 			{
@@ -257,14 +265,91 @@ app.put('/editarcompromisso/:cpf', async (req, res) =>{
 			},
 			(err, upObejct) =>{
 				if(err){
-					console.log(err);
+					console.log('------------------------------------');
+					console.log(`Third Promise Internal error updating statusCurso ${err}`);
+					console.log('------------------------------------');
 				} else{
-					res.redirect(`/paginadobolsista/${upObejct._id}`)
+					console.log('------------------------------------');
+					console.log(`Third promise statusCurso updated: ${upObejct.statusCurso}`);
+					console.log('------------------------------------');
 				}
 		});
-	} catch {
-		console.log('Error updating status do curso');
+	} catch(error) {
+		console.log('------------------------------------');
+		console.log(`Third Promise External error updating statusCurso ${error}`);
+		console.log('------------------------------------');
 	}
+
+	//Certificado de Conclusão
+	try{
+		await Bolsista.findOneAndUpdate({cpf:req.params.cpf},
+			{
+				'$push':{'certConclusao':{ies:iesUpdate,regular:req.body.bolsista.regCert,obsv:req.body.bolsista.obsvCert,user:'teste',data: new Date()}},
+			},
+			(err, upObejct) =>{
+				if(err){
+					console.log('------------------------------------');
+					console.log(`Forth Promise Internal error updating certConclusao ${err}`);
+					console.log('------------------------------------');
+				} else{
+					console.log('------------------------------------');
+					console.log(`Forth promise certConclusao updated: ${upObejct.certConclusao}`);
+					console.log('------------------------------------');
+				}
+		});
+	} catch(error) {
+		console.log('------------------------------------');
+		console.log(`Forth Promise External error updating certConclusao ${error}`);
+		console.log('------------------------------------');
+	}
+
+	//Declaração Permanência
+	try{
+		await Bolsista.findOneAndUpdate({cpf:req.params.cpf},
+			{
+				'$push':{'declaracao':{municipioEscola:municipioUpdate, permanencia:parseInt(req.body.bolsista.perm, 10), regular:req.body.bolsista.regDecl,obsv:req.body.bolsista.obsvDecl, user:'teste', data: new Date()}},
+			},
+			(err, upObejct) =>{
+				if(err){
+					console.log('------------------------------------');
+					console.log(`Fifth Promise Internal error updating declaracao ${err}`);
+					console.log('------------------------------------');
+				} else{
+					console.log('------------------------------------');
+					console.log(`Fifth promise declaracao updated: ${upObejct.declaracao}`);
+					console.log('------------------------------------');
+				}
+		});
+	} catch(error) {
+		console.log('------------------------------------');
+		console.log(`Fifth Promise External error updating declaracao ${error}`);
+		console.log('------------------------------------');
+	}
+
+	//Resultado da Análise
+	try{
+		await Bolsista.findOneAndUpdate({cpf:req.params.cpf},
+			{
+				'$push':{'analiseCompromisso':{regular:req.body.bolsista.resAna,obsv:req.body.bolsista.obsvAna, user:'teste', data: new Date()}},
+			},
+			(err, upObejct) =>{
+				if(err){
+					console.log('------------------------------------');
+					console.log(`Sixth Promise Internal error updating analiseCompromisso ${err}`);
+					console.log('------------------------------------');
+				} else{
+					console.log('------------------------------------');
+					console.log(`Sixth promise analiseCompromisso updated: ${upObejct.analiseCompromisso}`);
+					console.log('------------------------------------');
+					res.redirect(`/paginadobolsista/${upObejct._id}`);
+				}
+		});
+	} catch(error) {
+		console.log('------------------------------------');
+		console.log(`Sixth Promise External error updating analiseCompromisso ${error}`);
+		console.log('------------------------------------');
+	}
+
 });
 
 	//Routes order matters! This should always be the last route!!
