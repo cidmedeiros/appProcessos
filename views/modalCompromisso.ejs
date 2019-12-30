@@ -44,7 +44,7 @@
                                     </div>
 
                                     <div class="col-1">
-                                        <select style="display: none;" class="form-control" id='noDisplay'>
+                                        <select style="display: none;" class="form-control" id='noDisplayIes'>
                                             <% entidades.forEach(ies => { %>
                                                 <option value= <%= ies.uf %> > <%= ies.sigla %> </option>
                                             <% }); %>
@@ -52,8 +52,8 @@
                                     </div>
 
                                     <div class="col">
-                                        <label for="bolsista[ufCert]">Instituição de Ensino</label>
-                                        <select class="form-control" name='bolsista[munCert]' id='bolsista[munCert]'>
+                                        <label for="bolsista[iesCert]">Instituição de Ensino</label>
+                                        <select class="form-control" name='bolsista[iesCert]' id='bolsista[iesCert]'>
                                         <% if(indexCert <= 0){ %>
                                             <option>Selecione</option>
                                         <% } else { %>
@@ -139,7 +139,7 @@
                                     </div>
 
                                     <div class="col-1">
-                                        <select style="display: none;" class="form-control" id='noDisplay'>
+                                        <select style="display: none;" class="form-control" id='noDisplayMun'>
                                             <% municipios.forEach(mun => { %>
                                                 <% mun.municipios.forEach(munInt => { %>
                                                     <option value= <%= munInt.uf %> > <%= munInt.nome %> </option>

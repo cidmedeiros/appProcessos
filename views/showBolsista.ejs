@@ -461,11 +461,37 @@
 <% include modalCompromisso %>
 
 <script>
-    var ufSelect = document.getElementById('bolsista[ufDecl]');
-    var noDisplay = document.getElementById('noDisplay')
+    //Seletor de IES
+    var iesUfSelect = document.getElementById('bolsista[ufCert]');
+    var noDisplayIes = document.getElementById('noDisplayIes')
+    var iesSelect = document.getElementById('bolsista[iesCert]');
+
+    iesUfSelect.addEventListener('input', () => {
+        //clear the select box
+        $(iesSelect)
+        .find('option')
+        .remove()
+        .end();
+
+        let selecioneOpt = `<option>Selecione</option>`
+        iesSelect.insertAdjacentHTML("beforeend", selecioneOpt);
+        let ufValue = iesUfSelect.options.item(iesUfSelect.selectedIndex).value;
+        let lenIes = (noDisplayIes.length)-1;
+
+        for(var i = 0; i <= lenIes; i++){
+            if(ufValue == noDisplayIes.options.item(i).value){
+                let opt = `<option>${noDisplayIes.options.item(i).text}</option>`
+                iesSelect.insertAdjacentHTML("beforeend", opt);
+            } 
+        }
+    });
+
+    //Seletor de Municípios
+    var munUfSelect = document.getElementById('bolsista[ufDecl]');
+    var noDisplayMun = document.getElementById('noDisplayMun')
     var munSelect = document.getElementById('bolsista[munDecl]');
 
-    ufSelect.addEventListener('input', () => {
+    munUfSelect.addEventListener('input', () => {
         //clear the select box
         $(munSelect)
         .find('option')
@@ -474,12 +500,12 @@
 
         let selecioneOpt = `<option>Selecione</option>`
         munSelect.insertAdjacentHTML("beforeend", selecioneOpt);
-        let ufValue = ufSelect.options.item(ufSelect.selectedIndex).value;
-        let lenMun = (noDisplay.length)-1;
+        let ufValue = munUfSelect.options.item(munUfSelect.selectedIndex).value;
+        let lenMun = (noDisplayMun.length)-1;
 
         for(var i = 0; i <= lenMun; i++){
-            if(ufValue == noDisplay.options.item(i).value){
-                let opt = `<option>${noDisplay.options.item(i).text}</option>`
+            if(ufValue == noDisplayMun.options.item(i).value){
+                let opt = `<option>${noDisplayMun.options.item(i).text}</option>`
                 munSelect.insertAdjacentHTML("beforeend", opt);
             } 
         }
