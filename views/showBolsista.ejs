@@ -220,11 +220,8 @@
                             <% if(bolCons.certConclusao.length > 0){ %>
                                 <% let certificado = bolCons.certConclusao[((bolCons.certConclusao).length-1)]%>
                                 <h5 class="my-1 ml-1">Instituição de Ensino</h5><h6 class="my-1 ml-1"><%=certificado.ies.sigla%></h6>
-                                <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=certificado.motivo.tipo%></h6>
-                                <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=certificado.motivo.data.toLocaleString()%></h6>
-                                <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=certificado.regular.sit%></h6>
-                                <h5 class="my-1 ml-1">Data da Regularidade</h5><h6 class="my-1 ml-1"><%=certificado.regular.data.toLocaleString()%></h6>
-                                <footer class="mx-auto">Informações por <%=certificado.user%></footer>
+                                <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=certificado.obsv%></h6>
+                                <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=certificado.regular%></h6>
                             <% } else{ %>
                                 <h5 class="my-1 ml-1">Pendente de análise</h5>
                             <% } %>
@@ -464,9 +461,9 @@
 <% include modalCompromisso %>
 
 <script>
-    var ufSelect = document.getElementById('bolsista[ufCert]');
+    var ufSelect = document.getElementById('bolsista[ufDecl]');
     var noDisplay = document.getElementById('noDisplay')
-    var munSelect = document.getElementById('bolsista[munCert]');
+    var munSelect = document.getElementById('bolsista[munDecl]');
 
     ufSelect.addEventListener('input', () => {
         //clear the select box
