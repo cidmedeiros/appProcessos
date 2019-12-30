@@ -22,7 +22,7 @@
 
                                 <div class="form-row justify-content-center">
                                     <div class="col">
-                                        <label for="bolsista[ufCert]">Unidade Federativa</label>
+                                        <label for="bolsista[ufCert]">Unidade Federativa da Ies</label>
                                         <select class="form-control" name='bolsista[ufCert]' id='bolsista[ufCert]'>
                                         <% var indexCert = (bolCons.certConclusao.length)-1; %>
                                         <% var certificado = bolCons.certConclusao[indexCert]; %>
@@ -102,6 +102,35 @@
                                 <h5 class="card-title" style="color: black;">Data de Conclusão do Curso</h5>
                                 <div class="form-group">
                                     <input class="mx-auto" type="month" id="start" name="bolsista[dataConcl]" min="2011-03" value=''>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row justify-content-center">
+
+                        <div class="col-12 card mb-4 mx-2 py-.25 pl-.5">
+                            <div class="card-body">
+                                <h5 class="card-title" style="color: black;">Observação do Certificado</h5>
+                                <div class="form-group">
+                                    <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvCert]' id='bolsista[obsvCert]'>
+                                    <%var obsvCertList = ['Selecione','Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações'];%>
+                                    <% if(indexCert <= 0){ %>
+                                        <% obsvCertList.forEach((obs) => { %>
+                                            <option><%= obs %></option>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <% obsvCertList.shift() %>;
+                                        <% obsvCertList.forEach((obs) => { %>
+                                            <% if(obs === certificado.obsv){ %>
+                                                <option selected><%= obs %></option>
+                                            <% } else { %>
+                                                <option><%= obs %></option>
+                                            <% } %>
+                                        <% }); %>
+                                    <% } %>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -235,6 +264,56 @@
                             </div>
                         </div>
 
+                    </div>
+
+                    <h5><strong>Resultado da Análise</strong></h5>
+                    <div class="form-row">
+
+                        <div class=" col-4 card mb-2 ml-1 mr-1 py-.25 pl-.5">
+                            <div class="card-body">
+                                <h5 class="card-title mb-.25" style="color: black;">Resultado da Análise</h5>
+                                <div class="form-group mb-0">
+                                    <select class="form-control mx-auto" name="bolsista[resAna]" id="bolsista[resAna]">
+                                        <<% if(indexDecl <= 0){ %>
+                                            <option>Selecione</option>
+                                            <option>Regular</option>
+                                            <option>Irregular</option>
+                                        <% } else if(indexDecl.regular === 'Regular') { %>
+                                            <option selected>Regular</option>
+                                            <option>Irregular</option>
+                                        <% } else { %>
+                                            <option selected>Irregular</option>
+                                            <option>Regular</option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class=" col card mb-2 ml-1 mr-1 py-.25 pl-.5">
+                            <div class="card-body">
+                                <h5 class="card-title mb-.25" style="color: black;">Observação Adicional</h5>
+                                <div class="form-group">
+                                    <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvAna]' id='bolsista[obsvAna]'>
+                                    <%var obsvDeclList = ['Selecione','Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações'];%>
+                                    <% if(indexDecl <= 0){ %>
+                                        <% obsvDeclList.forEach((obs) => { %>
+                                            <option><%= obs %></option>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <% obsvDeclList.shift() %>;
+                                        <% obsvDeclList.forEach((obs) => { %>
+                                            <% if(obs === declaracao.obsv){ %>
+                                                <option selected><%= obs %></option>
+                                            <% } else { %>
+                                                <option><%= obs %></option>
+                                            <% } %>
+                                        <% }); %>
+                                    <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Salvar</button>
