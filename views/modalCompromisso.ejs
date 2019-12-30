@@ -13,7 +13,7 @@
             <div class="modal-body border border-rounded border-info mx-1 my-1">
                 <form action='/editarcompromisso/<%=bolCons.cpf%>?_method=PUT' method="POST">
 
-                    <h5><strong>Declaração de Término do Curso</strong></h5>
+                    <h5><strong>Certificado de Término do Curso</strong></h5>
 
                     <div class="card mt-2 mb-3 my-1 py-.25 pl-.5">
                         <div class="card-body">
@@ -23,7 +23,7 @@
                                 <div class="form-row justify-content-center">
                                     <div class="col">
                                         <label for="bolsista[ufCert]">Unidade Federativa da Ies</label>
-                                        <select class="form-control" name='bolsista[ufCert]' id='bolsista[ufCert]'>
+                                        <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[ufCert]' id='bolsista[ufCert]'>
                                         <% var indexCert = (bolCons.certConclusao.length)-1; %>
                                         <% var certificado = bolCons.certConclusao[indexCert]; %>
                                         <% if(indexCert <= 0){ %>
@@ -44,7 +44,7 @@
                                     </div>
 
                                     <div class="col-1">
-                                        <select style="display: none;" class="form-control" id='noDisplayIes'>
+                                        <select style="display: none;" class="form-control custom-select inlineFormCustomSelect" id='noDisplayIes'>
                                             <% entidades.forEach(ies => { %>
                                                 <option value= <%= ies.uf %> > <%= ies.sigla %> </option>
                                             <% }); %>
@@ -53,7 +53,7 @@
 
                                     <div class="col">
                                         <label for="bolsista[iesCert]">Instituição de Ensino</label>
-                                        <select class="form-control" name='bolsista[iesCert]' id='bolsista[iesCert]'>
+                                        <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[iesCert]' id='bolsista[iesCert]'>
                                         <% if(indexCert <= 0){ %>
                                             <option>Selecione</option>
                                         <% } else { %>
@@ -147,7 +147,7 @@
 
                                     <div class="col">
                                         <label for="bolsista[ufDecl]">Unidade Federativa</label>
-                                        <select class="form-control" name='bolsista[ufDecl]' id='bolsista[ufDecl]'>
+                                        <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[ufDecl]' id='bolsista[ufDecl]'>
                                         <% var indexDecl = (bolCons.declaracao.length)-1; %>
                                         <% var declaracao = bolCons.declaracao[indexDecl]; %>
                                         <% if(indexDecl <= 0){ %>
@@ -168,7 +168,7 @@
                                     </div>
 
                                     <div class="col-1">
-                                        <select style="display: none;" class="form-control" id='noDisplayMun'>
+                                        <select style="display: none;" class="form-control custom-select inlineFormCustomSelect" id='noDisplayMun'>
                                             <% municipios.forEach(mun => { %>
                                                 <% mun.municipios.forEach(munInt => { %>
                                                     <option value= <%= munInt.uf %> > <%= munInt.nome %> </option>
@@ -179,7 +179,7 @@
 
                                     <div class="col">
                                         <label for="bolsista[munDecl]">Município</label>
-                                        <select class="form-control" name='bolsista[munDecl]' id='bolsista[munDecl]'>
+                                        <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[munDecl]' id='bolsista[munDecl]'>
                                         <% if(indexDecl <= 0){ %>
                                             <option>Selecione</option>
                                         <% } else { %>
@@ -200,7 +200,7 @@
                             <div class="card-body">
                                 <h5 class="card-title mb-.25" style="color: black;">Permanência (meses)</h5>
                                 <div class="form-group mb-0">
-                                    <select class="form-control mx-auto" name="bolsista[perm]" id="bolsista[perm]">
+                                    <select class="form-control custom-select inlineFormCustomSelect mx-auto" name="bolsista[perm]" id="bolsista[perm]">
                                         <% if(indexDecl <= 0){ %>
                                             <option>Selecione</option>
                                             <% for(var mes = 0; mes <= 95; mes++){ %>
@@ -219,7 +219,7 @@
                             <div class="card-body">
                                 <h5 class="card-title mb-.25" style="color: black;">Regularidade da Declaração</h5>
                                 <div class="form-group mb-0">
-                                    <select class="form-control mx-auto" name="bolsista[regDecl]" id="bolsista[regDecl]">
+                                    <select class="form-control custom-select inlineFormCustomSelect mx-auto" name="bolsista[regDecl]" id="bolsista[regDecl]">
                                         <<% if(indexDecl <= 0){ %>
                                             <option>Selecione</option>
                                             <option>Regular</option>
@@ -273,7 +273,7 @@
                             <div class="card-body">
                                 <h5 class="card-title mb-.25" style="color: black;">Resultado da Análise</h5>
                                 <div class="form-group mb-0">
-                                    <select class="form-control mx-auto" name="bolsista[resAna]" id="bolsista[resAna]">
+                                    <select class="form-control custom-select inlineFormCustomSelect mx-auto" name="bolsista[resAna]" id="bolsista[resAna]">
                                         <<% if(indexDecl <= 0){ %>
                                             <option>Selecione</option>
                                             <option>Regular</option>
