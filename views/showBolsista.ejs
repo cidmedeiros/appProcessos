@@ -258,12 +258,8 @@
                             <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                             <% if(bolCons.analiseCompromisso.length > 0){ %>
                                 <% let compromisso = bolCons.analiseCompromisso %>
-                                <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=compromisso.motivo.tipo%></h6>
-                                <h5 class="my-1 ml-1">Data do Observação</h5><h6 class="my-1 ml-1"><%=compromisso.motivo.data.toLocaleString()%></h6>
-                                <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=compromisso.regular.sit%></h6>
-                                <h5 class="my-1 ml-1">Data da Regularidade</h5><h6 class="my-1 ml-1"><%=compromisso.regular.data.toLocaleString()%></h6>
-                                <footer class="mx-auto">Informações por <%=compromisso.user%></footer>
-                            <% } else{ %>
+                                <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=compromisso.obsv%></h6>
+                                <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=compromisso.regular%></h6>
                                 <h5 class="my-1 ml-1">Pendente de análise</h5>
                             <% } %>
                             </div>

@@ -34,7 +34,7 @@
                                         <% } else{ %>
                                             <% municipios.forEach(mun => { %>
                                                 <% if(mun.agrpUf == certificado.ies.uf){ %>
-                                                    <option value="<%= mun.agrpUf %>" selected><%= mun.agrpUf %></option>
+                                                    <option value="<%= mun.agrpUf %>" selected><%= certificado.ies.uf %></option>
                                                 <% } else { %>
                                                     <option value="<%= mun.agrpUf %>"><%= mun.agrpUf %></option>
                                                 <% } %>
@@ -57,7 +57,7 @@
                                         <% if(indexCert <= 0){ %>
                                             <option>Selecione</option>
                                         <% } else { %>
-                                            <option> <%= ies.sigla %> </option>
+                                            <option> <%= 'verificar populate' %> </option>
                                         <% } %>
                                         </select>
                                     </div>
@@ -75,14 +75,14 @@
                                 <h5 class="card-title" style="color: black;">Situação do Curso</h5>
                                 <div class="form-group">
                                     <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[status]' id='bolsista[status]'>
-                                    <%var statusList = ['Selecione','Concluído','Desligado','Abandonou o Curso','Cursando (Reingresso)'];%>
+                                    <% var statusList = ['Selecione','Concluído','Desligado','Abandonou o Curso','Cursando (Reingresso)']; %>
                                     <% var indexStatus = (bolCons.statusCurso.length)-1; %>
+                                    <% var statusCurso = bolCons.statusCurso[indexStatus]; %>
                                     <% if(indexStatus <= 0){ %>
                                         <% statusList.forEach((stat) => { %>
                                             <option><%= stat %></option>
                                         <% }); %>
                                     <% } else { %>
-                                        <% var statusCurso = bolCons.statusCurso[indexStatus]; %>
                                         <% statusList.shift() %>;
                                         <% statusList.forEach((statList) => { %>
                                             <% if(statList === statusCurso.status){ %>
@@ -110,7 +110,28 @@
 
                     <div class="form-row justify-content-center">
 
-                        <div class="col-12 card mb-4 mx-2 py-.25 pl-.5">
+                        <div class="col-4 card mb-2 ml-1 mr-1 py-.25 pl-.5">
+                            <div class="card-body">
+                                <h5 class="card-title mb-.25" style="color: black; text-align: center;">Regularidade do Certificado</h5>
+                                <div class="form-group mb-0">
+                                    <select class="form-control custom-select inlineFormCustomSelect mx-auto" name="bolsista[regCert]" id="bolsista[regCert]">
+                                        <<% if(indexCert <= 0){ %>
+                                            <option>Selecione</option>
+                                            <option>Regular</option>
+                                            <option>Irregular</option>
+                                        <% } else if(certificado.regular === 'Regular') { %>
+                                            <option selected>Regular</option>
+                                            <option>Irregular</option>
+                                        <% } else { %>
+                                            <option selected>Irregular</option>
+                                            <option>Regular</option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col card mb-2 ml-1 mr-1 py-.25 pl-.5">
                             <div class="card-body">
                                 <h5 class="card-title" style="color: black;">Observação do Certificado</h5>
                                 <div class="form-group">
@@ -196,7 +217,7 @@
 
                     <div class="form-row">
 
-                        <div class=" col-4 card mb-2 ml-1 mr-1 py-.25 pl-.5">
+                        <div class="col-4 card mb-2 ml-1 mr-1 py-.25 pl-.5">
                             <div class="card-body">
                                 <h5 class="card-title mb-.25" style="color: black;">Permanência (meses)</h5>
                                 <div class="form-group mb-0">
@@ -208,14 +229,18 @@
                                             <% } %>
                                             <option>96+</option>
                                         <% } else { %>
-                                            <option> <%= declaracao.permanencia %> </option>
+                                            <option selected><%=declaracao.permanencia%></option>
+                                            <% for(var mes = 0; mes <= 95; mes++){ %>
+                                                <option><%=mes%></option>
+                                            <% } %>
+                                            <option>96+</option>
                                         <% } %>
                                     </select>
                                 </div>
                             </div>
                         </div>
 
-                        <div class=" col card mb-2 ml-1 mr-1 py-.25 pl-.5">
+                        <div class="col card mb-2 ml-1 mr-1 py-.25 pl-.5">
                             <div class="card-body">
                                 <h5 class="card-title mb-.25" style="color: black;">Regularidade da Declaração</h5>
                                 <div class="form-group mb-0">
