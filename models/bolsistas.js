@@ -105,14 +105,6 @@ const bolsistaSchema = new mongoose.Schema({
 	]
 });
 
-bolsistaSchema.pre('save', function(next){
-	this.permanenciaTotal = 0;
-	 this.declaracao.forEach(declara => {
-		this.permanenciaTotal = this.permanenciaTotal + declara.permanencia
-	 })
-	next();
-  });
-
 bolsistaSchema.plugin(mongoose_fuzzy_searching, {fields: ['nome']});
 
 //the next statement uses the plural form of the string param to create (if needed) a collection on the DB.
