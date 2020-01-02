@@ -234,7 +234,7 @@
 
                 <div class="col my-auto">
 
-                    <h5><strong>Declaração de Permanência</strong></h5>
+                    <h5><strong>Declarações de Permanência</strong></h5>
                     <% if(bolCons.declaracao.length > 0){ %>
                         <table class="table table-sm">
                             <thead class="thead-light">
@@ -253,11 +253,11 @@
                             <% declars.forEach(declaracao => { %>
                                 <tr>
                                     <form action='/deletedeclaracao/<%=declaracao._id%>?_method=PUT' method="DELETE">
-                                        <td><%=0%></td>
-                                        <td><%=0%></td>
-                                        <td><%=0%></td>
-                                        <td><%=0%></td>
-                                        <td><%=0%></td>
+                                        <td><%=declaracao.municipioEscola.uf%></td>
+                                        <td><%=declaracao.municipioEscola.nome%></td>
+                                        <td><%=declaracao.permanencia%></td>
+                                        <td><%=declaracao.regular%></td>
+                                        <td><%=declaracao.obsv%></td>
                                         <td><button type="button" id="btnEditDeclara" class="btn btn-primary btn-sm btn-block active" data-toggle="modal" data-target="#modalCompromisso" data-whatever="<%=declaracao._id%>">Editar</button></td>
                                         <td><input type="submit" value="Excluir" id="btnDeleteDeclara" class="btn btn-danger btn-sm btn-block active"></input></td>
                                     </form>
