@@ -5,11 +5,13 @@ Created on Wed Nov 27 09:17:05 2019
 @author: cidm
 """
 import os
-os.chdir(r'D:\computer-science\web-development\capesProject\assets')
+os.chdir(r'G:\CGFO\CCB\Bolsas\geProcessos\appProcessos\assets\scripts\dataBase')
+from fuzzywuzzy import fuzz
+os.chdir(r'G:\CGFO\CCB\Bolsas\geProcessos\appProcessos\assets')
 import json
 import pandas as pd
 import numpy as np
-from fuzzywuzzy import fuzz
+
 import datetime as dt
 
 def munJson():
@@ -42,16 +44,9 @@ def munJson():
     
     
     municipiosJson = []
-    ufList = municipios.siglaUf.unique()
-    
-    for siglaUf in ufList:
-        ufDict = {'agrpUf':siglaUf}
-        munList = []
-        for _id, row in municipios.iterrows():
-            if row.siglaUf == siglaUf:
-                munList.append({'nome':row.nome,'nomeUf':row.uf,'uf':row.siglaUf,'ibge':row.ibge,'regiao':row.regiao})
-        ufDict['municipios'] = munList
-        municipiosJson.append(ufDict)
+
+    for _id, row in municipios.iterrows():
+        municipiosJson.append({'nome':row.nome,'nomeUf':row.uf,'uf':row.siglaUf,'ibge':row.ibge,'regiao':row.regiao})
         
     with open('dados\municipios.json', 'w', encoding='utf-8') as f:
         json.dump(municipiosJson, f, ensure_ascii=False)
