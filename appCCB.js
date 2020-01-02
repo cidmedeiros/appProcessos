@@ -38,7 +38,9 @@ app.get('/', async (req, res) =>{
 	//SHOW ROUTE
 app.get('/paginadobolsista/:id', async (req, res) => {
 	try{
-		await Bolsista.findById(req.params.id).populate('pags.iesLocal').populate([
+		await Bolsista.findById(req.params.id).populate('pags.iesLocal').populate('certConclusao.ies')
+		.populate('declaracao.municipioEscola')
+		.populate([
 			{
 				path: 'pags.programa',
 				model:'Programa',
@@ -47,7 +49,7 @@ app.get('/paginadobolsista/:id', async (req, res) => {
 					model:'Ies'
 				}
 			}
-		]).populate('declaracao.municipioEscola').exec(async (err, foundBol) => {
+		]).exec(async (err, foundBol) => {
 			if(err){
 				console.log(`Bolsista ${req.params.cpf} not found! Error: ${err}`);
 			} else {
@@ -145,10 +147,9 @@ app.put('/editardadospessoais/:cpf', (req, res) => {
 });
 
 app.put('/editarcompromisso/:cpf', async (req, res) =>{
-	//Ies & Municipio
+	//Ies
 	try{
 		var iesUpdate;
-		var municipioUpdate;
 		await Ies.findOne({sigla:req.body.bolsista.iesCert}, (err, foundIes) => {
 			if(err){
 				console.log('------------------------------------');
@@ -156,25 +157,11 @@ app.put('/editarcompromisso/:cpf', async (req, res) =>{
 				console.log('------------------------------------');
 			} else{
 				iesUpdate = foundIes._id;
-				Municipio.findOne({agrpUf:req.body.bolsista.ufDecl}, (err, foundUf) => {
-					if(err){
-						console.log('------------------------------------');
-						console.log(`Second Promise Internal error finding UF ${err}`);
-						console.log('------------------------------------');
-					} else{
-						foundUf.municipios.forEach(mun =>{
-							if(mun.nome == req.body.bolsista.munDecl){
-								municipioUpdate = mun._id;
-								console.log(`Municipio found: ${municipioUpdate}`)
-							}
-						})
-					}
-				});
 			}
 		});
 	} catch(error){
 		console.log('------------------------------------');
-		console.log(`First Promise External error finding Ies ${error}`);
+		console.log(`First Promise External error finding Ies & Municipio ${error}`);
 		console.log('------------------------------------');
 	}
 	console.log('------------------------------------');
@@ -182,30 +169,25 @@ app.put('/editarcompromisso/:cpf', async (req, res) =>{
 	console.log('------------------------------------');
 
 	//Municipio
-
 	try{
 		var municipioUpdate;
-		await Municipio.findOne({agrpUf:req.body.bolsista.ufDecl}, (err, foundUf) => {
+		await Municipio.findOne({uf:req.body.bolsista.ufDecl, nome:req.body.bolsista.munDecl}, (err, foundMun) => {
 			if(err){
 				console.log('------------------------------------');
 				console.log(`Second Promise Internal error finding UF ${err}`);
 				console.log('------------------------------------');
 			} else{
-				foundUf.municipios.forEach(mun =>{
-					if(mun.nome == req.body.bolsista.munDecl){
-						municipioUpdate = mun._id;
-						console.log(`Municipio found: ${municipioUpdate}`)
-					}
-				})
+				municipioUpdate = foundMun._id;
+				console.log(`Municipio found: ${municipioUpdate}`)
 			}
-		});
+		})
 	} catch(error){
 		console.log('------------------------------------');
-		console.log(`First Promise External error finding Ies ${error}`);
+		console.log(`Second Promise External error finding Ies ${error}`);
 		console.log('------------------------------------');
 	}
 	console.log('------------------------------------');
-	console.log(`First promise ies Id: ${iesUpdate}`);
+	console.log(`Second promise ies Id: ${iesUpdate}`);
 	console.log('------------------------------------');
 
 	//Push Docs
@@ -220,7 +202,7 @@ app.put('/editarcompromisso/:cpf', async (req, res) =>{
 			(err, upObejct) =>{
 				if(err){
 					console.log('------------------------------------');
-					console.log(`Second Promise Internal error updating ${err}`);
+					console.log(`Third Promise Internal error updating ${err}`);
 					console.log('------------------------------------');
 				} else{
 					console.log('------------------------------------');
@@ -230,7 +212,7 @@ app.put('/editarcompromisso/:cpf', async (req, res) =>{
 		});
 	} catch(error) {
 		console.log('------------------------------------');
-		console.log(`Second Promise External error updating ${error}`);
+		console.log(`Third Promise External error updating ${error}`);
 		console.log('------------------------------------');
 	}
 });
