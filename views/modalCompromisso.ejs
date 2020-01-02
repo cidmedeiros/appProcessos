@@ -12,7 +12,12 @@
             </div>
             <div class="modal-body border border-rounded border-info mx-1 my-1">
                 <form action='/editarcompromisso/<%=bolCons.cpf%>?_method=PUT' method="POST">
-
+                    <% var ufList = [] %>
+                    <% municipios.forEach(mun => { %>
+                        <% if(!ufList.includes(mun.uf)){ %>
+                            <% ufList.push(mun.uf) %>
+                        <% } %>                        
+                    <% }); %>
                     <h5><strong>Certificado de Término do Curso</strong></h5>
 
                     <div class="card mt-2 mb-3 my-1 py-.25 pl-.5">
@@ -28,15 +33,15 @@
                                         <% var certificado = bolCons.certConclusao[indexCert]; %>
                                         <% if(indexCert <= 0){ %>
                                             <option>Selecione</option>
-                                            <% municipios.forEach(mun => { %>
-                                                <option value="<%= mun.agrpUf %>"><%= mun.agrpUf %></option>
+                                            <% ufList.forEach(uf => { %>
+                                                <option value="<%= uf %>"><%= uf %></option>
                                             <% }); %>
                                         <% } else{ %>
-                                            <% municipios.forEach(mun => { %>
-                                                <% if(mun.agrpUf == certificado.ies.uf){ %>
-                                                    <option value="<%= mun.agrpUf %>" selected><%= certificado.ies.uf %></option>
+                                            <% ufList.forEach(uf => { %>
+                                                <% if(uf == certificado.ies.uf){ %>
+                                                    <option value="<%= uf %>" selected><%= certificado.ies.uf %></option>
                                                 <% } else { %>
-                                                    <option value="<%= mun.agrpUf %>"><%= mun.agrpUf %></option>
+                                                    <option value="<%= uf %>"><%= uf %></option>
                                                 <% } %>
                                             <% }); %>
                                         <% } %>
@@ -57,7 +62,7 @@
                                         <% if(indexCert <= 0){ %>
                                             <option>Selecione</option>
                                         <% } else { %>
-                                            <option> <%= 'verificar populate' %> </option>
+                                            <option> <%= certificado.ies.sigla %> </option>
                                         <% } %>
                                         </select>
                                     </div>
@@ -173,15 +178,15 @@
                                         <% var declaracao = bolCons.declaracao[indexDecl]; %>
                                         <% if(indexDecl <= 0){ %>
                                             <option>Selecione</option>
-                                            <% municipios.forEach(mun => { %>
-                                                <option value="<%= mun.agrpUf %>"><%= mun.agrpUf %></option>
+                                            <% ufList.forEach(uf => { %>
+                                                <option value="<%= uf %>"><%= uf %></option>
                                             <% }); %>
                                         <% } else{ %>
-                                            <% municipios.forEach(mun => { %>
-                                                <% if(mun.agrpUf == 0){ %>
-                                                    <option value="<%= mun.agrpUf %>" selected><%= mun.agrpUf %></option>
+                                            <% ufList.forEach(uf => { %>
+                                                <% if(uf == declaracao.municipioEscola.uf){ %>
+                                                    <option value="<%= uf %>" selected><%= declaracao.municipioEscola.uf %></option>
                                                 <% } else { %>
-                                                    <option value="<%= mun.agrpUf %>"><%= mun.agrpUf %></option>
+                                                    <option value="<%= uf %>"><%= uf %></option>
                                                 <% } %>
                                             <% }); %>
                                         <% } %>
@@ -191,9 +196,7 @@
                                     <div class="col-1">
                                         <select style="display: none;" class="form-control custom-select inlineFormCustomSelect" id='noDisplayMun'>
                                             <% municipios.forEach(mun => { %>
-                                                <% mun.municipios.forEach(munInt => { %>
-                                                    <option value= <%= munInt.uf %> > <%= munInt.nome %> </option>
-                                                <% }); %>
+                                                <option value= <%= mun.uf %> > <%= mun.nome %> </option>
                                             <% }); %>
                                         </select>
                                     </div>
@@ -204,7 +207,7 @@
                                         <% if(indexDecl <= 0){ %>
                                             <option>Selecione</option>
                                         <% } else { %>
-                                            <option> <%= 0 %> </option>
+                                            <option> <%= declaracao.municipioEscola.nome %> </option>
                                         <% } %>
                                         </select>
                                     </div>
