@@ -233,24 +233,42 @@
 
                 <div class="col my-auto">
 
-                    <div class="card my-1 py-.25 pl-.5">
-                        <div class="card-body">
-                            <h5 class="card-title"><strong>Declaração de Permanência</strong></h5>
-                            <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                            <% if(bolCons.declaracao.length > 0){ %>
-                                <% let declaracao = bolCons.declaracao[((bolCons.declaracao).length-1)]%>
-                                <h5 class="my-1 ml-1">Município da Escola</h5><h6 class="my-1 ml-1"><%=declaracao.municipioEscola%></h6>
-                                <h5 class="my-1 ml-1">Permanência</h5><h6 class="my-1 ml-1"><%=declaracao.permanencia%></h6>
-                                <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=declaracao.obsv%></h6>
-                                <h5 class="my-1 ml-1">Data da Observação</h5><h6 class="my-1 ml-1"><%=declaracao.data.toLocaleString()%></h6>
-                                <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=declaracao.regular%></h6>
-                                <footer class="mx-auto">Informações por <%=declaracao.user%></footer>
-                            <% } else{ %>
-                                <h5 class="my-1 ml-1">Pendente de análise</h5>
-                            <% } %>
-                            </div>
-                        </div>
-                    </div>
+                    <h5><strong>Declaração de Permanência</strong></h5>
+                    <% if(bolCons.declaracao.length > 0){ %>
+                        <table class="table table-sm">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">UF</th>
+                                    <th scope="col">Município</th>
+                                    <th scope="col">Permanência(meses)</th>
+                                    <th scope="col">Regularidade</th>
+                                    <th scope="col">Observação</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <% let declars = bolCons.declaracao %>
+                            <tbody>
+                            <% declars.forEach(declaracao => { %>
+                                <tr>
+                                    <td><%=0%></td>
+                                    <td><%=0%></td>
+                                    <td><%=0%></td>
+                                    <td><%=0%></td>
+                                    <td><%=0%></td>
+                                    <td><%=0%></td>
+                                    <td><%=0%></td>
+                                </tr>
+                            <% }); %>
+                                <tr>
+                                    <td class="bg-success" colspan="2">Permanência Total</td>
+                                    <td class="bg-success"><strong><%=0%></strong></td>
+                                </tr>
+                            </tbody>
+                                <% } else{ %>
+                                    <h5 class="my-1 ml-1">Pendente de análise</h5>
+                                <% } %>
+                        </table>
 
                     <div class="card my-1 py-.25 pl-.5">
                         <div class="card-body">
@@ -261,6 +279,8 @@
                                 <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=compromisso.obsv%></h6>
                                 <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=compromisso.regular%></h6>
                                 <h5 class="my-1 ml-1">Pendente de análise</h5>
+                            <% } else{ %>
+                                    <h5 class="my-1 ml-1">Pendente de análise</h5>
                             <% } %>
                             </div>
                         </div>
