@@ -31,7 +31,11 @@ function treatInput(input){
 function calcPerm(declaracao){
     let perm = 0;
     declaracao.forEach(decla => {
-        perm = parseInt(decla.perm, 10) + perm
+        console.log(decla.regular);
+        if(decla.regular == "Regular"){
+            perm = decla.permanencia + perm;
+            console.log(perm);
+        } 
     });
     return perm;
 };
@@ -39,5 +43,5 @@ function calcPerm(declaracao){
 module.exports = {
     getLocalIp:getLocalIp,
     treatInput:treatInput,
-	calcPerm:calcPerm
+    calcPerm:calcPerm
 }
