@@ -62,8 +62,8 @@
                                     <h5 class="my-1 ml-1">Entidade Local</h5><h4 class="my-1 ml-1"><%= pags.iesLocal.sigla %></h4>
                                 </li>
                                 <li class="list-group-item border-success">
-                                <% if((bolCons.email.length)-1 > 0) { %>
-                                    <h5 class="my-1 ml-1">E-mail</h5><h4 class="my-1 ml-1"><%=bolCons.email[(bolCons.email.length)-1].email%></h4>
+                                <% if((bolCons.email.length)-1 >= 0) { %>
+                                    <h5 class="my-1 ml-1">E-mail</h5><h4 class="my-1 ml-1"><%=bolCons.email[bolCons.email.length-1].email%></h4>
                                 <% } else { %>
                                     <h5 class="my-1 ml-1">E-mail</h5><h4 class="my-1 ml-1"> Email ainda não informado</h4>
                                 <% } %>
@@ -492,7 +492,7 @@
         .remove()
         .end();
 
-        let selecioneOpt = `<option>Selecione</option>`
+        let selecioneOpt = `<option value=''>Selecione</option>`
         iesSelect.insertAdjacentHTML("beforeend", selecioneOpt);
         let ufValue = iesUfSelect.options.item(iesUfSelect.selectedIndex).value;
         let lenIes = (noDisplayIes.length)-1;
@@ -517,7 +517,7 @@
         .remove()
         .end();
 
-        let selecioneOpt = `<option>Selecione</option>`
+        let selecioneOpt = `<option value=''>Selecione</option>`
         munSelect.insertAdjacentHTML("beforeend", selecioneOpt);
         let ufValue = munUfSelect.options.item(munUfSelect.selectedIndex).value;
         let lenMun = (noDisplayMun.length)-1;

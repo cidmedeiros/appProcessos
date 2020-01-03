@@ -28,7 +28,7 @@
                                     <h5 for="sexo" style="color: black;">Sexo</h5>
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[sexo]' id='bolsista[sexo]'>
                                     <% if(bolCons.sexo === 'sem info'){ %>
-                                        <option>Selecione</option>
+                                        <option value=''>Selecione</option>
                                         <option>Feminino</option>
                                         <option>Masculino</option>
                                     <% } else if(bolCons.sexo === 'Feminino') { %>
@@ -52,15 +52,15 @@
                                 <div class="form-group">
                                     <h5 style="color: black;" for="tipoDocFoto">Documento</h5>
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[tipoDocFoto]' id='bolsista[tipoDocFoto]'>
-                                    <%var docFotoList = ['Selecione','Identidade','Carteira de Motorista','Registro Profissional','Passaporte','Carteira de Trabalho'];%>
+                                    <%var docFotoList = ['Identidade','Carteira de Motorista','Registro Profissional','Passaporte','Carteira de Trabalho'];%>
                                     <% var indexFoto = (bolCons.docFoto.length)-1; %>
-                                    <% if(indexFoto <= 0){ %>
+                                    <% if(indexFoto < 0){ %>
+                                        <option value=''>Selecione</option>
                                         <% docFotoList.forEach((doc) => { %>
                                             <option><%= doc %></option>
                                         <% }); %>
                                     <% } else { %>
                                         <% var docuFoto = bolCons.docFoto[indexFoto]; %>
-                                        <% docFotoList.shift() %>;
                                         <% docFotoList.forEach((docList) => { %>
                                             <% if(docList === docuFoto.doc){ %>
                                                 <option selected><%= docList %></option>
@@ -72,8 +72,8 @@
                                     </select>
                                     <h5 style="color: black;" for="regDocFoto">Regularidade do Documento</h5>
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[regDocFoto]' id='bolsista[regDocFoto]'>
-                                    <% if(indexFoto <= 0){ %>
-                                        <option>Selecione</option>
+                                    <% if(indexFoto < 0){ %>
+                                        <option value=''>Selecione</option>
                                         <option>Regular</option>
                                         <option>Irregular</option>
                                     <% } else if(docuFoto.regular === 'Regular') { %>
@@ -86,13 +86,13 @@
                                     </select>
                                     <h5 style="color: black;" for="obsvDocFoto">Observação</h5>
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvDocFoto]' id='bolsista[obsvDocFoto]'>
-                                        <%var obsvFotoList = ['Selecione','Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações','Sem Foto','Vencida'];%>
-                                        <% if(indexFoto <= 0){ %>
+                                        <%var obsvFotoList = ['Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações','Sem Foto','Vencida'];%>
+                                        <% if(indexFoto < 0){ %>
+                                            <option value=''>Selecione</option>
                                             <% obsvFotoList.forEach((obsvList) => { %>
                                                 <option><%= obsvList %></option>
                                             <% }); %>
                                         <% } else { %>
-                                            <% obsvFotoList.shift() %>;
                                             <% obsvFotoList.forEach((obsvList) => { %>
                                                 <% if(obsvList === docuFoto.obsv){ %>
                                                     <option selected><%= obsvList %></option>
@@ -114,15 +114,15 @@
                                 <div class="form-group">
                                     <h5 style="color: black;" for="tipoDocRes">Documento</h5>
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[tipoDocRes]' id='bolsista[tipoDocRes]'>
-                                        <%var docResList = ['Selecione','Conta de Água','Conta de Luz','Conta de Telefone','Correspondência Bancária','Correspondência Comercial'];%>
+                                        <%var docResList = ['Conta de Água','Conta de Luz','Conta de Telefone','Correspondência Bancária','Correspondência Comercial'];%>
                                         <% var indexRes = (bolCons.docRes.length)-1; %>
-                                        <% if(indexRes <= 0){ %>
+                                        <% if(indexRes < 0){ %>
+                                            <option value=''>Selecione</option>
                                             <% docResList.forEach((doc) => { %>
                                                 <option><%= doc %></option>
                                             <% }); %>
                                         <% } else { %>
                                             <% var docuRes = bolCons.docRes[indexRes]; %>
-                                            <% docResList.shift() %>;
                                             <% docResList.forEach((docList) => { %>
                                                 <% if(docList === docuRes.doc){ %>
                                                     <option selected><%= docList %></option>
@@ -134,8 +134,8 @@
                                     </select>
                                     <h5 style="color: black;" for="regDocRes">Regularidade do Documento</h5>
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[regDocRes]' id='bolsista[regDocRes]'>
-                                    <% if(indexRes <= 0){ %>
-                                        <option>Selecione</option>
+                                    <% if(indexRes < 0){ %>
+                                        <option value=''>Selecione</option>
                                         <option>Regular</option>
                                         <option>Irregular</option>
                                     <% } else if(docuRes.regular === 'Regular') { %>
@@ -148,13 +148,13 @@
                                     </select>
                                     <h5 style="color: black;" for="obsvDocRes">Observação</h5>
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvDocRes]' id='bolsista[obsvDocRes]'>
-                                    <%var obsvResList = ['Selecione','Ilegível','Ausente','Sem Observações'];%>
-                                    <% if(indexRes <= 0){ %>
+                                    <%var obsvResList = ['Ilegível','Ausente','Sem Observações'];%>
+                                    <% if(indexRes < 0){ %>
+                                        <option value=''>Selecione</option>
                                         <% obsvResList.forEach((obsvList) => { %>
                                             <option><%= obsvList %></option>
                                         <% }); %>
                                     <% } else { %>
-                                        <% obsvResList.shift() %>;
                                         <% obsvResList.forEach((obsvList) => { %>
                                             <% if(obsvList === docuRes.obsv){ %>
                                                 <option selected><%= obsvList %></option>
@@ -177,8 +177,8 @@
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[regTermo]' id='bolsista[regTermo]'>
                                     <% var indexTermo = (bolCons.termo.length)-1; %>
                                     <% var termo = bolCons.termo[indexTermo]; %>
-                                    <% if(indexTermo <= 0){ %>
-                                        <option>Selecione</option>
+                                    <% if(indexTermo < 0){ %>
+                                        <option value=''>Selecione</option>
                                         <option>Regular</option>
                                         <option>Irregular</option>
                                     <% } else if(termo.regular === 'Regular') { %>
@@ -191,13 +191,13 @@
                                     </select>
                                     <h5 style="color: black;" for="obsvTermo">Observação</h5>
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvTermo]' id='bolsista[obsvTermo]'>
-                                    <%var obsvTermoList = ['Selecione','Assinado Após Pagamento','Ausente','Ilegível','Sem Assinatura','Sem Observações'];%>
-                                    <% if(indexTermo <= 0){ %>
+                                    <%var obsvTermoList = ['Assinado Após Pagamento','Ausente','Ilegível','Sem Assinatura','Sem Observações'];%>
+                                    <% if(indexTermo < 0){ %>
+                                        <option value=''>Selecione</option>
                                         <% obsvTermoList.forEach((obsvList) => { %>
                                             <option><%= obsvList %></option>
                                         <% }); %>
                                     <% } else { %>
-                                        <% obsvTermoList.shift() %>;
                                         <% obsvTermoList.forEach((obsvList) => { %>
                                             <% if(obsvList === termo.obsv){ %>
                                                 <option selected><%= obsvList %></option>
