@@ -3,7 +3,7 @@ function getLocalIp() {
 
     for(let addresses of Object.values(os.networkInterfaces())) {
         for(let add of addresses) {
-            if(add.address.startsWith('192.168.')) {
+            if(add.address.startsWith('172.19.')) {
                 return add.address;
             }
         }
@@ -24,8 +24,16 @@ function treatInput(input){
         }
 	} else {
 		input = input.toUpperCase();
-		return ['nome',input];
+		return ['nome', input];
 	}
+};
+
+function calcPerm(declaracao){
+    let perm = 0;
+    declaracao.forEach(decla => {
+        perm = parseInt(decla.perm, 10) + perm
+    });
+    return perm;
 };
 
 module.exports = {
