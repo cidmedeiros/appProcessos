@@ -160,13 +160,10 @@ app.put('/editarcompromisso/:cpf', async (req, res) =>{
 		});
 	} catch(error){
 		console.log('------------------------------------');
-		console.log(`First Promise External error finding Ies & Municipio ${error}`);
+		console.log(`First Promise External error finding Ies ${error}`);
 		console.log('------------------------------------');
 	}
-	console.log('------------------------------------');
-	console.log(`First promise ies Id: ${iesUpdate}`);
-	console.log('------------------------------------');
-
+	
 	//Push Docs
 	try{
 		Bolsista.findOneAndUpdate({cpf:req.params.cpf},
@@ -182,20 +179,38 @@ app.put('/editarcompromisso/:cpf', async (req, res) =>{
 			(err, upObejct) =>{
 				if(err){
 					console.log('------------------------------------');
-					console.log(`Third Promise Internal error updating ${err}`);
+					console.log(`Second Promise Internal error updating ${err}`);
 					console.log('------------------------------------');
 				} else{
-					console.log('------------------------------------');
-					res.redirect(`/paginadobolsista/${upObejct._id}`);
-					console.log('------------------------------------');
+					Bolsista.findOne({cpf:req.params.cpf}, async (err, foundBol) => {
+						if(err){
+							console.log('------------------------------------');
+							console.log(`Third Promise Internal error finding bolsista ${err}`)
+							console.log('------------------------------------');
+						} else{
+							console.log(foundBol.declaracao)
+							var newPerm = await tools.calcPerm(foundBol.declaracao);
+							console.log(`newPerm: ${newPerm}`);
+							Bolsista.findOneAndUpdate({cpf:req.params.cpf}, {'permanenciaTotal':newPerm}, (err, upObejctInt) =>{
+								if(err){
+									console.log('------------------------------------');
+									console.log(`Forth Promise Internal error updating after Calculating ${newPerm} ${err}`);
+									console.log('------------------------------------');
+								} else {
+									res.redirect(`/paginadobolsista/${upObejctInt._id}`);
+								}
+							});
+						}
+
+					});
 				}
-		});
+			});
 	} catch(error) {
 		console.log('------------------------------------');
-		console.log(`Third Promise External error updating ${error}`);
+		console.log(`Exit Promise External error updating ${error}`);
 		console.log('------------------------------------');
 	}
-});
+});	
 
 	//Routes order matters! This should always be the last route!!
 app.get('*', async (req, res) =>{
