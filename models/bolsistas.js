@@ -45,8 +45,8 @@ const bolsistaSchema = new mongoose.Schema({
 	declaracao: [
 		{
 			municipioEscola: {
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Municipio'
+				nome: String,
+				uf: String
 			},
 			permanencia: mongoose.Schema.Types.Mixed,
 			regular: String,
