@@ -39,4 +39,5 @@ function calcPerm(declaracao){
 module.exports = {
     getLocalIp:getLocalIp,
     treatInput:treatInput,
+	calcPerm:calcPerm
 }
