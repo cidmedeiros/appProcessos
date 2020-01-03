@@ -21,12 +21,12 @@
                                 <div class="form-group">
                                     <h5 for="email" style="color: black;">Email</h5>
                                     <% if(bolCons.email.length > 0){ %>
-                                        <input type="email" class="form-control" id='bolsista[email]' name='bolsista[email]' placeholder="nome@examplo.com" value= <%= bolCons.email[(bolCons.email.length)-1].email %> >
+                                        <input required type="email" class="form-control" id='bolsista[email]' name='bolsista[email]' placeholder="nome@examplo.com" value= <%= bolCons.email[(bolCons.email.length)-1].email %> >
                                     <% } else{ %>
-                                        <input type="email" class="form-control" id='bolsista[email]' name='bolsista[email]' placeholder="nome@examplo.com">
+                                        <input required type="email" class="form-control" id='bolsista[email]' name='bolsista[email]' placeholder="nome@examplo.com">
                                     <% } %>
                                     <h5 for="sexo" style="color: black;">Sexo</h5>
-                                    <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[sexo]' id='bolsista[sexo]'>
+                                    <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[sexo]' id='bolsista[sexo]'>
                                     <% if(bolCons.sexo === 'sem info'){ %>
                                         <option>Selecione</option>
                                         <option>Feminino</option>
@@ -51,7 +51,7 @@
                                 <h5>Documento Com Foto</h5>
                                 <div class="form-group">
                                     <h5 style="color: black;" for="tipoDocFoto">Documento</h5>
-                                    <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[tipoDocFoto]' id='bolsista[tipoDocFoto]'>
+                                    <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[tipoDocFoto]' id='bolsista[tipoDocFoto]'>
                                     <%var docFotoList = ['Selecione','Identidade','Carteira de Motorista','Registro Profissional','Passaporte','Carteira de Trabalho'];%>
                                     <% var indexFoto = (bolCons.docFoto.length)-1; %>
                                     <% if(indexFoto <= 0){ %>
@@ -71,7 +71,7 @@
                                     <% } %>
                                     </select>
                                     <h5 style="color: black;" for="regDocFoto">Regularidade do Documento</h5>
-                                    <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[regDocFoto]' id='bolsista[regDocFoto]'>
+                                    <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[regDocFoto]' id='bolsista[regDocFoto]'>
                                     <% if(indexFoto <= 0){ %>
                                         <option>Selecione</option>
                                         <option>Regular</option>
@@ -85,7 +85,7 @@
                                     <% } %>
                                     </select>
                                     <h5 style="color: black;" for="obsvDocFoto">Observação</h5>
-                                    <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvDocFoto]' id='bolsista[obsvDocFoto]'>
+                                    <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvDocFoto]' id='bolsista[obsvDocFoto]'>
                                         <%var obsvFotoList = ['Selecione','Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações','Sem Foto','Vencida'];%>
                                         <% if(indexFoto <= 0){ %>
                                             <% obsvFotoList.forEach((obsvList) => { %>
@@ -113,7 +113,7 @@
                                 <h5>Comprovante de Residência</h5>
                                 <div class="form-group">
                                     <h5 style="color: black;" for="tipoDocRes">Documento</h5>
-                                    <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[tipoDocRes]' id='bolsista[tipoDocRes]'>
+                                    <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[tipoDocRes]' id='bolsista[tipoDocRes]'>
                                         <%var docResList = ['Selecione','Conta de Água','Conta de Luz','Conta de Telefone','Correspondência Bancária','Correspondência Comercial'];%>
                                         <% var indexRes = (bolCons.docRes.length)-1; %>
                                         <% if(indexRes <= 0){ %>
@@ -133,7 +133,7 @@
                                         <% } %>
                                     </select>
                                     <h5 style="color: black;" for="regDocRes">Regularidade do Documento</h5>
-                                    <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[regDocRes]' id='bolsista[regDocRes]'>
+                                    <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[regDocRes]' id='bolsista[regDocRes]'>
                                     <% if(indexRes <= 0){ %>
                                         <option>Selecione</option>
                                         <option>Regular</option>
@@ -147,7 +147,7 @@
                                     <% } %>
                                     </select>
                                     <h5 style="color: black;" for="obsvDocRes">Observação</h5>
-                                    <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvDocRes]' id='bolsista[obsvDocRes]'>
+                                    <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvDocRes]' id='bolsista[obsvDocRes]'>
                                     <%var obsvResList = ['Selecione','Ilegível','Ausente','Sem Observações'];%>
                                     <% if(indexRes <= 0){ %>
                                         <% obsvResList.forEach((obsvList) => { %>
@@ -174,7 +174,7 @@
                                 <h5>Termo de Compromisso do Bolsista</h5>
                                 <div class="form-group">
                                     <h5 style="color: black;" for="regTermo">Regularidade do Documento</h5>
-                                    <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[regTermo]' id='bolsista[regTermo]'>
+                                    <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[regTermo]' id='bolsista[regTermo]'>
                                     <% var indexTermo = (bolCons.termo.length)-1; %>
                                     <% var termo = bolCons.termo[indexTermo]; %>
                                     <% if(indexTermo <= 0){ %>
@@ -190,7 +190,7 @@
                                     <% } %>
                                     </select>
                                     <h5 style="color: black;" for="obsvTermo">Observação</h5>
-                                    <select class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvTermo]' id='bolsista[obsvTermo]'>
+                                    <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvTermo]' id='bolsista[obsvTermo]'>
                                     <%var obsvTermoList = ['Selecione','Assinado Após Pagamento','Ausente','Ilegível','Sem Assinatura','Sem Observações'];%>
                                     <% if(indexTermo <= 0){ %>
                                         <% obsvTermoList.forEach((obsvList) => { %>
