@@ -39,7 +39,6 @@ app.get('/', async (req, res) =>{
 app.get('/paginadobolsista/:id', async (req, res) => {
 	try{
 		await Bolsista.findById(req.params.id).populate('pags.iesLocal').populate('certConclusao.ies')
-		.populate('declaracao.municipioEscola')
 		.populate([
 			{
 				path: 'pags.programa',
@@ -150,7 +149,7 @@ app.put('/editarcompromisso/:cpf', async (req, res) =>{
 	//Ies
 	try{
 		var iesUpdate;
-		await Ies.findOne({sigla:req.body.bolsista.iesCert}, (err, foundIes) => {
+		await Ies.findOne({sigla:req.body.bolsista.iesCert}, async (err, foundIes) => {
 			if(err){
 				console.log('------------------------------------');
 				console.log(`First Promise Internal error finding Ies ${err}`)
@@ -168,36 +167,17 @@ app.put('/editarcompromisso/:cpf', async (req, res) =>{
 	console.log(`First promise ies Id: ${iesUpdate}`);
 	console.log('------------------------------------');
 
-	//Municipio
-	try{
-		var municipioUpdate;
-		await Municipio.findOne({uf:req.body.bolsista.ufDecl, nome:req.body.bolsista.munDecl}, (err, foundMun) => {
-			if(err){
-				console.log('------------------------------------');
-				console.log(`Second Promise Internal error finding UF ${err}`);
-				console.log('------------------------------------');
-			} else{
-				municipioUpdate = foundMun._id;
-				console.log(`Municipio found: ${municipioUpdate}`)
-			}
-		})
-	} catch(error){
-		console.log('------------------------------------');
-		console.log(`Second Promise External error finding Ies ${error}`);
-		console.log('------------------------------------');
-	}
-	console.log('------------------------------------');
-	console.log(`Second promise ies Id: ${iesUpdate}`);
-	console.log('------------------------------------');
-
 	//Push Docs
 	try{
 		Bolsista.findOneAndUpdate({cpf:req.params.cpf},
 			{
-				'$push':{'statusCurso':{status:req.body.bolsista.status, data: new Date(req.body.bolsista.dataConcl), user:'teste'},
-						'certConclusao':{ies:iesUpdate,regular:req.body.bolsista.regCert,obsv:req.body.bolsista.obsvCert,user:'teste',data: new Date()},
-						'declaracao':{municipioEscola:municipioUpdate, permanencia:parseInt(req.body.bolsista.perm, 10), regular:req.body.bolsista.regDecl,obsv:req.body.bolsista.obsvDecl, user:'teste', data: new Date()},
-						'analiseCompromisso':{regular:req.body.bolsista.resAna,obsv:req.body.bolsista.obsvAna, user:'teste', data: new Date()}}
+				'$push':{
+
+					'statusCurso':{status:req.body.bolsista.status, data: new Date(req.body.bolsista.dataConcl), user:'teste'},
+					'certConclusao':{ies:iesUpdate,regular:req.body.bolsista.regCert,obsv:req.body.bolsista.obsvCert,user:'teste',data: new Date()},
+					'declaracao':{municipioEscola:{nome:req.body.bolsista.munDecl, uf:req.body.bolsista.ufDecl}, permanencia:parseInt(req.body.bolsista.perm, 10), regular:req.body.bolsista.regDecl,obsv:req.body.bolsista.obsvDecl, user:'teste', data: new Date()},
+					'analiseCompromisso':{regular:req.body.bolsista.resAna,obsv:req.body.bolsista.obsvAna, user:'teste', data: new Date()}
+				}
 			},
 			(err, upObejct) =>{
 				if(err){
