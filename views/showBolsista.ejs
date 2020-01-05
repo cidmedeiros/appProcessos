@@ -197,6 +197,13 @@
             </div>
 
             <div class="row">
+                <div class="col"><div></div></div>         
+                <div class="col-1 addButton">
+                <button type="button" id="addButtonDeclara" class="btn btn-success btn-sm btn-block active" data-toggle="modal" data-target="#modalCompromisso"><strong> + </strong> </button>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col my-auto">
 
                     <div class="card my-1 py-.25 pl-.5">
@@ -234,8 +241,8 @@
 
                 <div class="col my-auto">
 
-                    <h5><strong>Declarações de Permanência</strong></h5>
                     <% if(bolCons.declaracao.length > 0){ %>
+                        <h5><strong>Declarações de Permanência</strong></h5>
                         <table class="table table-sm">
                             <thead class="thead-light">
                                 <tr>
@@ -268,10 +275,17 @@
                                     <td class="table-info"><strong><%=bolCons.permanenciaTotal%></strong></td>
                                 </tr>
                             </tbody>
-                                <% } else{ %>
-                                    <h5 class="my-1 ml-1">Pendente de análise</h5>
-                                <% } %>
                         </table>
+                                <% } else{ %>
+                                    <div class="card my-1 py-.25 pl-.5">
+                                        <div class="card-body">
+                                            <h5><strong>Declarações de Permanência</strong></h5>
+                                            <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
+                                                <h5 class="my-1 ml-1">Pendente de análise</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% } %>
 
                     <div class="card my-1 py-.25 pl-.5">
                         <div class="card-body">
