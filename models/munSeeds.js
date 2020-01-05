@@ -36,4 +36,4 @@ const addMun = function() {
     }
 };
 
-//addMun();
+addMun();
