@@ -52,7 +52,7 @@
                                 <div class="form-group">
                                     <h5 style="color: black;" for="tipoDocFoto">Documento</h5>
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[tipoDocFoto]' id='bolsista[tipoDocFoto]'>
-                                    <%var docFotoList = ['Identidade','Carteira de Motorista','Registro Profissional','Passaporte','Carteira de Trabalho'];%>
+                                    <%var docFotoList = ['Identidade','Carteira de Motorista','Registro Profissional','Passaporte','Carteira de Trabalho','Ausência'];%>
                                     <% var indexFoto = (bolCons.docFoto.length)-1; %>
                                     <% if(indexFoto < 0){ %>
                                         <option value=''>Selecione</option>
@@ -114,7 +114,7 @@
                                 <div class="form-group">
                                     <h5 style="color: black;" for="tipoDocRes">Documento</h5>
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[tipoDocRes]' id='bolsista[tipoDocRes]'>
-                                        <%var docResList = ['Conta de Água','Conta de Luz','Conta de Telefone','Correspondência Bancária','Correspondência Comercial'];%>
+                                        <%var docResList = ['Conta de Água','Conta de Luz','Conta de Telefone','Correspondência Bancária','Correspondência Comercial','Ausência'];%>
                                         <% var indexRes = (bolCons.docRes.length)-1; %>
                                         <% if(indexRes < 0){ %>
                                             <option value=''>Selecione</option>
@@ -191,7 +191,7 @@
                                     </select>
                                     <h5 style="color: black;" for="obsvTermo">Observação</h5>
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvTermo]' id='bolsista[obsvTermo]'>
-                                    <%var obsvTermoList = ['Assinado Após Pagamento','Ausente','Ilegível','Sem Assinatura','Sem Observações'];%>
+                                    <%var obsvTermoList = ['Assinado Após Pagamento','Ausente','Ilegível','Sem Assinatura','Sem Observações','Ausência','Pendência'];%>
                                     <% if(indexTermo < 0){ %>
                                         <option value=''>Selecione</option>
                                         <% obsvTermoList.forEach((obsvList) => { %>

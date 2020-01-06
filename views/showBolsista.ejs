@@ -239,7 +239,7 @@
                                 <div class="row">
                                     <div class="col"><div></div></div>         
                                     <div class="col-2 addButton">
-                                        <button type="button" id="addButtonDeclara" class="btn mt-1 btn-success btn-sm btn-block active" data-toggle="modal" data-target="#modalCompromisso"><strong> + </strong></button>
+                                        <button type="button" id="addButtonDeclara" class="btn mt-1 btn-success btn-sm btn-block active" data-toggle="modal" data-target="#modalDeclaracao"><strong> + </strong></button>
                                     </div>
                                 </div>
                                 <h5><strong>Declarações de Permanência</strong></h5>
@@ -259,13 +259,13 @@
                                     <tbody>
                                     <% declars.forEach(declaracao => { %>
                                         <tr>
-                                            <form action='/deletedeclaracao/<%=declaracao._id%>?_method=PUT' method="DELETE">
+                                            <form action='/deletedeclaracao/<%=declaracao._id%>?_method=DELETE' method="DELETE">
                                                 <td><%=declaracao.municipioEscola.uf%></td>
                                                 <td><%=declaracao.municipioEscola.nome%></td>
                                                 <td><%=declaracao.permanencia%></td>
                                                 <td><%=declaracao.regular%></td>
                                                 <td><%=declaracao.obsv%></td>
-                                                <td><button type="button" id="btnEditDeclara" class="btn btn-primary btn-sm btn-block active" data-toggle="modal" data-target="#modalCompromisso" data-whatever="<%=declaracao._id%>">Editar</button></td>
+                                                <td><button type="button" id="btnEditDeclara" class="btn btn-primary btn-sm btn-block active" data-toggle="modal" data-target="#modalDeclaracao" data-whatever="<%=declaracao._id%>">Editar</button></td>
                                                 <td><input type="submit" value="Excluir" id="btnDeleteDeclara" class="btn btn-danger btn-sm btn-block active"></input></td>
                                             </form>
                                         </tr>
@@ -500,6 +500,8 @@
 <% include modalDadosPessoais %>
 
 <% include modalCompromisso %>
+
+<% include modalDeclaracao %>
 
 <script>
     //Seletor de IES

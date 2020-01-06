@@ -141,7 +141,7 @@
                                 <h5 class="card-title" style="color: black;">Observação do Certificado</h5>
                                 <div class="form-group">
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvCert]' id='bolsista[obsvCert]'>
-                                    <%var obsvCertList = ['Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações'];%>
+                                    <%var obsvCertList = ['Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações','Pendente'];%>
                                     <% if(indexCert < 0){ %>
                                         <option value=''>Selecione</option>
                                         <% obsvCertList.forEach((obs) => { %>
@@ -163,137 +163,6 @@
 
                     </div>
 
-                    <h5><strong>Declaração de Permanência</strong></h5>
-                    <div class="card mt-2 mb-3 my-1 py-.25 pl-.5">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <h5 style="color: black;">Município da Escola Emissora</h5>
-
-                                <div class="form-row">
-
-                                    <div class="col">
-                                        <label for="bolsista[ufDecl]">Unidade Federativa</label>
-                                        <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[ufDecl]' id='bolsista[ufDecl]'>
-                                        <% var indexDecl = (bolCons.declaracao.length)-1; %>
-                                        <% var declaracao = bolCons.declaracao[indexDecl]; %>
-                                        <% if(indexDecl < 0){ %>
-                                            <option value=''>Selecione</option>
-                                            <% ufList.forEach(uf => { %>
-                                                <option value="<%= uf %>"><%= uf %></option>
-                                            <% }); %>
-                                        <% } else{ %>
-                                            <% ufList.forEach(uf => { %>
-                                                <% if(uf == declaracao.municipioEscola.uf){ %>
-                                                    <option value="<%= uf %>" selected><%= declaracao.municipioEscola.uf %></option>
-                                                <% } else { %>
-                                                    <option value="<%= uf %>"><%= uf %></option>
-                                                <% } %>
-                                            <% }); %>
-                                        <% } %>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-1">
-                                        <select style="display: none;" class="form-control custom-select inlineFormCustomSelect" id='noDisplayMun'>
-                                            <% municipios.forEach(mun => { %>
-                                                <option value= <%= mun.uf %> > <%= mun.nome %> </option>
-                                            <% }); %>
-                                        </select>
-                                    </div>
-
-                                    <div class="col">
-                                        <label for="bolsista[munDecl]">Município</label>
-                                        <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[munDecl]' id='bolsista[munDecl]'>
-                                        <% if(indexDecl < 0){ %>
-                                            <option value=''>Selecione</option>
-                                        <% } else { %>
-                                            <option> <%= declaracao.municipioEscola.nome %> </option>
-                                        <% } %>
-                                        </select>
-                                    </div>
-
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-
-                        <div class="col-4 card mb-2 ml-1 mr-1 py-.25 pl-.5">
-                            <div class="card-body">
-                                <h5 class="card-title mb-.25" style="color: black;">Permanência (meses)</h5>
-                                <div class="form-group mb-0">
-                                    <select required class="form-control custom-select inlineFormCustomSelect mx-auto" name="bolsista[perm]" id="bolsista[perm]">
-                                        <% if(indexDecl < 0){ %>
-                                            <option value=''>Selecione</option>
-                                            <% for(var mes = 0; mes <= 95; mes++){ %>
-                                                <option><%=mes%></option>
-                                            <% } %>
-                                            <option>96+</option>
-                                        <% } else { %>
-                                            <option selected><%=declaracao.permanencia%></option>
-                                            <% for(var mes = 0; mes <= 95; mes++){ %>
-                                                <option><%=mes%></option>
-                                            <% } %>
-                                            <option>96+</option>
-                                        <% } %>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col card mb-2 ml-1 mr-1 py-.25 pl-.5">
-                            <div class="card-body">
-                                <h5 class="card-title mb-.25" style="color: black;">Regularidade da Declaração</h5>
-                                <div class="form-group mb-0">
-                                    <select required class="form-control custom-select inlineFormCustomSelect mx-auto" name="bolsista[regDecl]" id="bolsista[regDecl]">
-                                        <<% if(indexDecl < 0){ %>
-                                            <option value=''>Selecione</option>
-                                            <option>Regular</option>
-                                            <option>Irregular</option>
-                                        <% } else if(declaracao.regular == 'Regular') { %>
-                                            <option selected>Regular</option>
-                                            <option>Irregular</option>
-                                        <% } else { %>
-                                            <option selected>Irregular</option>
-                                            <option>Regular</option>
-                                        <% } %>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row justify-content-center">
-
-                        <div class="col-12 card mb-4 mx-2 py-.25 pl-.5">
-                            <div class="card-body">
-                                <h5 class="card-title" style="color: black;">Observação da Declaração</h5>
-                                <div class="form-group">
-                                    <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvDecl]' id='bolsista[obsvDecl]'>
-                                    <%var obsvDeclList = ['Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações'];%>
-                                    <% if(indexDecl < 0){ %>
-                                        <option value=''>Selecione</option>
-                                        <% obsvDeclList.forEach((obs) => { %>
-                                            <option><%= obs %></option>
-                                        <% }); %>
-                                    <% } else { %>
-                                        <% obsvDeclList.forEach((obs) => { %>
-                                            <% if(obs === declaracao.obsv){ %>
-                                                <option selected><%= obs %></option>
-                                            <% } else { %>
-                                                <option><%= obs %></option>
-                                            <% } %>
-                                        <% }); %>
-                                    <% } %>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
                     <h5><strong>Resultado da Análise</strong></h5>
                     <div class="form-row">
 
@@ -302,11 +171,11 @@
                                 <h5 class="card-title mb-.25" style="color: black;">Resultado da Análise</h5>
                                 <div class="form-group mb-0">
                                     <select required class="form-control custom-select inlineFormCustomSelect mx-auto" name="bolsista[resAna]" id="bolsista[resAna]">
-                                        <<% if(indexDecl < 0){ %>
+                                        <<% if(certificado < 0){ %>
                                             <option value=''>Selecione</option>
                                             <option>Regular</option>
                                             <option>Irregular</option>
-                                        <% } else if(indexDecl.regular === 'Regular') { %>
+                                        <% } else if(certificado.regular === 'Regular') { %>
                                             <option selected>Regular</option>
                                             <option>Irregular</option>
                                         <% } else { %>
@@ -323,15 +192,15 @@
                                 <h5 class="card-title mb-.25" style="color: black;">Observação Adicional</h5>
                                 <div class="form-group">
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvAna]' id='bolsista[obsvAna]'>
-                                    <%var obsvDeclList = ['Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações'];%>
-                                    <% if(indexDecl < 0){ %>
+                                    <%var obsvAddlList = ['Sem Observações'];%>
+                                    <% if(certificado < 0){ %>
                                         <option value=''>Selecione</option>
-                                        <% obsvDeclList.forEach((obs) => { %>
+                                        <% obsvAddlList.forEach((obs) => { %>
                                             <option><%= obs %></option>
                                         <% }); %>
                                     <% } else { %>
-                                        <% obsvDeclList.forEach((obs) => { %>
-                                            <% if(obs === declaracao.obsv){ %>
+                                        <% obsvAddlList.forEach((obs) => { %>
+                                            <% if(obs === certificado.obsv){ %>
                                                 <option selected><%= obs %></option>
                                             <% } else { %>
                                                 <option><%= obs %></option>
