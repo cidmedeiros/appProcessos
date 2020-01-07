@@ -1,8 +1,8 @@
-<div class="modal fade bd-modalDeclaracao-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalDeclaracao" aria-hidden="true" id="modalDeclaracao">
+<div class="modal fade bd-modalEditDeclaracao-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalEditDeclaracao" aria-hidden="true" id="modalEditDeclaracao">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Informar Declaração de Permanência</h4>
+                <h4 class="modal-title">Editar Declaração de Permanência</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -11,8 +11,7 @@
                 <h5 class="ml-3"> <%= bolCons.nome %> CPF: <%= bolCons.cpf %> </h5>
             </div>
             <div class="modal-body border border-rounded border-info mx-1 my-1">
-
-                <form action='/declaracao/<%=bolCons.cpf/%>/<%=declaracao._id%>?_method=PUT' method="POST">
+                <form action='/adddeclaracao/<%=bolCons.cpf%>?_method=PUT' method="POST">
                     <% var ufList = [] %>
                     <% municipios.forEach(mun => { %>
                         <% if(!ufList.includes(mun.uf)){ %>

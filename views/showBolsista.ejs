@@ -265,7 +265,7 @@
                                                 <td><%=declaracao.permanencia%></td>
                                                 <td><%=declaracao.regular%></td>
                                                 <td><%=declaracao.obsv%></td>
-                                                <td><button type="button" id="btnEditDeclara" class="btn btn-primary btn-sm btn-block active" data-toggle="modal" data-target="#modalDeclaracao" data-whatever="<%=declaracao._id%>">Editar</button></td>
+                                                <td><button type="button" id="btnEditDeclara" class="btn btn-primary btn-sm btn-block active" data-toggle="modal" data-target="#modalEditDeclaracao" data-whatever="<%=declaracao._id%>">Editar</button></td>
                                                 <td><input type="submit" value="Excluir" id="btnDeleteDeclara" class="btn btn-danger btn-sm btn-block active"></input></td>
                                             </form>
                                         </tr>
@@ -502,6 +502,8 @@
 <% include modalCompromisso %>
 
 <% include modalDeclaracao %>
+
+<% include modalEditDeclara %>
 
 <script>
     //Seletor de IES
