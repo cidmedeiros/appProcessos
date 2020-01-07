@@ -171,11 +171,13 @@
                                 <h5 class="card-title mb-.25" style="color: black;">Resultado da Análise</h5>
                                 <div class="form-group mb-0">
                                     <select required class="form-control custom-select inlineFormCustomSelect mx-auto" name="bolsista[resAna]" id="bolsista[resAna]">
-                                        <<% if(certificado < 0){ %>
+                                        <% var indexAnaRes = (bolCons.analiseCompromisso.length)-1; %>
+                                        <% var analiseCompromisso = bolCons.analiseCompromisso[indexAnaRes]; %>
+                                        <<% if(indexAnaRes < 0){ %>
                                             <option value=''>Selecione</option>
                                             <option>Regular</option>
                                             <option>Irregular</option>
-                                        <% } else if(certificado.regular === 'Regular') { %>
+                                        <% } else if(analiseCompromisso.regular === 'Regular') { %>
                                             <option selected>Regular</option>
                                             <option>Irregular</option>
                                         <% } else { %>
@@ -192,15 +194,15 @@
                                 <h5 class="card-title mb-.25" style="color: black;">Observação Adicional</h5>
                                 <div class="form-group">
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvAna]' id='bolsista[obsvAna]'>
-                                    <%var obsvAddlList = ['Sem Observações'];%>
-                                    <% if(certificado < 0){ %>
+                                    <%var obsvAnaReslList = ['Sem Observações'];%>
+                                    <% if(indexAnaRes < 0){ %>
                                         <option value=''>Selecione</option>
-                                        <% obsvAddlList.forEach((obs) => { %>
+                                        <% obsvAnaReslList.forEach((obs) => { %>
                                             <option><%= obs %></option>
                                         <% }); %>
                                     <% } else { %>
-                                        <% obsvAddlList.forEach((obs) => { %>
-                                            <% if(obs === certificado.obsv){ %>
+                                        <% obsvAnaReslList.forEach((obs) => { %>
+                                            <% if(obs === analiseCompromisso.obsv){ %>
                                                 <option selected><%= obs %></option>
                                             <% } else { %>
                                                 <option><%= obs %></option>
