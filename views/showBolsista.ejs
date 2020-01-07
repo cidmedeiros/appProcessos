@@ -507,7 +507,7 @@
 
 <script>
 
-    //Seletor de IES
+    //IES Selector
     var iesUfSelect = document.getElementById('bolsista[ufCert]');
     var noDisplayIes = document.getElementById('noDisplayIes')
     var iesSelect = document.getElementById('bolsista[iesCert]');
@@ -532,7 +532,7 @@
         }
     });
 
-    //Seletor de Municípios
+    //Municipios Selector
     var munUfSelect = document.getElementById('bolsista[ufDecl]');
     var noDisplayMun = document.getElementById('noDisplayMun');
     var munSelect = document.getElementById('bolsista[munDecl]');
@@ -557,19 +557,26 @@
         }
     });
 
-    //Modal Edit Declaração
+    //Modal Edit Declaracao (it uses event delegation)
     var editTable = document.getElementById('tableDeclara');
     var formEditDeclara = document.getElementById('formEditDeclara');
 
     editTable.addEventListener('click', (e) => {
         //clear the modal
-        $('#formEditDeclara').empty();
+        $(formEditDeclara)
+        .find('begone')
+        .remove()
+        .end();
 
         // e.target is the clicked element!
         if(e.target && e.target.nodeName == 'BUTTON'){
             var declaraId = e.target.id;
-            let declaraIdHiddenInput = `<input type="hidden" name='bolsista[declaId]' value=${declaraId}>`;
+
+            let declaraIdHiddenInput = `<input class="begone" type="hidden" name='bolsista[declaId]' value=${declaraId}>`;
+            let inputTest = `<input class='form-control' placeholder=${declaraId}>`;
             formEditDeclara.insertAdjacentHTML("beforeend", declaraIdHiddenInput);
+            formEditDeclara.insertAdjacentHTML("beforeend", inputTest);
+
         }
     });
 

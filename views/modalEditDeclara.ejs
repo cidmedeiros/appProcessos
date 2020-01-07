@@ -15,6 +15,66 @@
 
             <div class="modal-body border border-rounded border-info mx-1 my-1">
                 <form action='/editdeclaracao/<%=bolCons.cpf%>?_method=PUT' method="POST" id="formEditDeclara">
+
+                    <h5><strong>Declaração de Permanência</strong></h5>
+
+                    <div class="card mt-2 mb-3 my-1 py-.25 pl-.5">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <h5 style="color: black;">Município da Escola Emissora</h5>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label for="bolsista[EditUfDecl]">Unidade Federativa</label>
+                                        <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[EditUfDecl]' id='bolsista[EditUfDecl]'>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label for="bolsista[munDecl]">Município</label>
+                                        <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[editMunDecl]' id='bolsista[editMunDecl]'>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="col-4 card mb-2 ml-1 mr-1 py-.25 pl-.5">
+                            <div class="card-body">
+                                <h5 class="card-title mb-.25" style="color: black;">Permanência (meses)</h5>
+                                <div class="form-group mb-0">
+                                    <select required class="form-control custom-select inlineFormCustomSelect mx-auto" name="bolsista[editPerm]" id="bolsista[editPerm]">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col card mb-2 ml-1 mr-1 py-.25 pl-.5">
+                            <div class="card-body">
+                                <h5 class="card-title mb-.25" style="color: black;">Regularidade da Declaração</h5>
+                                <div class="form-group mb-0">
+                                    <select required class="form-control custom-select inlineFormCustomSelect mx-auto" name="bolsista[editRegDecl]" id="bolsista[editRegDecl]">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row justify-content-center">
+
+                        <div class="col-12 card mb-4 mx-2 py-.25 pl-.5">
+                            <div class="card-body">
+                                <h5 class="card-title" style="color: black;">Observação da Declaração</h5>
+                                <div class="form-group">
+                                    <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[editObsvDecl]' id='bolsista[editObsvDecl]'>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                     
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </form>
