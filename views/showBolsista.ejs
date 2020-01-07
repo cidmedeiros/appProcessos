@@ -534,7 +534,7 @@
 
     //Seletor de Municípios
     var munUfSelect = document.getElementById('bolsista[ufDecl]');
-    var noDisplayMun = document.getElementById('noDisplayMun')
+    var noDisplayMun = document.getElementById('noDisplayMun');
     var munSelect = document.getElementById('bolsista[munDecl]');
 
     munUfSelect.addEventListener('input', () => {
@@ -544,7 +544,7 @@
         .remove()
         .end();
 
-        let selecioneOpt = `<option value=''>Selecione</option>`
+        let selecioneOpt = `<option value=''>Selecione</option>`;
         munSelect.insertAdjacentHTML("beforeend", selecioneOpt);
         let ufValue = munUfSelect.options.item(munUfSelect.selectedIndex).value;
         let lenMun = (noDisplayMun.length)-1;
@@ -559,11 +559,17 @@
 
     //Modal Edit Declaração
     var editTable = document.getElementById('tableDeclara');
+    var formEditDeclara = document.getElementById('formEditDeclara');
+
     editTable.addEventListener('click', (e) => {
+        //clear the modal
+        $('#formEditDeclara').empty();
+
         // e.target is the clicked element!
         if(e.target && e.target.nodeName == 'BUTTON'){
             var declaraId = e.target.id;
-            console.log(`button clicked! ${declaraId}`);
+            let declaraIdHiddenInput = `<input type="hidden" name='bolsista[declaId]' value=${declaraId}>`;
+            formEditDeclara.insertAdjacentHTML("beforeend", declaraIdHiddenInput);
         }
     });
 

@@ -14,8 +14,7 @@
             </div>
 
             <div class="modal-body border border-rounded border-info mx-1 my-1">
-                <form action='/editdeclaracao/<%=bolCons.cpf%>?_method=PUT' method="POST">
-                    <input name='bolsista[declaId]' id='bolsista[declaId]' placeholder="">
+                <form action='/editdeclaracao/<%=bolCons.cpf%>?_method=PUT' method="POST" id="formEditDeclara">
                     
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </form>
