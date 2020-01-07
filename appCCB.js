@@ -35,7 +35,7 @@ app.get('/', async (req, res) =>{
 	res.render('landing');
 });
 
-	//SHOW ROUTE
+	//SHOW ROUTES
 app.get('/paginadobolsista/:id', async (req, res) => {
 	try{
 		await Bolsista.findById(req.params.id).populate('pags.iesLocal').populate('certConclusao.ies')
@@ -122,7 +122,7 @@ app.post('/consultabolsista', async (req, res) => {
 	}
 });
 
-	//PUT ROUTE (UPDATE ROUTE)
+	//PUT ROUTES (UPDATE ROUTES)
 app.put('/editardadospessoais/:cpf', (req, res) => {
 	try{
 		Bolsista.findOneAndUpdate({cpf:req.params.cpf},
