@@ -284,7 +284,7 @@
                                 <div class="row">
                                     <div class="col"><div></div></div>         
                                     <div class="col-2 addButton">
-                                        <button type="button" id="addButtonDeclara" class="btn mt-1 btn-success btn-sm btn-block active" data-toggle="modal" data-target="#modalCompromisso"><strong> + </strong></button>
+                                        <button type="button" id="addButtonDeclara" class="btn mt-1 btn-success btn-sm btn-block active" data-toggle="modal" data-target="#modalDeclaracao"><strong> + </strong></button>
                                     </div>
                                 </div>
                                 <h5><strong>Declarações de Permanência</strong></h5>
@@ -514,10 +514,7 @@
 
     iesUfSelect.addEventListener('input', () => {
         //clear the select box
-        $(iesSelect)
-        .find('option')
-        .remove()
-        .end();
+        $(iesSelect).find('option').remove().end();
 
         let selecioneOpt = `<option value=''>Selecione</option>`
         iesSelect.insertAdjacentHTML("beforeend", selecioneOpt);
@@ -539,10 +536,7 @@
 
     munUfSelect.addEventListener('input', () => {
         //clear the select box
-        $(munSelect)
-        .find('option')
-        .remove()
-        .end();
+        $(munSelect).find('option').remove().end();
 
         let selecioneOpt = `<option value=''>Selecione</option>`;
         munSelect.insertAdjacentHTML("beforeend", selecioneOpt);
@@ -560,23 +554,30 @@
     //Modal Edit Declaracao (it uses event delegation)
     var editTable = document.getElementById('tableDeclara');
     var formEditDeclara = document.getElementById('formEditDeclara');
+    var declaraList = document.getElementById('declaraList');
+    var declaracoes = declaraList.getElementsByTagName("li");
 
     editTable.addEventListener('click', (e) => {
         //clear the modal
-        $(formEditDeclara)
-        .find('begone')
-        .remove()
-        .end();
+        $(formEditDeclara).find('.begone').remove().end();
 
         // e.target is the clicked element!
         if(e.target && e.target.nodeName == 'BUTTON'){
             var declaraId = e.target.id;
 
             let declaraIdHiddenInput = `<input class="begone" type="hidden" name='bolsista[declaId]' value=${declaraId}>`;
-            let inputTest = `<input class='form-control' placeholder=${declaraId}>`;
             formEditDeclara.insertAdjacentHTML("beforeend", declaraIdHiddenInput);
-            formEditDeclara.insertAdjacentHTML("beforeend", inputTest);
 
+            for (var i = 0; i < declaracoes.length; ++i) {
+                declara = declaracoes[i].getAttribute('data-value');
+                console.log(typeof declara);
+                console.log(declara);
+                declara = JSON.parse(declara);
+                console.log(typeof declara);
+                console.log(declara);
+                console.log(declara._id);
+                console.log(declara.municipioEscola.nome);
+                }
         }
     });
 
