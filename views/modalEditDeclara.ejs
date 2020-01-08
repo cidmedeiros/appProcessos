@@ -13,6 +13,16 @@
                 <h5 class="ml-3"> <%= bolCons.nome %> CPF: <%= bolCons.cpf %> </h5>
             </div>
 
+            <div style="display: none;">
+                <% declaracoes = bolCons.declaracao %>
+                <ul id="declaraList">
+                    <% declaracoes.forEach(declara =>{ %>
+                        <% obj = `{"_id": "${declara._id}", "municipioEscola": { "nome": "${declara.municipioEscola.nome}", "uf": "${declara.municipioEscola.uf}"}, "permanencia": ${declara.permanencia}, "regular": "${declara.regular}", "obsv": "${declara.obsv}"}` %>
+                        <li data-value='<%= obj %>'> </li>
+                    <% }) %>
+                </ul>
+            </div>
+
             <div class="modal-body border border-rounded border-info mx-1 my-1">
                 <form action='/editdeclaracao/<%=bolCons.cpf%>?_method=PUT' method="POST" id="formEditDeclara">
 
