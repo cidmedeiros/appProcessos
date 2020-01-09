@@ -322,14 +322,14 @@
                     <% } %>
 
                     <div class="row justify-content-start mt-4">
-                        <div class="col-8 mx-auto my-auto">
+                        <div class="col-6 mx-auto my-auto">
 
                             <div class="card border-secondary my-3 py-.25 pl-.5">
                                 <div class="card-body">
                                     <h5 class="card-title"><strong>Resultado da Análise</strong></h5>
                                     <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                                     <% if(bolCons.analiseCompromisso.length > 0){ %>
-                                        <% let compromisso = bolCons.analiseCompromisso %>
+                                        <% let compromisso = bolCons.analiseCompromisso[((bolCons.analiseCompromisso).length-1)] %>
                                         <ul class="list-group list-group-flush">
                                         <% if(compromisso.obsv == 'Sem Observações'){ %>
                                             <li class="list-group-item border-success"><h5 class="my-1 ml-1">Observação</h5><h4 class="my-1 ml-1" style="color: darkgreen;"><strong><%=compromisso.obsv%></strong></h4></li>
