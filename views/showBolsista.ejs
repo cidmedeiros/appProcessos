@@ -556,6 +556,11 @@
     var formEditDeclara = document.getElementById('formEditDeclara');
     var declaraList = document.getElementById('declaraList');
     var declaracoes = declaraList.getElementsByTagName("li");
+    var editMunUfSelect = document.getElementById('bolsista[EditUfDecl]');
+    var editMunSelect = document.getElementById('bolsista[editMunDecl]');
+    var editPerm = document.getElementById('bolsista[editPerm]');
+    var editRegDecl = document.getElementById('bolsista[editRegDecl]');
+    var editObsvDecl = document.getElementById('bolsista[editObsvDecl]');
 
     editTable.addEventListener('click', (e) => {
         //clear the modal
@@ -570,14 +575,53 @@
 
             for (var i = 0; i < declaracoes.length; ++i) {
                 declara = declaracoes[i].getAttribute('data-value');
-                console.log(typeof declara);
-                console.log(declara);
                 declara = JSON.parse(declara);
-                console.log(typeof declara);
-                console.log(declara);
-                console.log(declara._id);
-                console.log(declara.municipioEscola.nome);
-                }
+                if(declara._id == declaraId){
+                    let lenMun = (editMunUfSelect.length)-1;
+                    for(var i = 0; i <= lenMun; i++){
+                        if(editMunUfSelect.options.item(i).value == declara.municipioEscola.uf){
+                            editMunUfSelect.selectedIndex = i;
+                        } 
+                    }
+                    let munOpt = `<option class="begone">${declara.municipioEscola.nome}</option>`;
+                    editMunSelect.insertAdjacentHTML('beforeend', munOpt);
+                    let lenPerm = (editPerm.length)-1;
+                    for(var i = 0; i <= lenPerm; i++){
+                        if(editPerm.options.item(i).value == declara.permanencia){
+                            editPerm.selectedIndex = i;
+                        } 
+                    }
+                    let lenRegDecl = (editRegDecl.length)-1;
+                    for(var i = 0; i <= lenRegDecl; i++){
+                        if(editRegDecl.options.item(i).value == declara.regular){
+                            editRegDecl.selectedIndex = i;
+                        } 
+                    }
+                    let lenObsv = (editObsvDecl.length)-1;
+                    for(var i = 0; i <= lenObsv; i++){
+                        if(editObsvDecl.options.item(i).value == declara.obsv){
+                            editObsvDecl.selectedIndex = i;
+                        } 
+                    }
+                }      
+            }
+        }
+    });
+
+    editMunUfSelect.addEventListener('input', () => {
+        //clear the select box
+        $(editMunSelect).find('option').remove().end();
+
+        let selecioneOpt = `<option class="begone" value=''>Selecione</option>`;
+        editMunSelect.insertAdjacentHTML("beforeend", selecioneOpt);
+        let ufValue = editMunUfSelect.options.item(editMunUfSelect.selectedIndex).value;
+        let lenMun = (noDisplayMun.length)-1;
+
+        for(var i = 0; i <= lenMun; i++){
+            if(ufValue == noDisplayMun.options.item(i).value){
+                let opt = `<option class="begone">${noDisplayMun.options.item(i).text}</option>`
+                editMunSelect.insertAdjacentHTML("beforeend", opt);
+            }
         }
     });
 
