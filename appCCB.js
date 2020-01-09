@@ -236,6 +236,49 @@ app.put('/adddeclaracao/:cpf',  async (req, res) =>{
 	}
 });
 
+app.put('/editdeclaracao/:cpf', async (req, res) => {
+	try{
+		Bolsista.updateOne({cpf:req.params.cpf, 'declaracao._id':req.body.bolsista.declaId},
+		{$set: {'declaracao.$.municipioEscola.uf':req.body.bolsista.EditUfDecl,
+				'declaracao.$.municipioEscola.nome':req.body.bolsista.editMunDecl,
+				'declaracao.$.permanencia':parseInt(req.body.bolsista.editPerm, 10),
+				'declaracao.$.regular':req.body.bolsista.editRegDecl,
+				'declaracao.$.obsv':req.body.bolsista.editObsvDecl,
+				'declaracao.$.user':'user',
+				'declaracao.$.data':new Date(),
+			}
+		},
+		(err, foundBol) => {
+			if(err){
+				console.log(`Internal Error updating declaracao ${req.body.bolsista.declaId}: ${err}`);
+			} else{
+				Bolsista.findOne({cpf:req.params.cpf}, async (err, foundBol) => {
+					if(err){
+						console.log('------------------------------------');
+						console.log(`Second Promise Internal error finding bolsista ${err}`)
+						console.log('------------------------------------');
+					} else{
+						console.log(foundBol.declaracao)
+						var newPerm = await tools.calcPerm(foundBol.declaracao);
+						console.log(`newPerm: ${newPerm}`);
+						Bolsista.findOneAndUpdate({cpf:req.params.cpf}, {'permanenciaTotal':newPerm}, (err, upObejctInt) =>{
+							if(err){
+								console.log('------------------------------------');
+								console.log(`Third Promise Internal error updating after Calculating ${newPerm} ${err}`);
+								console.log('------------------------------------');
+							} else {
+								res.redirect(`/paginadobolsista/${upObejctInt._id}`);
+							}
+						});
+					}
+				});
+			}
+		})
+	} catch(error){
+		console.log(`Internal Error updating declaracao ${req.body.bolsista.declaId}: ${err}`);
+	}
+});
+
 	//Routes order matters! This should always be the last route!!
 app.get('*', async (req, res) =>{
 	console.log('Waiting...');
