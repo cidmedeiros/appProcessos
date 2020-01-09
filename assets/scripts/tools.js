@@ -31,10 +31,8 @@ function treatInput(input){
 function calcPerm(declaracao){
     let perm = 0;
     declaracao.forEach(decla => {
-        console.log(decla.regular);
         if(decla.regular == "Regular"){
             perm = decla.permanencia + perm;
-            console.log(perm);
         } 
     });
     return perm;
