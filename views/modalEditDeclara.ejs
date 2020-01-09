@@ -36,8 +36,19 @@
                                     <div class="col">
                                         <label for="bolsista[EditUfDecl]">Unidade Federativa</label>
                                         <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[EditUfDecl]' id='bolsista[EditUfDecl]'>
+                                            <% var ufList = [] %>
+                                            <% municipios.forEach(mun => { %>
+                                                <% if(!ufList.includes(mun.uf)){ %>
+                                                    <% ufList.push(mun.uf) %>
+                                                <% } %>                        
+                                            <% }); %>
+                                            <option value=''>Selecione</option>
+                                        <% ufList.forEach(uf => { %>
+                                            <option value="<%= uf %>"><%= uf %></option>
+                                        <% }); %>
                                         </select>
                                     </div>
+
                                     <div class="col">
                                         <label for="bolsista[munDecl]">Município</label>
                                         <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[editMunDecl]' id='bolsista[editMunDecl]'>
@@ -55,6 +66,11 @@
                                 <h5 class="card-title mb-.25" style="color: black;">Permanência (meses)</h5>
                                 <div class="form-group mb-0">
                                     <select required class="form-control custom-select inlineFormCustomSelect mx-auto" name="bolsista[editPerm]" id="bolsista[editPerm]">
+                                        <option value=''>Selecione</option>
+                                        <% for(var mes = 0; mes <= 95; mes++){ %>
+                                            <option><%=mes%></option>
+                                        <% } %>
+                                        <option>96+</option>
                                     </select>
                                 </div>
                             </div>
@@ -65,6 +81,9 @@
                                 <h5 class="card-title mb-.25" style="color: black;">Regularidade da Declaração</h5>
                                 <div class="form-group mb-0">
                                     <select required class="form-control custom-select inlineFormCustomSelect mx-auto" name="bolsista[editRegDecl]" id="bolsista[editRegDecl]">
+                                        <option value=''>Selecione</option>
+                                        <option>Regular</option>
+                                        <option>Irregular</option>
                                     </select>
                                 </div>
                             </div>
@@ -79,6 +98,11 @@
                                 <h5 class="card-title" style="color: black;">Observação da Declaração</h5>
                                 <div class="form-group">
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[editObsvDecl]' id='bolsista[editObsvDecl]'>
+                                    <%var obsvDeclList = ['Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações','Pendente'];%>
+                                        <option value=''>Selecione</option>
+                                    <% obsvDeclList.forEach((obs) => { %>
+                                        <option><%= obs %></option>
+                                    <% }); %>
                                     </select>
                                 </div>
                             </div>
