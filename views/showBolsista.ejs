@@ -90,11 +90,11 @@
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item border-success"><h5 class="my-1 ml-1">Descrição</h5><h4 class="my-1 ml-1"><%=docuRes.doc%></h4></li>
                                             <li class="list-group-item border-success"><h5 class="my-1 ml-1">Observação</h5><h4 class="my-1 ml-1"><%=docuRes.obsv%></h4></li>
-                                            <% if(docuRes.regular === 'Regular'){ %>
-                                                <li class="list-group-item border-success"><h5 class="my-1 ml-1">Regularidade</h5><h4 class="my-1 ml-1" style="color:darkgreen"><strong>Regular</strong></h4></li>
-                                            <% } else { %>
-                                                <li class="list-group-item border-success"><h5 class="my-1 ml-1">Regularidade</h5><h4 class="my-1 ml-1" style="color: darkred"><strong>Irregular</strong></h4></li>
-                                            <% } %>
+                                        <% if(docuRes.regular === 'Regular'){ %>
+                                            <li class="list-group-item border-success"><h5 class="my-1 ml-1">Regularidade</h5><h4 class="my-1 ml-1" style="color:darkgreen"><strong>Regular</strong></h4></li>
+                                        <% } else { %>
+                                            <li class="list-group-item border-success"><h5 class="my-1 ml-1">Regularidade</h5><h4 class="my-1 ml-1" style="color: darkred"><strong>Irregular</strong></h4></li>
+                                        <% } %>
                                         </ul>
                                     <% } else{ %>
                                         <h5 class="my-1 ml-1">Pendente de análise</h5>
@@ -179,7 +179,7 @@
     <div class="row analiseCompromisso border border-dark rounded mt-2 mb-3 mr-2 ml-2 px-5 py-2">
     
         <h2>Análise do Compromisso</h2>        
-        <div class="container-fluid border border-warning rounded mb-2 py-2">
+        <div class="container-fluid border border-warning rounded mb-2 py-2" id="datawrap">
 
             <div class="row">
                 <div class="col-4"><div></div></div>
@@ -196,17 +196,24 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col my-auto">
-
-                    <div class="card my-1 py-.25 pl-.5">
+            <div class="row justify-content-start">
+                <div class="col-4 mx-auto my-auto">
+                    <div class="card border-secondary my-4 py-.25 pl-.5">
                         <div class="card-body">
-                            <h5 class="card-title"><strong>Situação do Curso</strong></h5>
+                            <h5 class="card-title text-center"><strong>Situação do Curso</strong></h5>
                             <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                             <% if(bolCons.statusCurso.length > 0){ %>
                                 <% let curso = bolCons.statusCurso[((bolCons.statusCurso).length-1)]%>
-                                <h5 class="my-1 ml-1">Status do Curso</h5><h6 class="my-1 ml-1"><%=curso.status%></h6>
-                                <h5 class="my-1 ml-1">Data Status do Curso</h5><h6 class="my-1 ml-1"><%=curso.data.getMonth()+1%>/<%=curso.data.getFullYear()%></h6>
+                                <ul class="list-group list-group-flush">
+                                <% if(curso.status == 'Concluído'){ %>
+                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Status do Curso</h5><h4 class="my-1 ml-1" style="color: darkgreen;"><strong><%=curso.status%></strong></h4></li>
+                                <% } else if(curso.status == 'Abandonou o Curso'){ %>
+                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Status do Curso</h5><h4 class="my-1 ml-1" style="color: darkred;"><strong><%=curso.status%></strong></h4></li>
+                                <% } else { %>
+                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Status do Curso</h5><h4 class="my-1 ml-1" style="color: darkorange;"><strong><%=curso.status%></strong></h4></li>
+                                <% }%>
+                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Data Status do Curso</h5><h4 class="my-1 ml-1"><%=curso.data.getMonth()+1%>/<%=curso.data.getFullYear()%></h4></li>
+                                </ul>
                             <% } else{ %>
                                 <h5 class="my-1 ml-1">Pendente de análise</h5>
                             <% } %>
@@ -214,103 +221,137 @@
                         </div>
                     </div>
 
-                    <div class="card my-1 py-.25 pl-.5">
+                    <div class="card border-secondary my-4 py-.25 pl-.5">
                         <div class="card-body">
                             <h5 class="card-title"><strong>Certificado de Conclusão</strong></h5>
                             <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                             <% if(bolCons.certConclusao.length > 0){ %>
                                 <% let certificado = bolCons.certConclusao[((bolCons.certConclusao).length-1)]%>
-                                <h5 class="my-1 ml-1">Instituição de Ensino</h5><h6 class="my-1 ml-1"><%=certificado.ies.sigla%></h6>
-                                <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=certificado.obsv%></h6>
-                                <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=certificado.regular%></h6>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Instituição de Ensino</h5><h4 class="my-1 ml-1"><%=certificado.ies.sigla%></h4></li>
+                                <% if(certificado.obsv == 'Sem Observações'){ %>
+                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Observação</h5><h4 class="my-1 ml-1" style="color: darkgreen;"><strong><%=certificado.obsv%></strong></h4></li>
+                                <% } else if(certificado.obsv == 'Ausente'){ %>
+                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Observação</h5><h4 class="my-1 ml-1" style="color: darkred;"><strong><%=certificado.obsv%></strong></h4></li>
+                                <% } else { %>
+                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Observação</h5><h4 class="my-1 ml-1" style="color: darkorange;"><strong><%=certificado.obsv%></strong></h4></li>
+                                <% }%>
+                                <% if(certificado.regular === 'Regular'){ %>
+                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Regularidade</h5><h4 class="my-1 ml-1" style="color:darkgreen"><strong><%=certificado.regular%></strong></h4></li>
+                                <% } else { %>
+                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Regularidade</h5><h4 class="my-1 ml-1" style="color: darkred"><strong><%=certificado.regular%></strong></h4></li>
+                                <% } %>
+                                </ul>
                             <% } else{ %>
                                 <h5 class="my-1 ml-1">Pendente de análise</h5>
                             <% } %>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="col my-auto">
                     <% if(bolCons.declaracao.length > 0){ %>
-                        <div class="card my-1 py-.25 pl-.5">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col"><div></div></div>         
-                                    <div class="col-2 addButton">
-                                        <button type="button" id="addButtonDeclara" class="btn mt-1 btn-success btn-sm btn-block active" data-toggle="modal" data-target="#modalDeclaracao"><strong> + </strong></button>
-                                    </div>
-                                </div>
-                                <h5><strong>Declarações de Permanência</strong></h5>
-                                <table class="table table-sm" id="tableDeclara">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th scope="col">UF</th>
-                                            <th scope="col">Município</th>
-                                            <th scope="col">Permanência(meses)</th>
-                                            <th scope="col">Regularidade</th>
-                                            <th scope="col">Observação</th>
-                                            <th scope="col"></th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <% let declars = bolCons.declaracao %>
-                                    <tbody>
-                                    <% declars.forEach(declaracao => { %>
-                                        <tr>
-                                            <form action='/deletedeclaracao/<%=bolCons.cpf%>/<%=declaracao._id%>?_method=DELETE' method="POST">
-                                                <td><%=declaracao.municipioEscola.uf%></td>
-                                                <td><%=declaracao.municipioEscola.nome%></td>
-                                                <td><%=declaracao.permanencia%></td>
-                                                <td><%=declaracao.regular%></td>
-                                                <td><%=declaracao.obsv%></td>
-                                                <td><button type="button" id='<%=declaracao._id%>' class="btn btn-primary btn-sm btn-block active" data-toggle="modal" data-target="#modalEditDeclaracao">Editar</button></td>
-                                                <td><input type="submit" value="Excluir" class="btn btn-danger btn-sm btn-block active"></input></td>
-                                            </form>
-                                        </tr>
-                                    <% }); %>
-                                        <tr>
-                                            <td class="table-info" colspan="2"><strong>Permanência Total</strong></td>
-                                            <td class="table-info"><strong><%=bolCons.permanenciaTotal%></strong></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    <% } else{ %>
-                        <div class="card my-1 py-.25 pl-.5">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col"><div></div></div>         
-                                    <div class="col-2 addButton">
-                                        <button type="button" id="addButtonDeclara" class="btn mt-1 btn-success btn-sm btn-block active" data-toggle="modal" data-target="#modalDeclaracao"><strong> + </strong></button>
-                                    </div>
-                                </div>
-                                <h5><strong>Declarações de Permanência</strong></h5>
-                                <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                                    <h5 class="my-1 ml-1">Pendente de análise</h5>
-                                </div>
-                            </div>
-                        </div>
-                    <% } %>
-
-                    <div class="card my-1 py-.25 pl-.5">
+                    <div class="card border-secondary my-3 py-.25 pl-.5">
                         <div class="card-body">
-                            <h5 class="card-title"><strong>Resultado da Análise</strong></h5>
+                            <div class="row justify-content-center">
+                                <h5><strong>Declarações de Permanência</strong></h5>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col"><div></div></div>         
+                                <div class="col-2 addButton">
+                                    <button type="button" id="addButtonDeclara" class="btn mt-1 btn-success btn-sm btn-block active" data-toggle="modal" data-target="#modalDeclaracao"><strong> + </strong></button>
+                                </div>
+                            </div>
+                            <table class="table table-sm table-bordered table-hover table-active" id="tableDeclara">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">UF</th>
+                                        <th scope="col">Município</th>
+                                        <th scope="col">Permanência(meses)</th>
+                                        <th scope="col">Regularidade</th>
+                                        <th scope="col">Observação</th>
+                                        <th scope="col" colspan="2">Ações</th>
+                                    </tr>
+                                </thead>
+                                <% let declars = bolCons.declaracao %>
+                                <tbody>
+                                <% declars.forEach(declaracao => { %>
+                                    <tr>
+                                        <form action='/deletedeclaracao/<%=bolCons.cpf%>/<%=declaracao._id%>?_method=DELETE' method="POST">
+                                            <td><%=declaracao.municipioEscola.uf%></td>
+                                            <td><%=declaracao.municipioEscola.nome%></td>
+                                            <td><%=declaracao.permanencia%></td>
+                                            <%if(declaracao.regular == 'Regular'){ %>
+                                                <td style="color: darkgreen;"><strong><%=declaracao.regular%></strong></td>
+                                            <%} else{ %>
+                                                <td style="color: darkred;"><strong><%=declaracao.regular%></strong></td>
+                                            <% } %>
+                                            <td><%=declaracao.obsv%></td>
+                                            <td><button type="button" id='<%=declaracao._id%>' class="btn btn-primary btn-sm btn-block active" data-toggle="modal" data-target="#modalEditDeclaracao">Editar</button></td>
+                                            <td><input type="submit" value="Excluir" class="btn btn-danger btn-sm btn-block active"></input></td>
+                                        </form>
+                                    </tr>
+                                <% }); %>
+                                    <tr>
+                                        <td class="table-info" colspan="2"><strong>Permanência Total</strong></td>
+                                        <td class="table-info"><strong><%=bolCons.permanenciaTotal%></strong></td>
+                                        <td class="table-light" colspan="4"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                <% } else{ %>
+                    <div class="card border-secondary my-3 py-.25 pl-.5">
+                        <div class="card-body">
+                            <div class="row justify-content-center">
+                                <h5><strong>Declarações de Permanência</strong></h5>
+                            </div>
+                            <div class="row">
+                                <div class="col"><div></div></div>         
+                                <div class="col-2 addButton">
+                                    <button type="button" id="addButtonDeclara" class="btn mt-1 btn-success btn-sm btn-block active" data-toggle="modal" data-target="#modalDeclaracao"><strong> Iniciar Declaração </strong></button>
+                                </div>
+                            </div>
                             <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
-                            <% if(bolCons.analiseCompromisso.length > 0){ %>
-                                <% let compromisso = bolCons.analiseCompromisso %>
-                                <h5 class="my-1 ml-1">Observação</h5><h6 class="my-1 ml-1"><%=compromisso.obsv%></h6>
-                                <h5 class="my-1 ml-1">Regularidade</h5><h6 class="my-1 ml-1"><%=compromisso.regular%></h6>
                                 <h5 class="my-1 ml-1">Pendente de análise</h5>
-                            <% } else{ %>
-                                    <h5 class="my-1 ml-1">Pendente de análise</h5>
-                            <% } %>
                             </div>
                         </div>
                     </div>
+                    <% } %>
 
+                    <div class="row justify-content-start mt-4">
+                        <div class="col-8 mx-auto my-auto">
+
+                            <div class="card border-secondary my-3 py-.25 pl-.5">
+                                <div class="card-body">
+                                    <h5 class="card-title"><strong>Resultado da Análise</strong></h5>
+                                    <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
+                                    <% if(bolCons.analiseCompromisso.length > 0){ %>
+                                        <% let compromisso = bolCons.analiseCompromisso %>
+                                        <ul class="list-group list-group-flush">
+                                        <% if(compromisso.obsv == 'Sem Observações'){ %>
+                                            <li class="list-group-item border-success"><h5 class="my-1 ml-1">Observação</h5><h4 class="my-1 ml-1" style="color: darkgreen;"><strong><%=compromisso.obsv%></strong></h4></li>
+                                        <% } else if(compromisso.obsv == 'Ausente'){ %>
+                                            <li class="list-group-item border-success"><h5 class="my-1 ml-1">Observação</h5><h4 class="my-1 ml-1" style="color: darkred;"><strong><%=compromisso.obsv%></strong></h4></li>
+                                        <% } else { %>
+                                            <li class="list-group-item border-success"><h5 class="my-1 ml-1">Observação</h5><h4 class="my-1 ml-1" style="color: darkorange;"><strong><%=compromisso.obsv%></strong></h4></li>
+                                        <% }%>
+                                        <% if(compromisso.regular === 'Regular'){ %>
+                                            <li class="list-group-item border-success"><h5 class="my-1 ml-1">Regularidade</h5><h4 class="my-1 ml-1" style="color:darkgreen"><strong><%=compromisso.regular%></strong></h4></li>
+                                        <% } else { %>
+                                            <li class="list-group-item border-success"><h5 class="my-1 ml-1">Regularidade</h5><h4 class="my-1 ml-1" style="color: darkred"><strong><%=compromisso.regular%></strong></h4></li>
+                                        <% } %>
+                                        </ul>
+                                    <% } else{ %>
+                                            <h5 class="my-1 ml-1">Pendente de análise</h5>
+                                    <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
