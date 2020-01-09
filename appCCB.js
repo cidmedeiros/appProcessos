@@ -212,9 +212,7 @@ app.put('/adddeclaracao/:cpf',  async (req, res) =>{
 							console.log(`Second Promise Internal error finding bolsista ${err}`)
 							console.log('------------------------------------');
 						} else{
-							console.log(foundBol.declaracao)
 							var newPerm = await tools.calcPerm(foundBol.declaracao);
-							console.log(`newPerm: ${newPerm}`);
 							Bolsista.findOneAndUpdate({cpf:req.params.cpf}, {'permanenciaTotal':newPerm}, (err, upObejctInt) =>{
 								if(err){
 									console.log('------------------------------------');
@@ -225,7 +223,6 @@ app.put('/adddeclaracao/:cpf',  async (req, res) =>{
 								}
 							});
 						}
-
 					});
 				}
 			});
@@ -248,7 +245,7 @@ app.put('/editdeclaracao/:cpf', async (req, res) => {
 				'declaracao.$.data':new Date(),
 			}
 		},
-		(err, foundBol) => {
+		(err, result) => {
 			if(err){
 				console.log(`Internal Error updating declaracao ${req.body.bolsista.declaId}: ${err}`);
 			} else{
@@ -258,9 +255,7 @@ app.put('/editdeclaracao/:cpf', async (req, res) => {
 						console.log(`Second Promise Internal error finding bolsista ${err}`)
 						console.log('------------------------------------');
 					} else{
-						console.log(foundBol.declaracao)
 						var newPerm = await tools.calcPerm(foundBol.declaracao);
-						console.log(`newPerm: ${newPerm}`);
 						Bolsista.findOneAndUpdate({cpf:req.params.cpf}, {'permanenciaTotal':newPerm}, (err, upObejctInt) =>{
 							if(err){
 								console.log('------------------------------------');
@@ -276,6 +271,37 @@ app.put('/editdeclaracao/:cpf', async (req, res) => {
 		})
 	} catch(error){
 		console.log(`Internal Error updating declaracao ${req.body.bolsista.declaId}: ${err}`);
+	}
+});
+
+app.delete('/deletedeclaracao/:cpf/:id', async (req, res) => {
+	try{
+		Bolsista.updateOne({cpf:req.params.cpf},{$pull: {declaracao:{_id:req.params.id}}}, (err, result) => {
+			if(err){
+				console.log(`First promise Internal Error deleting declaracao ${req.params.id}: ${err}`);
+			} else{
+				Bolsista.findOne({cpf:req.params.cpf}, async (err, foundBol) => {
+					if(err){
+						console.log('------------------------------------');
+						console.log(`Second Promise Internal error finding bolsista ${err}`)
+						console.log('------------------------------------');
+					} else{
+						var newPerm = await tools.calcPerm(foundBol.declaracao);
+						Bolsista.findOneAndUpdate({cpf:req.params.cpf}, {'permanenciaTotal':newPerm}, (err, upObejctInt) =>{
+							if(err){
+								console.log('------------------------------------');
+								console.log(`Third Promise Internal error updating after Calculating ${newPerm} ${err}`);
+								console.log('------------------------------------');
+							} else {
+								res.redirect(`/paginadobolsista/${upObejctInt._id}`);
+							}
+						});
+					}
+				});
+			}
+		})
+	} catch(error){
+		console.log(`Internal Error deleting declaracao ${req.body.bolsista.declaId}: ${err}`);
 	}
 });
 
