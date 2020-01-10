@@ -23,11 +23,9 @@
                 <div class="col-3 usuario">
                 <% if(bolCons.docFoto.length > 0){ %>
                     <% let docuFoto = bolCons.docFoto[((bolCons.docFoto).length-1)] %>
-                    <footer class="mx-auto">
-                        Última atualização <%=docuFoto.data.toLocaleString()%> por <%= docuFoto.user %>
+                    <footer class="mx-auto" style="text-align: right;">
+                        atualizado em <%=docuFoto.data.toLocaleString()%> - <%= docuFoto.user %>
                     </footer>
-                <% } else { %>
-                    <footer class="mx-auto">Aguardando informações</footer>
                 <% } %>
                 </div>
             </div>
@@ -169,7 +167,7 @@
                 <div class="col-3 mx-auto my-auto" style="text-align: center;">
                     <%let colaborador = bolCons.clbr[((bolCons.clbr).length-1)].nome%>
                     <%let Adata = bolCons.clbr[((bolCons.clbr).length-1)].data%> 
-                    <footer>Bolsista atribuído(a) para <%=colaborador%> em: <%=Adata.getDate()%>/<%=Adata.getMonth()+1%>/<%=Adata.getFullYear()%></footer>
+                    <footer style="text-align: right;">Bolsista atribuído(a) para <%=colaborador%> em: <%=Adata.getDate()%>/<%=Adata.getMonth()+1%>/<%=Adata.getFullYear()%></footer>
                 </div>
             </div>
         </div>
@@ -187,11 +185,9 @@
                 <div class="col-3 usuario">
                 <% if(bolCons.analiseCompromisso.length > 0){ %>
                     <% let analise = bolCons.analiseCompromisso[((bolCons.analiseCompromisso).length-1)] %>
-                    <footer class="mx-auto">
-                        Última atualização <%=analise.data.toLocaleString()%> por <%= analise.user %>
+                    <footer class="mx-auto" style="text-align: right;">
+                        atualizado em <%=analise.data.toLocaleString()%> - <%= analise.user %>
                     </footer>
-                <% } else { %>
-                    <footer class="mx-auto">Aguardando informações</footer>
                 <% } %>
                 </div>
             </div>
@@ -308,6 +304,10 @@
                                             <td><input type="submit" value="Excluir" class="btn btn-danger btn-sm btn-block active"></input></td>
                                         </form>
                                     </tr>
+                                    <tr>
+                                        <td colspan="3"></td>
+                                        <td colspan="4" class="mx-auto" style="color: lightslategrey; text-align: right;">atualizado em <%=declaracao.data.toLocaleString()%> - <%= declaracao.user %></td>
+                                    </tr>
                                 <% }); %>
                                     <tr>
                                         <td class="table-info" colspan="2"><strong>Permanência Total</strong></td>
@@ -391,18 +391,15 @@
         <h2>Acompanhamento do Processo</h2>        
         <div class="container-fluid border border-warning rounded mb-2 py-2">
 
-             
             <div class="row">
                 <div class="col-4"><div></div></div>
                 <div class="col-5"><div></div></div>             
                 <div class="col-3 usuario">
                 <% if(bolCons.pad.length > 0){ %>
                     <% let regPad = bolCons.pad[((bolCons.pad).length-1)] %>
-                    <footer class="mx-auto">
-                        Última atualização <%=regPad.data.toLocaleString()%> por <%= regPad.user %>
+                    <footer class="mx-auto" style="text-align: right;">
+                        atualizado em <%=regPad.data.toLocaleString()%> - <%= regPad.user %>
                     </footer>
-                <% } else { %>
-                    <footer class="mx-auto">Aguardando informações</footer>
                 <% } %>
                 </div>
             </div>
