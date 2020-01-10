@@ -211,8 +211,24 @@
                                     <li class="list-group-item border-success"><h5 class="my-1 ml-1">Status do Curso</h5><h4 class="my-1 ml-1" style="color: darkred;"><strong><%=curso.status%></strong></h4></li>
                                 <% } else { %>
                                     <li class="list-group-item border-success"><h5 class="my-1 ml-1">Status do Curso</h5><h4 class="my-1 ml-1" style="color: darkorange;"><strong><%=curso.status%></strong></h4></li>
-                                <% }%>
-                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Data Status do Curso</h5><h4 class="my-1 ml-1"><%=curso.data.getMonth()+1%>/<%=curso.data.getFullYear()%></h4></li>
+                                <% } %>
+                                <% var ShowMonth = curso.data.getMonth() %>
+                                <% var showYear = curso.data.getFullYear(); %>
+                                <% if(ShowMonth != 11){ %>
+                                    <% ShowMonth = ShowMonth+2; %>
+                                    <% if(ShowMonth <= 9){ %>
+                                        <% ShowMonth = '0'+ ShowMonth; %>
+                                        <li class="list-group-item border-success"><h5 class="my-1 ml-1">Data Status do Curso</h5><h4 class="my-1 ml-1"><%=ShowMonth%>/<%=showYear%></h4></li>
+                                    <% } else { %>
+                                        <% var date = showYear+'-'+ShowMonth%>
+                                        <li class="list-group-item border-success"><h5 class="my-1 ml-1">Data Status do Curso</h5><h4 class="my-1 ml-1"><%=ShowMonth%>/<%=showYear%></h4></li>
+                                    <% } %>
+                                <% } else { %>
+                                    <% ShowMonth = '01' %>
+                                    <% showYear = showYear+1; %>
+                                    <% var date = showYear+'-'+ShowMonth%>
+                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Data Status do Curso</h5><h4 class="my-1 ml-1"><%=ShowMonth%>/<%=showYear%></h4></li>
+                                <% } %>
                                 </ul>
                             <% } else{ %>
                                 <h5 class="my-1 ml-1">Pendente de análise</h5>

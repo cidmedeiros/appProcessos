@@ -108,13 +108,26 @@
                                 <div class="form-group">
                                     <% if(indexStatus < 0){ %>
                                         <input required class="mx-auto" type="month" id="start" name="bolsista[dataConcl]" min="2011-03" value=''>
-                                     <% } else { %>
-                                        <% console.log(`${statusCurso.data.getFullYear()}-${statusCurso.data.getMonth()+1}`) %>
-                                        <% var datecert = "2016-09" %>
-                                        <%console.log( typeof datecert) %>
-                                        <%console.log(datecert) %>
-                                         <input required class="mx-auto" type="month" id="start" name="bolsista[dataConcl]" min="2011-03" value='<%=datecert%>'>
-                                     <% } %>
+                                    <% } else { %>
+                                        <% var month = statusCurso.data.getMonth() %>
+                                        <% var year = statusCurso.data.getFullYear(); %>
+                                        <% if(month != 11){ %>
+                                            <% month = month+2; %>
+                                            <% if(month <= 9){ %>
+                                                <% month = '0'+ month; %>
+                                                <% var date = year+'-'+month %>
+                                                <input required class="mx-auto" type="month" id="start" name="bolsista[dataConcl]" min="2011-03" value='<%=date%>'>
+                                            <% } else { %>
+                                                <% var date = year+'-'+month %>
+                                                <input required class="mx-auto" type="month" id="start" name="bolsista[dataConcl]" min="2011-03" value='<%=date%>'>
+                                            <% } %>
+                                        <% } else { %>
+                                            <% month = '01' %>
+                                            <% year = year+1; %>
+                                            <% var date = year+'-'+month%>
+                                            <input required class="mx-auto" type="month" id="start" name="bolsista[dataConcl]" min="2011-03" value='<%=date%>'>
+                                        <% } %>
+                                    <% } %>
                                 </div>
                             </div>
                         </div>
