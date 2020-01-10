@@ -105,7 +105,7 @@
                         <div class="col mx-auto my-auto">
                             <div class="card border-secondary my-1 py-.25 pl-.5">
                                 <div class="card-body">
-                                    <h5 class="card-title text-center"><strong>Documento Com Foto</strong></h5>
+                                    <h5 class="card-title text-center"><strong>Documento de Identificação</strong></h5>
                                     <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                                     <% if(bolCons.docFoto.length > 0){ %>
                                         <% let docuFoto = bolCons.docFoto[((bolCons.docFoto).length-1)] %>
@@ -229,6 +229,9 @@
                             <% } else{ %>
                                 <h5 class="my-1 ml-1">Pendente de análise</h5>
                             <% } %>
+                            </div>
+                            <div>
+                                <footer style="text-align: center; color: red;">Em caso de reingresso, a data do status do curso reflete a previsão de término do curso.</footer>
                             </div>
                         </div>
                     </div>

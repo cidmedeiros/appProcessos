@@ -48,11 +48,11 @@
                         <div class="row mb-2">
 
                             <div class="card col border border-rounded-bottom ml-1 py-.25 pl-.5">
-                                <h5>Documento Com Foto</h5>
+                                <h5>Documento de Identificação</h5>
                                 <div class="form-group">
                                     <h5 style="color: black;" for="tipoDocFoto">Documento</h5>
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[tipoDocFoto]' id='bolsista[tipoDocFoto]'>
-                                    <%var docFotoList = ['Identidade','Carteira de Motorista','Registro Profissional','Passaporte','Carteira de Trabalho','Ausência'];%>
+                                    <%var docFotoList = ['Identidade','Carteira de Motorista','Registro Profissional','Passaporte','Carteira de Trabalho','Ausência', 'Óbito'];%>
                                     <% var indexFoto = (bolCons.docFoto.length)-1; %>
                                     <% if(indexFoto < 0){ %>
                                         <option value=''>Selecione</option>
