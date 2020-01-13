@@ -88,16 +88,16 @@
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvDocFoto]' id='bolsista[obsvDocFoto]'>
                                         <%var obsvFotoList = ['Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações','Sem Foto','Vencida'];%>
                                         <% if(indexFoto < 0){ %>
-                                            <option value=''>Selecione</option>
+                                            <option class="optObsvDocIde" value=''>Selecione</option>
                                             <% obsvFotoList.forEach((obsvList) => { %>
-                                                <option><%= obsvList %></option>
+                                                <option class="optObsvDocIde"><%= obsvList %></option>
                                             <% }); %>
                                         <% } else { %>
                                             <% obsvFotoList.forEach((obsvList) => { %>
                                                 <% if(obsvList === docuFoto.obsv){ %>
-                                                    <option selected><%= obsvList %></option>
+                                                    <option class="optObsvDocIde" selected><%= obsvList %></option>
                                                 <% } else { %>
-                                                    <option><%= obsvList %></option>
+                                                    <option class="optObsvDocIde"><%= obsvList %></option>
                                                 <% } %>
                                             <% }); %>
                                         <% } %>
@@ -150,16 +150,17 @@
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvDocRes]' id='bolsista[obsvDocRes]'>
                                     <%var obsvResList = ['Ilegível','Ausente','Sem Observações'];%>
                                     <% if(indexRes < 0){ %>
-                                        <option value=''>Selecione</option>
+                                        <option class="optObsvDocRes" value=''>Selecione</option>
                                         <% obsvResList.forEach((obsvList) => { %>
-                                            <option><%= obsvList %></option>
+                                            <option class="optObsvDocRes"><%= obsvList %></option>
                                         <% }); %>
                                     <% } else { %>
                                         <% obsvResList.forEach((obsvList) => { %>
                                             <% if(obsvList === docuRes.obsv){ %>
-                                                <option selected><%= obsvList %></option>
+                                                <option class="optObsvDocRes" selected><%= obsvList %></option>
                                             <% } else { %>
-                                                <option><%= obsvList %></option>
+                                                <option class="optObsvDocRes"
+                                                ><%= obsvList %></option>
                                             <% } %>
                                         <% }); %>
                                     <% } %>
@@ -193,16 +194,16 @@
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvTermo]' id='bolsista[obsvTermo]'>
                                     <%var obsvTermoList = ['Assinado Após Pagamento','Ausente','Ilegível','Sem Assinatura','Sem Observações','Ausência','Pendência'];%>
                                     <% if(indexTermo < 0){ %>
-                                        <option value=''>Selecione</option>
+                                        <option class="optObsvDocTermo" value=''>Selecione</option>
                                         <% obsvTermoList.forEach((obsvList) => { %>
-                                            <option><%= obsvList %></option>
+                                            <option class="optObsvDocTermo"><%= obsvList %></option>
                                         <% }); %>
                                     <% } else { %>
                                         <% obsvTermoList.forEach((obsvList) => { %>
                                             <% if(obsvList === termo.obsv){ %>
-                                                <option selected><%= obsvList %></option>
+                                                <option class="optObsvDocTermo" selected><%= obsvList %></option>
                                             <% } else { %>
-                                                <option><%= obsvList %></option>
+                                                <option class="optObsvDocTermo"><%= obsvList %></option>
                                             <% } %>
                                         <% }); %>
                                     <% } %>

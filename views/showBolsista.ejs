@@ -563,8 +563,47 @@
 <% include modalEditDeclara %>
 
 <script>
+    //Modal Dados Pessoais
+    var regSelect = function(reg, obsv, optClass){
+        let lenObsv = (obsv.length)-1;
+        let obsvList = [];
 
-    //IES Selector
+        for(var i = 0; i<= lenObsv; i++){
+            obsvList.push(obsv.options.item(i).text)
+        }
+
+        reg.addEventListener('input', () => {
+            if(reg.options.item(reg.selectedIndex).text == 'Regular'){
+                $(obsv).find(`.${optClass}`).remove().end();
+                obsvList.forEach(obs =>{
+                    if(obs == 'Sem Observações'){
+                        let optObsSelected = `<option class=${optClass} selected>${obs}</option>`;
+                        obsv.insertAdjacentHTML('beforeend', optObsSelected);
+                    } else{
+                        let optObs = `<option class=${optClass}> ${obs} </option>`;
+                        obsv.insertAdjacentHTML('beforeend', optObs)
+                    }
+                });
+            }
+        });
+    }
+
+    var regDocIde = document.getElementById('bolsista[regDocFoto]');
+    var obsvDocIde = document.getElementById('bolsista[obsvDocFoto]');
+    var optClassIde = 'optObsvDocIde';
+    regSelect(regDocIde, obsvDocIde, optClassIde);
+
+    var regDocRes = document.getElementById('bolsista[regDocRes]');
+    var obsvDocRes = document.getElementById('bolsista[obsvDocRes]');
+    var optClassRes = 'optObsvDocRes';
+    regSelect(regDocRes, obsvDocRes, optClassRes);
+
+    var regTermo = document.getElementById('bolsista[regTermo]');
+    var obsvTermo = document.getElementById('bolsista[obsvTermo]');
+    var optClassTermo = 'optObsvDocTermo';
+    regSelect(regTermo, obsvTermo, optClassTermo);
+
+    //Modal Compromisso
     var iesUfSelect = document.getElementById('bolsista[ufCert]');
     var noDisplayIes = document.getElementById('noDisplayIes')
     var iesSelect = document.getElementById('bolsista[iesCert]');
@@ -586,7 +625,7 @@
         }
     });
 
-    //Municipios Selector
+    //Municipios Selector (Modal Declaração)
     var munUfSelect = document.getElementById('bolsista[ufDecl]');
     var noDisplayMun = document.getElementById('noDisplayMun');
     var munSelect = document.getElementById('bolsista[munDecl]');
@@ -608,7 +647,7 @@
         }
     });
 
-    //Modal Edit Declaracao (it uses event delegation)
+     //Modal Edit Declaração
     var editTable = document.getElementById('tableDeclara');
     var formEditDeclara = document.getElementById('formEditDeclara');
     var declaraList = document.getElementById('declaraList');
