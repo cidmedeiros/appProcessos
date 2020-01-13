@@ -563,7 +563,7 @@
 <% include modalEditDeclara %>
 
 <script>
-    //Modal Dados Pessoais
+    //Regular Selection Automation - Função Geral
     var regSelect = function(reg, obsv, optClass){
         let lenObsv = (obsv.length)-1;
         let obsvList = [];
@@ -588,29 +588,32 @@
         });
     }
         
-        //Documento Identificação
+    //Modal Dados Pessoais
+
+        //Regular Selection Automation - Documento Identificação
     var regDocIde = document.getElementById('bolsista[regDocFoto]');
     var obsvDocIde = document.getElementById('bolsista[obsvDocFoto]');
     var optClassIde = 'optObsvDocIde';
     regSelect(regDocIde, obsvDocIde, optClassIde);
 
-        //Documento Residência
+        //Regular Selection Automation - Documento Residência
     var regDocRes = document.getElementById('bolsista[regDocRes]');
     var obsvDocRes = document.getElementById('bolsista[obsvDocRes]');
     var optClassRes = 'optObsvDocRes';
     regSelect(regDocRes, obsvDocRes, optClassRes);
 
-        //Termo de Compromisso
+        //Regular Selection Automation - Termo de Compromisso
     var regTermo = document.getElementById('bolsista[regTermo]');
     var obsvTermo = document.getElementById('bolsista[obsvTermo]');
     var optClassTermo = 'optObsvDocTermo';
     regSelect(regTermo, obsvTermo, optClassTermo);
 
     //Modal Compromisso
+
+        //Seletor Certificado Conclusão
     var iesUfSelect = document.getElementById('bolsista[ufCert]');
     var noDisplayIes = document.getElementById('noDisplayIes')
     var iesSelect = document.getElementById('bolsista[iesCert]');
-
     iesUfSelect.addEventListener('input', () => {
         //clear the select box
         $(iesSelect).find('option').remove().end();
@@ -628,23 +631,24 @@
         }
     });
         
-        //Certificado de Conclusão
+        //Regular Selection Automation - Certificado de Conclusão
     var regCert = document.getElementById('bolsista[regCert]');
     var obsvCert = document.getElementById('bolsista[obsvCert]');
     var optClassCert = 'optObsvDocCert';
     regSelect(regCert, obsvCert, optClassCert);
-    
-        //Resultado Análise
+
+        //Regular Selection Automation - Resultado Análise
     var resAna = document.getElementById('bolsista[resAna]');
     var obsvAna = document.getElementById('bolsista[obsvAna]');
     var optClassAna = 'optClassAna';
     regSelect(resAna, obsvAna, optClassAna);
 
-    //Municipios Selector (Modal Declaração)
+    //Modal Adiciona Declaração
+
+        //Seletor IES Declaração
     var munUfSelect = document.getElementById('bolsista[ufDecl]');
     var noDisplayMun = document.getElementById('noDisplayMun');
     var munSelect = document.getElementById('bolsista[munDecl]');
-
     munUfSelect.addEventListener('input', () => {
         //clear the select box
         $(munSelect).find('option').remove().end();
@@ -662,7 +666,13 @@
         }
     });
 
-     //Modal Edit Declaração
+        //Regular Selection Automation - AddDeclaraçãoDeclaração
+    var regDecl = document.getElementById('bolsista[regDecl]');
+    var obsvDecl = document.getElementById('bolsista[obsvDecl]');
+    var optClassDecl = 'optClassDecl';
+    regSelect(regDecl, obsvDecl, optClassDecl);
+
+     //Modal Edita Declaração
     var editTable = document.getElementById('tableDeclara');
     var formEditDeclara = document.getElementById('formEditDeclara');
     var declaraList = document.getElementById('declaraList');
