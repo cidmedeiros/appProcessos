@@ -36,6 +36,7 @@
     "ejs": "^2.7.3",
     "express": "^4.17.1",
     "express-sanitizer": "^1.0.5",
+    "express-session": "^1.17.0",
     "jquery": "^3.4.1",
     "json2csv": "^4.5.4",
     "lodash": "^4.17.15",
@@ -43,6 +44,9 @@
     "mongodb": "^3.3.4",
     "mongoose": "^5.7.11",
     "mongoose-fuzzy-searching": "^1.1.8",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^6.0.1",
     "popper.js": "^1.16.0",
     "underscore": "^1.9.1",
     "yargs": "^15.0.1"
