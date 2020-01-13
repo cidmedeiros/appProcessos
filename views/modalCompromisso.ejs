@@ -167,16 +167,16 @@
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvCert]' id='bolsista[obsvCert]'>
                                     <%var obsvCertList = ['Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações','Pendente'];%>
                                     <% if(indexCert < 0){ %>
-                                        <option value=''>Selecione</option>
+                                        <option class="optObsvDocCert" value=''>Selecione</option>
                                         <% obsvCertList.forEach((obs) => { %>
-                                            <option><%= obs %></option>
+                                            <option class="optObsvDocCert"><%= obs %></option class="optObsvDocCert">
                                         <% }); %>
                                     <% } else { %>
                                         <% obsvCertList.forEach((obs) => { %>
                                             <% if(obs === certificado.obsv){ %>
-                                                <option selected><%= obs %></option>
+                                                <option class="optObsvDocCert" selected><%= obs %></option>
                                             <% } else { %>
-                                                <option><%= obs %></option>
+                                                <option class="optObsvDocCert"><%= obs %></option>
                                             <% } %>
                                         <% }); %>
                                     <% } %>
@@ -220,16 +220,16 @@
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvAna]' id='bolsista[obsvAna]'>
                                     <%var obsvAnaReslList = ['Sem Observações'];%>
                                     <% if(indexAnaRes < 0){ %>
-                                        <option value=''>Selecione</option>
+                                        <option class="optClassAna" value=''>Selecione</option>
                                         <% obsvAnaReslList.forEach((obs) => { %>
-                                            <option><%= obs %></option>
+                                            <option class="optClassAna"><%= obs %></option>
                                         <% }); %>
                                     <% } else { %>
                                         <% obsvAnaReslList.forEach((obs) => { %>
                                             <% if(obs === analiseCompromisso.obsv){ %>
-                                                <option selected><%= obs %></option>
+                                                <option class="optClassAna" selected><%= obs %></option>
                                             <% } else { %>
-                                                <option><%= obs %></option>
+                                                <option class="optClassAna"><%= obs %></option>
                                             <% } %>
                                         <% }); %>
                                     <% } %>

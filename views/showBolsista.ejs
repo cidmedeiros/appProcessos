@@ -587,17 +587,20 @@
             }
         });
     }
-
+        
+        //Documento Identificação
     var regDocIde = document.getElementById('bolsista[regDocFoto]');
     var obsvDocIde = document.getElementById('bolsista[obsvDocFoto]');
     var optClassIde = 'optObsvDocIde';
     regSelect(regDocIde, obsvDocIde, optClassIde);
 
+        //Documento Residência
     var regDocRes = document.getElementById('bolsista[regDocRes]');
     var obsvDocRes = document.getElementById('bolsista[obsvDocRes]');
     var optClassRes = 'optObsvDocRes';
     regSelect(regDocRes, obsvDocRes, optClassRes);
 
+        //Termo de Compromisso
     var regTermo = document.getElementById('bolsista[regTermo]');
     var obsvTermo = document.getElementById('bolsista[obsvTermo]');
     var optClassTermo = 'optObsvDocTermo';
@@ -624,6 +627,18 @@
             } 
         }
     });
+        
+        //Certificado de Conclusão
+    var regCert = document.getElementById('bolsista[regCert]');
+    var obsvCert = document.getElementById('bolsista[obsvCert]');
+    var optClassCert = 'optObsvDocCert';
+    regSelect(regCert, obsvCert, optClassCert);
+    
+        //Resultado Análise
+    var resAna = document.getElementById('bolsista[resAna]');
+    var obsvAna = document.getElementById('bolsista[obsvAna]');
+    var optClassAna = 'optClassAna';
+    regSelect(resAna, obsvAna, optClassAna);
 
     //Municipios Selector (Modal Declaração)
     var munUfSelect = document.getElementById('bolsista[ufDecl]');
