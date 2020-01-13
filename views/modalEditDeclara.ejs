@@ -99,9 +99,9 @@
                                 <div class="form-group">
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[editObsvDecl]' id='bolsista[editObsvDecl]'>
                                     <%var obsvDeclList = ['Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações','Pendente'];%>
-                                        <option value=''>Selecione</option>
+                                        <option class="optClassEditDecl" value=''>Selecione</option>
                                     <% obsvDeclList.forEach((obs) => { %>
-                                        <option><%= obs %></option>
+                                        <option class="optClassEditDecl"><%= obs %></option>
                                     <% }); %>
                                     </select>
                                 </div>
