@@ -97,12 +97,15 @@
                                 <h5 class="card-title" style="color: black;">Observação da Declaração</h5>
                                 <div class="form-group">
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvDecl]' id='bolsista[obsvDecl]'>
-                                    <%var obsvDeclList = ['Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações','Pendente'];%>
+                                    <%var obsvDeclList = ['Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações','Pendente', 'Período de Permanência a Iniciar'];%>
                                         <option class="optClassDecl" value=''>Selecione</option>
                                         <% obsvDeclList.forEach((obs) => { %>
                                             <option class="optClassDecl"><%= obs %></option>
                                         <% }); %>
                                     </select>
+                                </div>
+                                <div>
+                                    <footer style="text-align: left; color: #cc7000;"><strong>*A opção 'Período de Permanência a Iniciar' somente deverá ser assinalada quando o Status do Curso do bolsista for 'Cursando (Reingresso)'.</strong></footer>
                                 </div>
                             </div>
                         </div>

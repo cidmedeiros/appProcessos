@@ -206,7 +206,7 @@
                                 <% } else if(curso.status == 'Abandonou o Curso'){ %>
                                     <li class="list-group-item border-success"><h5 class="my-1 ml-1">Status do Curso</h5><h4 class="my-1 ml-1" style="color: darkred;"><strong><%=curso.status%></strong></h4></li>
                                 <% } else { %>
-                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Status do Curso</h5><h4 class="my-1 ml-1" style="color: darkorange;"><strong><%=curso.status%></strong></h4></li>
+                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Status do Curso</h5><h4 class="my-1 ml-1" style="color: #cc7000;"><strong><%=curso.status%></strong></h4></li>
                                 <% } %>
                                 <% var ShowMonth = curso.data.getMonth() %>
                                 <% var showYear = curso.data.getFullYear(); %>
@@ -231,7 +231,7 @@
                             <% } %>
                             </div>
                             <div>
-                                <footer style="text-align: center; color: red;">Em caso de reingresso, a data do status do curso reflete a previsão de término do curso.</footer>
+                                <footer style="text-align: left; color: #cc7000;"><strong>*Em caso de 'Cursando (Reingresso)', a data do status do curso reflete a previsão de término do curso.</strong></footer>
                             </div>
                         </div>
                     </div>
@@ -302,7 +302,11 @@
                                             <%} else{ %>
                                                 <td style="color: darkred;"><strong><%=declaracao.regular%></strong></td>
                                             <% } %>
-                                            <td><%=declaracao.obsv%></td>
+                                            <%if(declaracao.obsv == 'Período de Permanência a Iniciar'){ %>
+                                                <td style="color: #cc7000;"><strong><%=declaracao.obsv%></strong></td>
+                                            <%} else{ %>
+                                                <td><strong><%=declaracao.obsv%></strong></td>
+                                            <% } %>
                                             <td><button type="button" id='<%=declaracao._id%>' class="btn btn-primary btn-sm btn-block active" data-toggle="modal" data-target="#modalEditDeclaracao">Editar</button></td>
                                             <td><input type="submit" value="Excluir" class="btn btn-danger btn-sm btn-block active"></input></td>
                                         </form>
@@ -645,10 +649,11 @@
 
     //Modal Adiciona Declaração
 
-        //Seletor IES Declaração
+        //Seletor Município Declaração
     var munUfSelect = document.getElementById('bolsista[ufDecl]');
     var noDisplayMun = document.getElementById('noDisplayMun');
     var munSelect = document.getElementById('bolsista[munDecl]');
+
     munUfSelect.addEventListener('input', () => {
         //clear the select box
         $(munSelect).find('option').remove().end();
@@ -666,13 +671,40 @@
         }
     });
 
-        //Regular Selection Automation - AddDeclaraçãoDeclaração
+        //Regular Selection Automation - AddDeclaração
     var regDecl = document.getElementById('bolsista[regDecl]');
     var obsvDecl = document.getElementById('bolsista[obsvDecl]');
     var optClassDecl = 'optClassDecl';
     regSelect(regDecl, obsvDecl, optClassDecl);
 
+        //Não Obrigatória Selection Automation - AddDeclaração
+    var ufDecl = document.getElementById('bolsista[ufDecl]');
+    var munDecl = document.getElementById('bolsista[munDecl]');
+    var permDecl = document.getElementById('bolsista[perm]');
+
+    obsvDecl.addEventListener('input', () => {
+        if(obsvDecl.options.item(obsvDecl.selectedIndex).text == 'Período de Permanência a Iniciar'){
+            $(munUfSelect).find('option').remove().end();
+            $(munSelect).find('option').remove().end();
+            $(permDecl).find('option').remove().end();
+            $(regDecl).find('option').remove().end();
+
+            let optUf = `<option selected value="não aplica">não aplica</option>`;
+            munUfSelect.insertAdjacentHTML('beforeend',optUf);
+
+            let optMun = `<option selected>não aplica</option>`;
+            munSelect.insertAdjacentHTML('beforeend',optMun);
+
+            let optPer = `<option selected> 0 </option>`;
+            permDecl.insertAdjacentHTML('beforeend',optPer);
+
+            let optReg = `<option selected> Regular </option>`;
+            regDecl.insertAdjacentHTML('beforeend',optReg);
+        }
+    });
+
      //Modal Edita Declaração
+
     var editTable = document.getElementById('tableDeclara');
     var formEditDeclara = document.getElementById('formEditDeclara');
     var declaraList = document.getElementById('declaraList');
@@ -746,7 +778,7 @@
         }
     });
 
-        //Regular Selection Automation - Editar DeclaraçãoDeclaração
+        //Regular Selection Automation - Editar Declaração
     var optClassEditDecl = 'optClassEditDecl';
     regSelect(editRegDecl, editObsvDecl, optClassEditDecl);
 
