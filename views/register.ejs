@@ -1,0 +1,46 @@
+<% include partials/header %>
+
+<div class="row justify-content-center mt-5">
+    <div class="col-4"></div>
+    <div class="col mx-auto my-auto">
+        <div class="card border-secondary my-1 py-.25 pl-.5">
+            <div class="card-body">
+                <h3 class="card-title text-center"><strong>Cadastro</strong></h3>
+                <form action="/registro" id="registerForm" method="POST">
+                    <label for="user[name]">Primeiro e Último Nomes</label>
+                    <input required type="text" class="form-control" id='user[fullName]' name='user[fullName]' placeholder="João Francisco">
+                    <label for="user[name]">Nome do Usuário</label>
+                    <input required type="text" class="form-control" id='user[name]' name='user[name]' placeholder="nome do usuário(a) sem espaços">
+                    <label for="user[name]">Cadastrar Senha</label>
+                    <input required type="password" class="form-control" id='user[pass]' name='user[pass]' placeholder="uma senha séria aqui">
+                    <label for="user[name]">Confirmar Senha</label>
+                    <input required type="password" class="form-control" id='user[confirmPass]' name='user[confirmPass]' placeholder="confirme sua senha séria">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-4"></div>
+</div>
+
+<script>
+    var senha = document.getElementById('user[pass]');
+    var confSenha = document.getElementById('user[confirmPass]');
+    var formulario = document.getElementById('registerForm');
+    
+    confSenha.addEventListener('keyup', () =>{
+        if(senha.value === confSenha.value){
+            $(formulario).find('button').remove().end();
+            senha.style.borderColor = 'blue';
+            confSenha.style.borderColor = 'blue';
+            let suButton = `<div class="col text-center"><button type="submit" class="btn btn-md btn-success mt-3">Confirmar</button></div>`;
+            formulario.insertAdjacentHTML('beforeend', suButton);            
+        }else{
+            $(formulario).find('button').remove().end();
+            senha.style.borderColor = '#E34234';
+            confSenha.style.borderColor = '#E34234';
+        }
+    });
+</script>
+
+<!-- closing elements -->
+<% include partials/footer %>

@@ -18,7 +18,7 @@ User = require('./models/user')
 
 //App Variable
 const app = express();
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({extended:true})); /* body-parser module parses the JSON, buffer, string and URL encoded data submitted using HTTP POST request. */
 app.use(expressSanitizer());
 app.use(express.static('assets'));
 app.use(methodOverride("_method"));
@@ -26,7 +26,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(require('express-session')({
-	secret: 'inconstitucionalissimamente is a very massive long word',
+	secret: 'inconstitucionalissimamente is a very fat massive long word',
 	resave:false,
 	saveUninitialized:false
 }));
@@ -39,14 +39,34 @@ const port = 8087;
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
-
 //Set DataBase
 mongoose.connect('mongodb://localhost:27017/testDB', {'useNewUrlParser': true, 'useUnifiedTopology':true});
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
 //Routes Definitions
+
+	//AUTH ROUTES
+app.get('/registro', (req, res) =>{
+	res.render('register');
+});
+
+app.post('/registro',  async (req, res) =>{
+	try{
+		User.register( new User({fullname:req.body.user.fullName, username:req.body.user.name}), req.body.user.pass, (err, user) =>{
+			if(err){
+				console.log(`External error trying to register user ${err}`);
+			} else {
+				passport.authenticate('local')(req, res, ()=>{
+					res.redirect('/');
+				});
+			}
+		});
+
+	} catch(error){
+		console.log(`External error trying to register user ${error}`)
+	}
+});
 
 	//INDEX ROUTE - Lists all the related data from DB
 app.get('/', async (req, res) =>{
