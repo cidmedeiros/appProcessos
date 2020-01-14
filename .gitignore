@@ -2,3 +2,5 @@
 /assets/bootstrap
 /assets/jquery
 /assets/popper.js
+/data
+/assets/scripts/dataBase/fuzzywuzzy

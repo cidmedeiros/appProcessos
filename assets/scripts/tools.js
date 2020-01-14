@@ -3,7 +3,7 @@ function getLocalIp() {
 
     for(let addresses of Object.values(os.networkInterfaces())) {
         for(let add of addresses) {
-            if(add.address.startsWith('192.')) {
+            if(add.address.startsWith('172.')) {
                 return add.address;
             }
         }
