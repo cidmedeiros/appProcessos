@@ -14,6 +14,7 @@ tools = require('./assets/scripts/tools');
 Bolsista = require('./models/bolsistas');
 Ies = require('./models/ies');
 Municipio = require('./models/municipios');
+User = require('./models/user')
 
 //App Variable
 const app = express();
@@ -21,9 +22,24 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(expressSanitizer());
 app.use(express.static('assets'));
 app.use(methodOverride("_method"));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(require('express-session')({
+	secret: 'inconstitucionalissimamente is a very massive long word',
+	resave:false,
+	saveUninitialized:false
+}));
+
 app.set('view engine', 'ejs');
 const hostname = `${tools.getLocalIp()}`;
 const port = 8087;
+
+//It brings in code-decode methods from plugin in UserSchema
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 
 //Set DataBase
 mongoose.connect('mongodb://localhost:27017/testDB', {'useNewUrlParser': true, 'useUnifiedTopology':true});
