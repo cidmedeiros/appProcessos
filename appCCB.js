@@ -62,7 +62,6 @@ app.post('/registro',  async (req, res) =>{
 				});
 			}
 		});
-
 	} catch(error){
 		console.log(`External error trying to register user ${error}`)
 	}
