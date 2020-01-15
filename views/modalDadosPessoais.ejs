@@ -13,6 +13,7 @@
             <div class="modal-body border border-rounded border-info mx-1 my-1">
                 <div class="container-fluid">
                     <form action='/editardadospessoais/<%=bolCons.cpf%>?_method=PUT' method="POST">
+                        <input type="hidden" name="user" id="user" value="<%=currentUser.fullname%>">
 
                         <div class="row mb-2">
                             <div class="col-1"></div>

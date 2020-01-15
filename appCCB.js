@@ -194,9 +194,9 @@ app.put('/editardadospessoais/:cpf', isLoggedIn, (req, res) => {
 		Bolsista.findOneAndUpdate({cpf:req.params.cpf},
 			{
 				'$push':{'email':{'email':req.body.bolsista.email, 'data': new Date()},
-						'docFoto':{'doc': req.body.bolsista.tipoDocFoto,'regular':req.body.bolsista.regDocFoto,'obsv':req.body.bolsista.obsvDocFoto,'data': new Date(),'user':'tester'},
-						'docRes':{'doc': req.body.bolsista.tipoDocRes,'regular':req.body.bolsista.regDocRes,'obsv':req.body.bolsista.obsvDocRes,'data': new Date(),'user':'tester'},
-						'termo':{'regular':req.body.bolsista.regTermo,'obsv':req.body.bolsista.obsvTermo,'data': new Date(),'user':'tester'}},
+						'docFoto':{'doc': req.body.bolsista.tipoDocFoto,'regular':req.body.bolsista.regDocFoto,'obsv':req.body.bolsista.obsvDocFoto,'data': new Date(),'user':req.body.user},
+						'docRes':{'doc': req.body.bolsista.tipoDocRes,'regular':req.body.bolsista.regDocRes,'obsv':req.body.bolsista.obsvDocRes,'data': new Date(),'user':req.body.user},
+						'termo':{'regular':req.body.bolsista.regTermo,'obsv':req.body.bolsista.obsvTermo,'data': new Date(),'user':req.body.user}},
 				'sexo': req.body.bolsista.sexo
 			},
 			(err, upObejct) =>{
@@ -236,9 +236,9 @@ app.put('/editarcompromisso/:cpf', isLoggedIn, async (req, res) =>{
 			{
 				'$push':{
 
-					'statusCurso':{status:req.body.bolsista.status, data: new Date(req.body.bolsista.dataConcl), user:'teste'},
-					'certConclusao':{ies:iesUpdate,regular:req.body.bolsista.regCert,obsv:req.body.bolsista.obsvCert,user:'teste',data: new Date()},
-					'analiseCompromisso':{regular:req.body.bolsista.resAna,obsv:req.body.bolsista.obsvAna, user:'teste', data: new Date()}
+					'statusCurso':{status:req.body.bolsista.status, data: new Date(req.body.bolsista.dataConcl), user:req.body.user},
+					'certConclusao':{ies:iesUpdate,regular:req.body.bolsista.regCert,obsv:req.body.bolsista.obsvCert, user:req.body.user, data: new Date()},
+					'analiseCompromisso':{regular:req.body.bolsista.resAna,obsv:req.body.bolsista.obsvAna, user:req.body.user, data: new Date()}
 				}
 			},
 			(err, upObejct) =>{
@@ -263,7 +263,7 @@ app.put('/adddeclaracao/:cpf', isLoggedIn, async (req, res) =>{
 		Bolsista.findOneAndUpdate({cpf:req.params.cpf},
 			{
 				'$push':{
-					'declaracao':{municipioEscola:{nome:req.body.bolsista.munDecl, uf:req.body.bolsista.ufDecl}, permanencia:parseInt(req.body.bolsista.perm, 10), regular:req.body.bolsista.regDecl, obsv:req.body.bolsista.obsvDecl, user:'teste', data: new Date()},
+					'declaracao':{municipioEscola:{nome:req.body.bolsista.munDecl, uf:req.body.bolsista.ufDecl}, permanencia:parseInt(req.body.bolsista.perm, 10), regular:req.body.bolsista.regDecl, obsv:req.body.bolsista.obsvDecl, user:req.body.user, data: new Date()},
 				}
 			},
 			(err, upObejct) =>{
@@ -307,7 +307,7 @@ app.put('/editdeclaracao/:cpf', isLoggedIn, async (req, res) => {
 				'declaracao.$.permanencia':parseInt(req.body.bolsista.editPerm, 10),
 				'declaracao.$.regular':req.body.bolsista.editRegDecl,
 				'declaracao.$.obsv':req.body.bolsista.editObsvDecl,
-				'declaracao.$.user':'user',
+				'declaracao.$.user':req.body.user,
 				'declaracao.$.data':new Date(),
 			}
 		},
