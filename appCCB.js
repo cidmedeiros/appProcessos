@@ -97,7 +97,12 @@ function isLoggedIn(req, res, next){
 	res.redirect('/login');
 }
 
-	//INDEX ROUTE - Lists all the related data from DB
+	//INDEX ROUTE
+
+app.get('/teste', (req, res) =>{
+	res.render('test');
+});
+
 app.get('/', isLoggedIn, async (req, res) =>{
 	res.render('landing');
 });
