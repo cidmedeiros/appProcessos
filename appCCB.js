@@ -1,7 +1,8 @@
 //Required External Modules
 path = require("path");
 express = require('express');
-http = require("http");
+https = require("https");
+fs = require('fs');
 bodyParser = require('body-parser');
 mongoose = require('mongoose');
 mongoose_fuzzy_searching = require('mongoose-fuzzy-searching');
@@ -383,6 +384,13 @@ app.get('*', isLoggedIn, async (req, res) =>{
 });
 
 //Server Activation
-app.listen(port, hostname, (req, res) => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
+/* Command to renew keys for ssl connection: openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 */
+var activateServer = function(hostname, port){
+	https.createServer({
+    key: fs.readFileSync('./key.pem'),
+    cert: fs.readFileSync('./cert.pem'),
+	passphrase: 'somethingidontknow'},
+	app).listen(port);
+	console.log(`Server running at https://${hostname}:${port}/`);
+}
+activateServer(hostname, port);
