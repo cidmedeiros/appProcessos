@@ -104,7 +104,25 @@ app.get('/teste', (req, res) =>{
 });
 
 app.get('/', isLoggedIn, async (req, res) =>{
-	res.render('landing');
+	try{
+		Bolsista.find({}, (err, allBols) => {
+			if(err){
+				console.log(`Internal error: ${err}`);
+			} else {
+				var clbrs = []
+				allBols.forEach(bol => {
+					let indx = (bol.clbr.length)-1;
+					lastClbr = bol.clbr[indx];
+					if(!clbrs.includes(lastClbr.nome)){
+						clbrs.push(lastClbr.nome);
+					}
+				});
+				res.render('landing', {clbrs:clbrs})
+			}
+		});
+	}catch(error){
+		console.log(`External error: ${err}`);
+	}
 });
 
 	//SHOW ROUTES

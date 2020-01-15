@@ -81,7 +81,7 @@
                                 <h5 class="card-title" style="color: black;">Situação do Curso</h5>
                                 <div class="form-group">
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[status]' id='bolsista[status]'>
-                                    <% var statusList = ['Concluído','Desligado','Abandonou o Curso','Cursando (Reingresso)']; %>
+                                    <% var statusList = ['Concluído','Concluído (Reingresso)','Desligado','Abandonou o Curso','Cursando (Reingresso)']; %>
                                     <% var indexStatus = (bolCons.statusCurso.length)-1; %>
                                     <% var statusCurso = bolCons.statusCurso[indexStatus]; %>
                                     <% if(indexStatus < 0){ %>
