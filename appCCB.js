@@ -169,40 +169,24 @@ app.post('/consultabolsista', isLoggedIn, async (req, res) => {
 	try{
 		if(input[0] === 'cpf'){
 			await Bolsista.findOne({cpf:input[1]}, async (err, foundBol) => {
-				if(err){
+				if(err | !foundBol){
 					console.log(`Bolsista ${input[1]} not found! ${err}`);
+					res.render('bolsistaNaoEncontrado');
 				} else {
 					res.redirect(`/paginadobolsista/${foundBol._id}`);
 				}
 			});
 		} else if(input[0] === 'sei'){
 			await Bolsista.findOne({sei:input[1]}, async (err, foundBol) => {
-				if(err){
+				if(err | !foundBol){
 					console.log(`Error tryng to find ${input[1]}, ${err}`);
+					res.render('bolsistaNaoEncontrado');
 				} else {
 					res.redirect(`/paginadobolsista/${foundBol._id}`);
 				}
 			});
 		} else if(input[0] === 'nome'){
-			console.log(`nome to be passed to fuzzySearch: ${input[1]}`);
-			await Bolsista.fuzzySearch({nome:input[1]}, (err, foundBol) => {
-				if(err){
-					console.log(`Error tryng to find ${input[1]}, ${err}`);
-				} else {
-					console.log(`Result from fuzzySearch: ${foundBol}`);
-					if(foundBol.lenght === 1){
-						res.redirect(`/paginadobolsista/${foundBol._id}`);
-					} else {
-						console.log('--------------------------');
-						console.log('nomesss found!');
-						console.log(foundBol.lenght);
-						console.log(foundBol);
-						console.log('redirecting to showResultados');
-						res.render('showResultados', {bolCons:foundBol});
-						console.log('End of server execution!');
-					}
-				}
-			});
+			res.render('pesquisaPorNome');
 		} else {
 			res.render('landing');
 			alert(input[0]);
@@ -210,6 +194,10 @@ app.post('/consultabolsista', isLoggedIn, async (req, res) => {
 	} catch(error){
 		console.log(`Error trying to find ${input[1]}, ${error} by catch`)
 	}
+});
+
+app.get('/clbrbolsistas', isLoggedIn, async(req, res) =>{
+	res.render('showBolsistas.ejs');
 });
 
 	//PUT ROUTES (UPDATE ROUTES)
