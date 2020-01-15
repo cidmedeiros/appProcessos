@@ -14,7 +14,7 @@ tools = require('./assets/scripts/tools');
 Bolsista = require('./models/bolsistas');
 Ies = require('./models/ies');
 Municipio = require('./models/municipios');
-User = require('./models/user')
+User = require('./models/user');
 
 //App Variable
 const app = express();
@@ -40,11 +40,15 @@ mongoose.set('useCreateIndex', true);
 //Set Auth
 app.use(passport.initialize());
 app.use(passport.session());
-
 passport.use(new localStrategy(User.authenticate()));
 //It brings in code-decode methods from plugin in UserSchema
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+app.use(function(req, res, next){
+	res.locals.currentUser = req.user;
+	next();
+});
 
 //Routes Definitions
 
@@ -84,6 +88,7 @@ app.get('/logout', (req, res) =>{
 	res.redirect('/login');
 });
 
+/* middleware to check authentication */
 function isLoggedIn(req, res, next){
 	if(req.isAuthenticated()){
 		return next();

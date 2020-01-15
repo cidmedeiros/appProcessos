@@ -1,17 +1,18 @@
 <% include partials/header %>
+<% include partials/headerBottom %>
 
 <div class="row justify-content-center mt-5">
     <div class="col-4"></div>
     <div class="col mx-auto my-auto">
         <div class="card border-secondary my-1 py-.25 pl-.5">
             <div class="card-body">
-                <h3 class="card-title text-center"><strong>Cadastro</strong></h3>
+                <h3 class="card-title text-center"><strong>Cadastro - Gestão de Processos</strong></h3>
                 <form action="/registro" id="registerForm" method="POST">
                     <label class="mb-1 mt-1" for="fullname">Primeiro e Último Nomes</label>
                     <input required type="text" class="form-control" id='fullname' name='fullname' placeholder="João Francisco">
                     <label  class="mb-1 mt-1" for="user[name]">Nome do Usuário</label>
                     <input required type="text" class="form-control" id='username' name='username' placeholder="nome do usuário(a) sem espaços">
-                    <label  class="mb-1 mt-1" for="lotacao">Lotacao</label>
+                    <label  class="mb-1 mt-1" for="lotacao">Lotação</label>
                     <select required class="form-control custom-select" name="lotacao" id="lotacao">
                         <option value="">Selecione</option>
                     <% lotList = ['CGFO','CCB','CSF'] %>
@@ -25,8 +26,8 @@
                     <input required type="password" class="form-control" id='confirmPass' name='confirmPass' placeholder="confirme sua senha séria">
                 </form>
                 <div class="col text-center mt-3">
-                    <p>Ja tem login? Acesso o app abaixo</p>
-                    <a href="/login">Login</a>
+                    <p>Possui login? Acesse a aplicação no link abaixo.</p>
+                    <a href="/login">Acessar</a>
                 </div>
             </div>
         </div>
@@ -42,8 +43,8 @@
     confSenha.addEventListener('keyup', () =>{
         if(senha.value === confSenha.value){
             $(formulario).find('button').remove().end();
-            senha.style.borderColor = 'blue';
-            confSenha.style.borderColor = 'blue';
+            senha.style.borderColor = 'green';
+            confSenha.style.borderColor = 'green';
             let suButton = `<div class="col text-center"><button type="submit" class="btn btn-md btn-success mt-3">Confirmar</button></div>`;
             formulario.insertAdjacentHTML('beforeend', suButton);            
         }else{
