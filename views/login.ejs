@@ -7,14 +7,18 @@
             <div class="card-body">
                 <h3 class="card-title text-center"><strong>Login</strong></h3>
                 <form action="/login" method="POST">
-                    <label for="user[name]">Nome do Usuário</label>
+                    <label class="mt-1 mb-1" for="username">Nome do Usuário(a)</label>
                     <input required type="text" class="form-control" id='username' name='username' placeholder="nome do usuário(a) sem espaços">
-                    <label for="user[name]">Senha</label>
-                    <input required type="password" class="form-control" id='user[pass]' name='user[pass]' placeholder="uma senha séria aqui">
+                    <label class="mt-1 mb-1" for="password">Senha</label>
+                    <input required type="password" class="form-control" id='password' name='password' placeholder="Senha">
                     <div class="col text-center">
                         <button type="submit" class="btn btn-md btn-primary mt-3">Entrar</button>
                     </div>
                 </form>
+                <div class="col text-center mt-3">
+                    <p>Nao tem login? Solicite acesso abaixo</p>
+                    <a href="/registro">Solicitar Acesso</a>
+                </div>
             </div>
         </div>
     </div>

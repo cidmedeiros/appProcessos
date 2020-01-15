@@ -22,9 +22,6 @@ app.use(bodyParser.urlencoded({extended:true})); /* body-parser module parses th
 app.use(expressSanitizer());
 app.use(express.static('assets'));
 app.use(methodOverride("_method"));
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.use(require('express-session')({
 	secret: 'inconstitucionalissimamente is a very fat massive long word',
 	resave:false,
@@ -35,14 +32,19 @@ app.set('view engine', 'ejs');
 const hostname = `${tools.getLocalIp()}`;
 const port = 8087;
 
-//It brings in code-decode methods from plugin in UserSchema
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
 //Set DataBase
 mongoose.connect('mongodb://localhost:27017/testDB', {'useNewUrlParser': true, 'useUnifiedTopology':true});
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
+
+//Set Auth
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new localStrategy(User.authenticate()));
+//It brings in code-decode methods from plugin in UserSchema
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 //Routes Definitions
 
@@ -53,12 +55,13 @@ app.get('/registro', (req, res) =>{
 
 app.post('/registro',  async (req, res) =>{
 	try{
-		User.register( new User({fullname:req.body.user.fullName, username:req.body.user.name}), req.body.user.pass, (err, user) =>{
+		let fullName = req.body.fullname.toUpperCase();
+		User.register( new User({fullname:fullName, username:req.body.username, lotacao:req.body.lotacao}), req.body.password, (err, user) =>{
 			if(err){
 				console.log(`External error trying to register user ${err}`);
 			} else {
 				passport.authenticate('local')(req, res, ()=>{
-					res.redirect('/');
+					res.redirect('/login');
 				});
 			}
 		});
@@ -67,14 +70,34 @@ app.post('/registro',  async (req, res) =>{
 	}
 });
 
+app.get('/login', (req, res) => {
+	res.render('login');
+});
+
+app.post('/login', passport.authenticate('local', {
+	successRedirect: '/',
+	failureRedirect: '/login'
+}), (req, res) =>{});
+
+app.get('/logout', (req, res) =>{
+	req.logout();
+	res.redirect('/login');
+});
+
+function isLoggedIn(req, res, next){
+	if(req.isAuthenticated()){
+		return next();
+	}
+	res.redirect('/login');
+}
+
 	//INDEX ROUTE - Lists all the related data from DB
-app.get('/', async (req, res) =>{
-	console.log('Waiting...');
+app.get('/', isLoggedIn, async (req, res) =>{
 	res.render('landing');
 });
 
 	//SHOW ROUTES
-app.get('/paginadobolsista/:id', async (req, res) => {
+app.get('/paginadobolsista/:id',isLoggedIn, async (req, res) => {
 	try{
 		await Bolsista.findById(req.params.id).populate('pags.iesLocal').populate('certConclusao.ies')
 		.populate([
@@ -111,7 +134,7 @@ app.get('/paginadobolsista/:id', async (req, res) => {
 	}
 });
 
-app.post('/consultabolsista', async (req, res) => {
+app.post('/consultabolsista', isLoggedIn, async (req, res) => {
 	let input = req.body.consulta;
 	input = await tools.treatInput(input);
 	try{
@@ -161,7 +184,7 @@ app.post('/consultabolsista', async (req, res) => {
 });
 
 	//PUT ROUTES (UPDATE ROUTES)
-app.put('/editardadospessoais/:cpf', (req, res) => {
+app.put('/editardadospessoais/:cpf', isLoggedIn, (req, res) => {
 	try{
 		Bolsista.findOneAndUpdate({cpf:req.params.cpf},
 			{
@@ -183,7 +206,7 @@ app.put('/editardadospessoais/:cpf', (req, res) => {
 	}
 });
 
-app.put('/editarcompromisso/:cpf', async (req, res) =>{
+app.put('/editarcompromisso/:cpf', isLoggedIn, async (req, res) =>{
 	//Ies
 	try{
 		var iesUpdate;
@@ -229,7 +252,7 @@ app.put('/editarcompromisso/:cpf', async (req, res) =>{
 	}
 });
 
-app.put('/adddeclaracao/:cpf',  async (req, res) =>{
+app.put('/adddeclaracao/:cpf', isLoggedIn, async (req, res) =>{
 	//Push Declaracao
 	try{
 		Bolsista.findOneAndUpdate({cpf:req.params.cpf},
@@ -271,7 +294,7 @@ app.put('/adddeclaracao/:cpf',  async (req, res) =>{
 	}
 });
 
-app.put('/editdeclaracao/:cpf', async (req, res) => {
+app.put('/editdeclaracao/:cpf', isLoggedIn, async (req, res) => {
 	try{
 		Bolsista.updateOne({cpf:req.params.cpf, 'declaracao._id':req.body.bolsista.declaId},
 		{$set: {'declaracao.$.municipioEscola.uf':req.body.bolsista.EditUfDecl,
@@ -312,7 +335,7 @@ app.put('/editdeclaracao/:cpf', async (req, res) => {
 	}
 });
 
-app.delete('/deletedeclaracao/:cpf/:id', async (req, res) => {
+app.delete('/deletedeclaracao/:cpf/:id',isLoggedIn, async (req, res) => {
 	try{
 		Bolsista.updateOne({cpf:req.params.cpf},{$pull: {declaracao:{_id:req.params.id}}}, (err, result) => {
 			if(err){
@@ -344,7 +367,7 @@ app.delete('/deletedeclaracao/:cpf/:id', async (req, res) => {
 });
 
 	//Routes order matters! This should always be the last route!!
-app.get('*', async (req, res) =>{
+app.get('*', isLoggedIn, async (req, res) =>{
 	console.log('Waiting...');
 	try{
 		res.status(200).send("Sorry, We don't have any content here... yet :)");

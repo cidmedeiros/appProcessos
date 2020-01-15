@@ -7,15 +7,27 @@
             <div class="card-body">
                 <h3 class="card-title text-center"><strong>Cadastro</strong></h3>
                 <form action="/registro" id="registerForm" method="POST">
-                    <label for="user[name]">Primeiro e Último Nomes</label>
-                    <input required type="text" class="form-control" id='user[fullName]' name='user[fullName]' placeholder="João Francisco">
-                    <label for="user[name]">Nome do Usuário</label>
-                    <input required type="text" class="form-control" id='user[name]' name='user[name]' placeholder="nome do usuário(a) sem espaços">
-                    <label for="user[name]">Cadastrar Senha</label>
-                    <input required type="password" class="form-control" id='user[pass]' name='user[pass]' placeholder="uma senha séria aqui">
-                    <label for="user[name]">Confirmar Senha</label>
-                    <input required type="password" class="form-control" id='user[confirmPass]' name='user[confirmPass]' placeholder="confirme sua senha séria">
+                    <label class="mb-1 mt-1" for="fullname">Primeiro e Último Nomes</label>
+                    <input required type="text" class="form-control" id='fullname' name='fullname' placeholder="João Francisco">
+                    <label  class="mb-1 mt-1" for="user[name]">Nome do Usuário</label>
+                    <input required type="text" class="form-control" id='username' name='username' placeholder="nome do usuário(a) sem espaços">
+                    <label  class="mb-1 mt-1" for="lotacao">Lotacao</label>
+                    <select required class="form-control custom-select" name="lotacao" id="lotacao">
+                        <option value="">Selecione</option>
+                    <% lotList = ['CGFO','CCB','CSF'] %>
+                    <% lotList.forEach(lot =>{ %>
+                        <option><%= lot%></option>
+                    <% }); %>
+                    </select>
+                    <label class="mb-1 mt-1" for="user[name]">Cadastrar Senha</label>
+                    <input required type="password" class="form-control" id='password' name='password' placeholder="uma senha séria aqui">
+                    <label  class="mb-1 mt-1" for="user[name]">Confirmar Senha</label>
+                    <input required type="password" class="form-control" id='confirmPass' name='confirmPass' placeholder="confirme sua senha séria">
                 </form>
+                <div class="col text-center mt-3">
+                    <p>Ja tem login? Acesso o app abaixo</p>
+                    <a href="/login">Login</a>
+                </div>
             </div>
         </div>
     </div>
@@ -23,8 +35,8 @@
 </div>
 
 <script>
-    var senha = document.getElementById('user[pass]');
-    var confSenha = document.getElementById('user[confirmPass]');
+    var senha = document.getElementById('password');
+    var confSenha = document.getElementById('confirmPass');
     var formulario = document.getElementById('registerForm');
     
     confSenha.addEventListener('keyup', () =>{
