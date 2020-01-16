@@ -34,7 +34,7 @@ const hostname = `${tools.getLocalIp()}`;
 const port = 8087;
 
 //Set DataBase
-mongoose.connect('mongodb://localhost:27017/testDB', {'useNewUrlParser': true, 'useUnifiedTopology':true});
+mongoose.connect('mongodb://localhost:27017/DBproc', {'useNewUrlParser': true, 'useUnifiedTopology':true});
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
@@ -109,19 +109,22 @@ app.get('/', isLoggedIn, async (req, res) =>{
 			if(err){
 				console.log(`Internal error: ${err}`);
 			} else {
-				var clbrs = []
+				var clbrsIds = [];
+				var clbrs = [];
 				allBols.forEach(bol => {
 					let indx = (bol.clbr.length)-1;
 					lastClbr = bol.clbr[indx];
-					if(!clbrs.includes(lastClbr.nome)){
-						clbrs.push(lastClbr.nome);
+					if(!clbrsIds.includes(lastClbr.idClbr)){
+						clbrsIds.push(lastClbr.idClbr);
+						clbrs.push(lastClbr);
 					}
 				});
+				console.log(clbrs);
 				res.render('landing', {clbrs:clbrs})
 			}
 		});
 	}catch(error){
-		console.log(`External error: ${err}`);
+		console.log(`External error: ${error}`);
 	}
 });
 
@@ -196,8 +199,22 @@ app.post('/consultabolsista', isLoggedIn, async (req, res) => {
 	}
 });
 
-app.get('/clbrbolsistas', isLoggedIn, async(req, res) =>{
-	res.render('showBolsistas.ejs');
+app.post('/clbrbolsistas', isLoggedIn, async(req, res) =>{
+	console.log(req.body);
+	res.redirect(`/clbrbolsistas/${req.body.clbrselect}`);
+});
+
+app.get('/clbrbolsistas/:id', isLoggedIn, async(req, res) =>{
+	try{
+		Bolsista.find({'clbr.idClbr':req.params.id}, (err, allBols) => {
+			if(err){
+				console.log(`Internal error: ${err}`);
+			} else {
+				res.render('showBolsistas', {allBols:allBols});
+			}
+		});
+	} catch(error){
+	}
 });
 
 	//PUT ROUTES (UPDATE ROUTES)

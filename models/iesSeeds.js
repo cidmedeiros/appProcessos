@@ -1,6 +1,6 @@
 //Set DataBase
 mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/testDB', {'useNewUrlParser': true, 'useUnifiedTopology':true});
+mongoose.connect('mongodb://localhost:27017/DBproc', {'useNewUrlParser': true, 'useUnifiedTopology':true});
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 

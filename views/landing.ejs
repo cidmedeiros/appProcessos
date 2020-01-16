@@ -13,13 +13,13 @@
                 <button type="submit" class="btn btn-primary">Ir</button>
             </div>
         </form>
-        <form action="/clbrbolsistas" method="GET" class="col-5 border border-info rounded">
+        <form action="/clbrbolsistas" method="POST" class="col-5 border border-info rounded">
             <div class="form-group">
                 <label for="clbrselect">Consultar Bolsistas Atribuídos</label>
                 <select required class="form-control" name="clbrselect" id="clbrselect" onchange="this.form.submit()">
                     <option value="">Selecione o Colaborador</option>
                 <%clbrs.forEach(clbr => { %>
-                    <option><%=clbr%></option>
+                    <option value="<%=clbr.idClbr%>"><%=clbr.nome%></option>
                 <% }) %>
                 </select>
                 <small id="consultaHelp" class="form-text text-muted"> Selecione o nome do colaborador.</small>

@@ -210,13 +210,21 @@ def preProcessBolsistas(minScore):
     bolsistas['valorBolsas'] = [sum(x) for x in bolsistas.valor]
     bolsistas = bolsistas[bolsistas.valorBolsas > 0]
     bolsistas['nomeDisplay'] = 'sem info'
-    bolsistas['colaborador'] = np.where(bolsistas.index.isin(bolsistas.iloc[0:372].index), 'André Braga', 'A definir')
-    bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[372:744].index), 'Gilson Oliveira', bolsistas.colaborador)
-    bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[744:1116].index), 'Débora Costa', bolsistas.colaborador)
+    bolsistas['colaborador'] = np.where(bolsistas.index.isin(bolsistas.iloc[0:372].index), 'André Amorim', 'A definir')
+    bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[372:744].index), 'Gilson Souza', bolsistas.colaborador)
+    bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[744:1116].index), 'Débora Gonçalves', bolsistas.colaborador)
     bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[1116:1488].index), 'Pricilla Oliveira', bolsistas.colaborador)
     bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[1488:1767].index), 'Mônica Gama', bolsistas.colaborador)
     bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[1767:2046].index), 'Mayra Gobbato', bolsistas.colaborador)
-    bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[2046:2320].index), 'Carlos Boseli', bolsistas.colaborador)
+    bolsistas.colaborador = np.where(bolsistas.index.isin(bolsistas.iloc[2046:2320].index), 'Carlos Boselli', bolsistas.colaborador)
+    
+    bolsistas['idColaborador'] = np.where(bolsistas.colaborador == 'André Amorim',1, 0)
+    bolsistas.idColaborador = np.where(bolsistas.colaborador == 'Gilson Souza',2, bolsistas.idColaborador)
+    bolsistas.idColaborador = np.where(bolsistas.colaborador == 'Débora Gonçalves',3, bolsistas.idColaborador)
+    bolsistas.idColaborador = np.where(bolsistas.colaborador == 'Pricilla Oliveira',4, bolsistas.idColaborador)
+    bolsistas.idColaborador = np.where(bolsistas.colaborador == 'Mônica Gama',5, bolsistas.idColaborador)
+    bolsistas.idColaborador = np.where(bolsistas.colaborador == 'Mayra Gobbato',6, bolsistas.idColaborador)
+    bolsistas.idColaborador = np.where(bolsistas.colaborador == 'Carlos Boselli',7, bolsistas.idColaborador)
     
     return bolsistas
 
@@ -232,7 +240,7 @@ def bolsistasJson(minScore):
         pags = []
         now = dt.date.today()
         today = now.strftime("%d/%m/%Y")
-        clbr = [{'nome':row.colaborador, 'data':today}]
+        clbr = [{'nome':row.colaborador, 'idClbr':row.idColaborador, 'data':today}]
         values = {'cpf':row.cpf,
                   'nome':row.nome,
                   'nomeDisplay':row.nomeDisplay,
@@ -266,7 +274,7 @@ def bolsistasJson(minScore):
         
         bolJson.append(values)
     
-    with open(r'D:\computer-science\web-development\capesProject\assets\dados\bolsistas.json', 'w', encoding='utf-8') as f:
+    with open(r'G:\CGFO\CCB\Bolsas\geProcessos\appProcessos\assets\dados\bolsistas.json', 'w', encoding='utf-8') as f:
         json.dump(bolJson, f, ensure_ascii=False, sort_keys=True, default=str)
     
     return bolJson
