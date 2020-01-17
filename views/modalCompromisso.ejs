@@ -81,7 +81,7 @@
                                 <h5 class="card-title" style="color: black;">Situação do Curso</h5>
                                 <div class="form-group">
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[status]' id='bolsista[status]'>
-                                    <% var statusList = ['Concluído','Concluído (Reingresso)','Desligado','Abandonou o Curso','Cursando (Reingresso)']; %>
+                                    <% var statusList = ['Concluído','Concluído (Reingresso)','Desligado','Abandonou o Curso','Cursando (Reingresso)', 'Pendente de Informação']; %>
                                     <% var indexStatus = (bolCons.statusCurso.length)-1; %>
                                     <% var statusCurso = bolCons.statusCurso[indexStatus]; %>
                                     <% if(indexStatus < 0){ %>
@@ -142,7 +142,7 @@
 
                         <div class="col-4 card mb-2 ml-1 mr-1 py-.25 pl-.5">
                             <div class="card-body">
-                                <h5 class="card-title mb-.25" style="color: black; text-align: center;">Regularidade do Certificado</h5>
+                                <h5 class="card-title mb-.25" style="color: black; text-align: center;">Regularidade do Documento no SEI (Certificado de Conclusão)</h5>
                                 <div class="form-group mb-0">
                                     <select required class="form-control custom-select inlineFormCustomSelect mx-auto" name="bolsista[regCert]" id="bolsista[regCert]">
                                         <<% if(indexCert < 0){ %>
@@ -166,7 +166,7 @@
                                 <h5 class="card-title" style="color: black;">Observação do Certificado</h5>
                                 <div class="form-group">
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvCert]' id='bolsista[obsvCert]'>
-                                    <%var obsvCertList = ['Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações','Pendente'];%>
+                                    <%var obsvCertList = ['Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações'];%>
                                     <% if(indexCert < 0){ %>
                                         <option class="optObsvDocCert" value=''>Selecione</option>
                                         <% obsvCertList.forEach((obs) => { %>
@@ -219,7 +219,7 @@
                                 <h5 class="card-title mb-.25" style="color: black;">Observação Adicional</h5>
                                 <div class="form-group">
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvAna]' id='bolsista[obsvAna]'>
-                                    <%var obsvAnaReslList = ['Sem Observações'];%>
+                                    <%var obsvAnaReslList = ['Sem Observações', 'Pendente de Informação'];%>
                                     <% if(indexAnaRes < 0){ %>
                                         <option class="optClassAna" value=''>Selecione</option>
                                         <% obsvAnaReslList.forEach((obs) => { %>
