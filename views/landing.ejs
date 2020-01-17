@@ -10,13 +10,14 @@
                 <label for="consulta">Consultar Bolsista</label>
                 <input class="form-control" type="text" name="consulta" id="consulta" placeholder="consultar">
                 <small id="consultaHelp" class="form-text text-muted"> A consulta pode ser feita por CPF, nome completo ou SEI.</small>
+                <%var clbrs = clbrs%>
                 <button type="submit" class="btn btn-primary">Ir</button>
             </div>
         </form>
         <form action="/clbrbolsistas" method="POST" class="col-5 border border-info rounded">
             <div class="form-group">
                 <label for="clbrselect">Consultar Bolsistas Atribuídos</label>
-                <select required class="form-control" name="clbrselect" id="clbrselect" onchange="this.form.submit()">
+                <select class="form-control" name="clbrselect" id="clbrselect" onchange="this.form.submit()">
                     <option value="">Selecione o Colaborador</option>
                 <%clbrs.forEach(clbr => { %>
                     <option value="<%=clbr.idClbr%>"><%=clbr.nome%></option>

@@ -18,30 +18,46 @@
         <h4>Colaborador: <%=colaboradorNome.toUpperCase()%></h4>
 
         <div class="container-fluid border border-warning rounded mb-2 py-2" id="datawrap">
-             <table class="table table-sm table-bordered table-striped table-dark table-hover" style="height: 100px;">
+             <table class="table table-sm table-bordered table-striped table-light table-hover" style="height: 100px;">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">Programa</th>
-                        <th scope="col">SEI</th>
-                        <th scope="col">CPF</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Análise Dados Pessoais</th>
-                        <th scope="col">Análise Compromisso</th>
-                        <th scope="col">Acompanhamento do Processo</th>
-                        <th scope="col" colspan="2"></th>
+                        <th class='align-middle mx-auto' style="text-align: center;" scope="col">Programa</th>
+                        <th class='align-middle mx-auto' style="text-align: center; width: 14%" scope="col">SEI</th>
+                        <th class='align-middle mx-auto' style="text-align: center; width: 10%" scope="col">CPF</th>
+                        <th class='align-middle mx-auto' style="text-align: center;" scope="col">Nome</th>
+                        <th class='align-middle mx-auto' style="text-align: center; width: 10%" scope="col">Análise Dados Pessoais</th>
+                        <th class='align-middle mx-auto' style="text-align: center; width: 10%" scope="col">Análise Compromisso</th>
+                        <th class='align-middle mx-auto' style="text-align: center; width: 10%" scope="col">Acompanhamento do Processo</th>
+                        <th class='align-middle mx-auto' style="text-align: center;" scope="col" colspan="2"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <% allBols.forEach((bol) => { %>
+                        <%let lastPay = bol.pags[bol.pags.length-1]%>
+                        <%let programa = lastPay.programa%> 
+                        <%let nomePro = programa.nome%>
+
                     <tr>
-                        <td><%=1%></td>
+                        <td><%=nomePro%></td>
                         <td><%=bol.sei%></td>
                         <td><%=bol.cpf%></td>
-                        <td><%=3%></td>
-                        <td><%=4%></td>
-                        <td><%=5%></td>
-                        <td><%=6%></td>
-                        <td><%=8%></td>
+                        <td><%=bol.nome%></td>
+                        <% if(bol.docFoto.length > 0){ %>
+                            <td style="color: darkgreen; text-align: center"><strong>Analisado</strong></td>
+                        <%} else {%>
+                            <td style="color:darkorange; text-align: center"><strong>Pendente</strong></td>
+                        <%}%>
+                        <% if((bol.analiseCompromisso.length > 0) && (bol.declaracao.length > 0)){ %>
+                            <td style="color: darkgreen; text-align: center"><strong>Analisado</strong></td>
+                        <%} else {%>
+                            <td style="color:darkorange; text-align: center"><strong>Pendente</strong></td>
+                        <%}%>
+                        <% if(bol.pad.length > 0){ %>
+                            <td style="color: darkgreen; text-align: center"><strong>Analisado</strong></td>
+                        <%} else {%>
+                            <td style="color:darkorange; text-align: center"><strong>Pendente</strong></td>
+                        <%}%>
+                        <td style="width: 5%"><a class="btn btn-primary btn-sm btn-block active" href='/paginadobolsista/<%=bol._id%>'>Ir</a></td>
                     </tr>
                     <% }); %>
                 </tbody>

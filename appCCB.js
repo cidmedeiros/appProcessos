@@ -191,29 +191,39 @@ app.post('/consultabolsista', isLoggedIn, async (req, res) => {
 		} else if(input[0] === 'nome'){
 			res.render('pesquisaPorNome');
 		} else {
-			res.render('landing');
-			alert(input[0]);
+			res.render('bolsistaNaoEncontrado');
 		}
 	} catch(error){
-		console.log(`Error trying to find ${input[1]}, ${error} by catch`)
+		console.log(`Error trying to find ${input[1]}, ${error} by catch`);
+		res.render('bolsistaNaoEncontrado');
 	}
 });
 
 app.post('/clbrbolsistas', isLoggedIn, async(req, res) =>{
-	console.log(req.body);
 	res.redirect(`/clbrbolsistas/${req.body.clbrselect}`);
 });
 
 app.get('/clbrbolsistas/:id', isLoggedIn, async(req, res) =>{
 	try{
-		Bolsista.find({'clbr.idClbr':req.params.id}, (err, allBols) => {
+		Bolsista.find({'clbr.idClbr':req.params.id}).populate('pags.iesLocal').populate('certConclusao.ies')
+		.populate([
+			{
+				path: 'pags.programa',
+				model:'Programa',
+				populate:{
+					path:'coordNacional.ies',
+					model:'Ies'
+				}
+			}
+		]).exec((err, allBols) => {
 			if(err){
 				console.log(`Internal error: ${err}`);
 			} else {
 				res.render('showBolsistas', {allBols:allBols});
 			}
-		});
+		})
 	} catch(error){
+		console.log(`Internal error: ${err}`);
 	}
 });
 
