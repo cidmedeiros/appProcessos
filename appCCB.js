@@ -55,7 +55,7 @@ app.use(function(req, res, next){
 
 	//AUTH ROUTES
 app.get('/registro', (req, res) =>{
-	res.render('register');
+	res.render('./acesso/register');
 });
 
 app.post('/registro',  async (req, res) =>{
@@ -98,11 +98,6 @@ function isLoggedIn(req, res, next){
 }
 
 	//INDEX ROUTE
-
-app.get('/teste', (req, res) =>{
-	res.render('test');
-});
-
 app.get('/', isLoggedIn, async (req, res) =>{
 	try{
 		Bolsista.find({}, (err, allBols) => {
@@ -119,7 +114,6 @@ app.get('/', isLoggedIn, async (req, res) =>{
 						clbrs.push(lastClbr);
 					}
 				});
-				console.log(clbrs);
 				res.render('landing', {clbrs:clbrs})
 			}
 		});
@@ -145,7 +139,6 @@ app.get('/paginadobolsista/:id',isLoggedIn, async (req, res) => {
 			if(err){
 				console.log(`Bolsista ${req.params.cpf} not found! Error: ${err}`);
 			} else {
-				console.log('Id found!');
 				await Ies.find({}, async (err, entidades) =>{
 					if(err){
 						console.log(`Error fetching Ies collection in Id -> ${err}`)
