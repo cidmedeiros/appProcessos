@@ -24,7 +24,7 @@
                                     <% if(bolCons.email.length > 0){ %>
                                         <input required type="email" class="form-control" id='bolsista[email]' name='bolsista[email]' placeholder="nome@examplo.com" value= <%= bolCons.email[(bolCons.email.length)-1].email %> >
                                     <% } else{ %>
-                                        <input required type="email" class="form-control" id='bolsista[email]' name='bolsista[email]' placeholder="nome@examplo.com">
+                                        <input required type="email" class="form-control" id='bolsista[email]' name='bolsista[email]' value="ausente@ausente.com">
                                     <% } %>
                                     <h5 for="sexo" style="color: black;">Sexo</h5>
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[sexo]' id='bolsista[sexo]'>
@@ -53,7 +53,7 @@
                                 <div class="form-group">
                                     <h5 style="color: black;" for="tipoDocFoto">Documento</h5>
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[tipoDocFoto]' id='bolsista[tipoDocFoto]'>
-                                    <%var docFotoList = ['Identidade','Carteira de Motorista','Registro Profissional','Passaporte','Carteira de Trabalho','Ausente', 'Óbito'];%>
+                                    <%var docFotoList = ['Identidade','Carteira de Motorista','Registro Profissional','Passaporte','Carteira de Trabalho','Ausente','Óbito'];%>
                                     <% var indexFoto = (bolCons.docFoto.length)-1; %>
                                     <% if(indexFoto < 0){ %>
                                         <option value=''>Selecione</option>
@@ -149,7 +149,7 @@
                                     </select>
                                     <h5 style="color: black;" for="obsvDocRes">Observação</h5>
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvDocRes]' id='bolsista[obsvDocRes]'>
-                                    <%var obsvResList = ['Ilegível','Sem Observações'];%>
+                                    <%var obsvResList = ['Ilegível','Sem Observações','O Bolsista não é o Titular'];%>
                                     <% if(indexRes < 0){ %>
                                         <option class="optObsvDocRes" value=''>Selecione</option>
                                         <% obsvResList.forEach((obsvList) => { %>
