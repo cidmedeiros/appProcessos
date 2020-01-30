@@ -78,7 +78,7 @@
 
                         <div class="col card mb-2 ml-1 mr-1 py-.25 pl-.5">
                             <div class="card-body">
-                                <h5 class="card-title mb-.25" style="color: black;">Regularidade da Declaração</h5>
+                                <h5 class="card-title mb-.25" style="color: black;">Regularidade da Declaração <footer><strong>(Refere-se ao Documento no SEI)</strong></footer></h5>
                                 <div class="form-group mb-0">
                                     <select required class="form-control custom-select inlineFormCustomSelect mx-auto" name="bolsista[regDecl]" id="bolsista[regDecl]">
                                         <option value=''>Selecione</option>
@@ -98,7 +98,7 @@
                                 <h5 class="card-title" style="color: black;">Observação da Declaração</h5>
                                 <div class="form-group">
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvDecl]' id='bolsista[obsvDecl]'>
-                                    <%var obsvDeclList = ['Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações','Pendente','Período de Permanência a Iniciar'];%>
+                                    <%var obsvDeclList = ['Ausente','Cópia Ilegível','Sem Assinatura','Sem Observações','Pendente','Período de Permanência a Iniciar','Data de Conclusão do Curso Pendente'];%>
                                         <option class="optClassDecl" value=''>Selecione</option>
                                         <% obsvDeclList.forEach((obs) => { %>
                                             <option class="optClassDecl"><%= obs %></option>

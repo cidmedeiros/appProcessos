@@ -716,6 +716,23 @@
 
             let optReg = `<option selected> Irregular </option>`;
             regDecl.insertAdjacentHTML('beforeend',optReg);
+        } else if(obsvDecl.options.item(obsvDecl.selectedIndex).text == 'Data de Conclusão do Curso Pendente'){
+            $(munUfSelect).find('option').remove().end();
+            $(munSelect).find('option').remove().end();
+            $(permDecl).find('option').remove().end();
+            $(regDecl).find('option').remove().end();
+
+            let optUf = `<option selected value="não aplica">não aplica</option>`;
+            munUfSelect.insertAdjacentHTML('beforeend',optUf);
+
+            let optMun = `<option selected>não aplica</option>`;
+            munSelect.insertAdjacentHTML('beforeend',optMun);
+
+            let optPer = `<option selected> 0 </option>`;
+            permDecl.insertAdjacentHTML('beforeend',optPer);
+
+            let optReg = `<option selected> Regular </option>`;
+            regDecl.insertAdjacentHTML('beforeend',optReg);
         }
     });
 
