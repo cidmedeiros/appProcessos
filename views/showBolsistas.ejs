@@ -36,7 +36,6 @@
                         <%let lastPay = bol.pags[bol.pags.length-1]%>
                         <%let programa = lastPay.programa%> 
                         <%let nomePro = programa.nome%>
-
                     <tr>
                         <td><%=nomePro%></td>
                         <td><%=bol.sei%></td>
@@ -57,7 +56,7 @@
                         <%} else {%>
                             <td style="color:darkorange; text-align: center"><strong>Pendente</strong></td>
                         <%}%>
-                        <td style="width: 5%"><a class="btn btn-primary btn-sm btn-block active" href='/paginadobolsista/<%=bol._id%>'>Ir</a></td>
+                        <td><a class="btn btn-sm btn-primary mx-auto my-auto" href='/paginadobolsista/<%=bol._id%>'>Ir</a></td>
                     </tr>
                     <% }); %>
                 </tbody>

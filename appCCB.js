@@ -12,6 +12,7 @@ passport = require('passport');
 localStrategy = require('passport-local');
 passportLocalMongoose = require('passport-local-mongoose');
 tools = require('./assets/scripts/tools');
+middleware = require('./middleware/middleware');
 Bolsista = require('./models/bolsistas');
 Ies = require('./models/ies');
 Municipio = require('./models/municipios');
@@ -51,360 +52,34 @@ app.use(function(req, res, next){
 	next();
 });
 
-//Routes Definitions
+//Routes Require
+indexRoutes = require('./routes/index');
+paginaDoBolsista = require('./routes/paginaDoBolsista');
+consultaBolsista = require('./routes/consultaBolsista');
+consultaColaborador = require('./routes/consultaColaborador');
+editarDadosPessoais = require('./routes/editarDadosPessoais');
+editarCompromisso = require('./routes/editarCompromisso');
+addDeclaracao = require('./routes/addDeclaracao');
+editaDeclaracao = require('./routes/editaDeclaracao');
+deletaDeclaracao = require('./routes/deletaDeclaracao');
+relatorioSitGeral = require('./routes/relatorioSitGeral');
+resultadosNominal = require('./routes/resultadosNominal');
 
-	//AUTH ROUTES
-app.get('/registro', (req, res) =>{
-	res.render('./acesso/register');
-});
-
-app.post('/registro',  async (req, res) =>{
-	try{
-		let fullName = req.body.fullname.toUpperCase();
-		User.register( new User({fullname:fullName, username:req.body.username, lotacao:req.body.lotacao}), req.body.password, (err, user) =>{
-			if(err){
-				console.log(`External error trying to register user ${err}`);
-			} else {
-				passport.authenticate('local')(req, res, ()=>{
-					res.redirect('/login');
-				});
-			}
-		});
-	} catch(error){
-		console.log(`External error trying to register user ${error}`)
-	}
-});
-
-app.get('/login', (req, res) => {
-	res.render('login');
-});
-
-app.post('/login', passport.authenticate('local', {
-	successRedirect: '/',
-	failureRedirect: '/login'
-}), (req, res) =>{});
-
-app.get('/logout', (req, res) =>{
-	req.logout();
-	res.redirect('/login');
-});
-
-/* middleware to check authentication */
-function isLoggedIn(req, res, next){
-	if(req.isAuthenticated()){
-		return next();
-	}
-	res.redirect('/login');
-}
-
-	//INDEX ROUTE
-app.get('/', isLoggedIn, async (req, res) =>{
-	try{
-		Bolsista.find({}, (err, allBols) => {
-			if(err){
-				console.log(`Internal error: ${err}`);
-			} else {
-				var clbrsIds = [];
-				var clbrs = [];
-				allBols.forEach(bol => {
-					let indx = (bol.clbr.length)-1;
-					lastClbr = bol.clbr[indx];
-					if(!clbrsIds.includes(lastClbr.idClbr)){
-						clbrsIds.push(lastClbr.idClbr);
-						clbrs.push(lastClbr);
-					}
-				});
-				res.render('landing', {clbrs:clbrs})
-			}
-		});
-	}catch(error){
-		console.log(`External error: ${error}`);
-	}
-});
-
-	//SHOW ROUTES
-app.get('/paginadobolsista/:id',isLoggedIn, async (req, res) => {
-	try{
-		await Bolsista.findById(req.params.id).populate('pags.iesLocal').populate('certConclusao.ies')
-		.populate([
-			{
-				path: 'pags.programa',
-				model:'Programa',
-				populate:{
-					path:'coordNacional.ies',
-					model:'Ies'
-				}
-			}
-		]).exec(async (err, foundBol) => {
-			if(err){
-				console.log(`Bolsista ${req.params.cpf} not found! Error: ${err}`);
-			} else {
-				await Ies.find({}, async (err, entidades) =>{
-					if(err){
-						console.log(`Error fetching Ies collection in Id -> ${err}`)
-					} else {
-						await Municipio.find({}, async (err, municipios) => {
-							if(err){
-								console.log(`Error fetching Municipios collection in Id -> ${err}`)
-							} else{
-								res.render('showBolsista', {bolCons:foundBol, entidades:entidades, municipios:municipios});
-							}
-						})						
-					}
-				});
-			}
-		});
-	} catch(error){
-		console.log(`Error trying to find ${req.params.cpf}, ${error} by catch`)
-	}
-});
-
-app.post('/consultabolsista', isLoggedIn, async (req, res) => {
-	let input = req.body.consulta;
-	input = await tools.treatInput(input);
-	try{
-		if(input[0] === 'cpf'){
-			await Bolsista.findOne({cpf:input[1]}, async (err, foundBol) => {
-				if(err | !foundBol){
-					console.log(`Bolsista ${input[1]} not found! ${err}`);
-					res.render('bolsistaNaoEncontrado');
-				} else {
-					res.redirect(`/paginadobolsista/${foundBol._id}`);
-				}
-			});
-		} else if(input[0] === 'sei'){
-			await Bolsista.findOne({sei:input[1]}, async (err, foundBol) => {
-				if(err | !foundBol){
-					console.log(`Error tryng to find ${input[1]}, ${err}`);
-					res.render('bolsistaNaoEncontrado');
-				} else {
-					res.redirect(`/paginadobolsista/${foundBol._id}`);
-				}
-			});
-		} else if(input[0] === 'nome'){
-			res.render('pesquisaPorNome');
-		} else {
-			res.render('bolsistaNaoEncontrado');
-		}
-	} catch(error){
-		console.log(`Error trying to find ${input[1]}, ${error} by catch`);
-		res.render('bolsistaNaoEncontrado');
-	}
-});
-
-app.post('/clbrbolsistas', isLoggedIn, async(req, res) =>{
-	res.redirect(`/clbrbolsistas/${req.body.clbrselect}`);
-});
-
-app.get('/clbrbolsistas/:id', isLoggedIn, async(req, res) =>{
-	try{
-		Bolsista.find({'clbr.idClbr':req.params.id}).populate('pags.iesLocal').populate('certConclusao.ies')
-		.populate([
-			{
-				path: 'pags.programa',
-				model:'Programa',
-				populate:{
-					path:'coordNacional.ies',
-					model:'Ies'
-				}
-			}
-		]).exec((err, allBols) => {
-			if(err){
-				console.log(`Internal error: ${err}`);
-			} else {
-				res.render('showBolsistas', {allBols:allBols});
-			}
-		})
-	} catch(error){
-		console.log(`Internal error: ${err}`);
-	}
-});
-
-	//PUT ROUTES (UPDATE ROUTES)
-app.put('/editardadospessoais/:cpf', isLoggedIn, (req, res) => {
-	try{
-		Bolsista.findOneAndUpdate({cpf:req.params.cpf},
-			{
-				'$push':{'email':{'email':req.body.bolsista.email, 'data': new Date()},
-						'docFoto':{'doc': req.body.bolsista.tipoDocFoto,'regular':req.body.bolsista.regDocFoto,'obsv':req.body.bolsista.obsvDocFoto,'data': new Date(),'user':req.body.user},
-						'docRes':{'doc': req.body.bolsista.tipoDocRes,'regular':req.body.bolsista.regDocRes,'obsv':req.body.bolsista.obsvDocRes,'data': new Date(),'user':req.body.user},
-						'termo':{'regular':req.body.bolsista.regTermo,'obsv':req.body.bolsista.obsvTermo,'data': new Date(),'user':req.body.user}},
-				'sexo': req.body.bolsista.sexo
-			},
-			(err, upObejct) =>{
-				if(err){
-					console.log(err);
-				} else{
-					res.redirect(`/paginadobolsista/${upObejct._id}`);
-				}
-		});
-	} catch {
-		console.log('Error updating email/sexo');
-	}
-});
-
-app.put('/editarcompromisso/:cpf', isLoggedIn, async (req, res) =>{
-	//Ies
-	try{
-		var iesUpdate;
-		await Ies.findOne({sigla:req.body.bolsista.iesCert}, async (err, foundIes) => {
-			if(err){
-				console.log('------------------------------------');
-				console.log(`First Promise Internal error finding Ies ${err}`)
-				console.log('------------------------------------');
-			} else{
-				iesUpdate = foundIes._id;
-			}
-		});
-	} catch(error){
-		console.log('------------------------------------');
-		console.log(`First Promise External error finding Ies ${error}`);
-		console.log('------------------------------------');
-	}
-	
-	//Push Docs
-	try{
-		Bolsista.findOneAndUpdate({cpf:req.params.cpf},
-			{
-				'$push':{
-
-					'statusCurso':{status:req.body.bolsista.status, data: new Date(req.body.bolsista.dataConcl), user:req.body.user},
-					'certConclusao':{ies:iesUpdate,regular:req.body.bolsista.regCert,obsv:req.body.bolsista.obsvCert, user:req.body.user, data: new Date()},
-					'analiseCompromisso':{regular:req.body.bolsista.resAna,obsv:req.body.bolsista.obsvAna, user:req.body.user, data: new Date()}
-				}
-			},
-			(err, upObejct) =>{
-				if(err){
-					console.log('------------------------------------');
-					console.log(`First Promise Internal error updating ${err}`);
-					console.log('------------------------------------');
-				} else{
-					res.redirect(`/paginadobolsista/${upObejct._id}`);
-				}
-			});
-	} catch(error) {
-		console.log('------------------------------------');
-		console.log(`Exit Promise External error updating ${error}`);
-		console.log('------------------------------------');
-	}
-});
-
-app.put('/adddeclaracao/:cpf', isLoggedIn, async (req, res) =>{
-	//Push Declaracao
-	try{
-		Bolsista.findOneAndUpdate({cpf:req.params.cpf},
-			{
-				'$push':{
-					'declaracao':{municipioEscola:{nome:req.body.bolsista.munDecl, uf:req.body.bolsista.ufDecl}, permanencia:parseInt(req.body.bolsista.perm, 10), regular:req.body.bolsista.regDecl, obsv:req.body.bolsista.obsvDecl, user:req.body.user, data: new Date()},
-				}
-			},
-			(err, upObejct) =>{
-				if(err){
-					console.log('------------------------------------');
-					console.log(`First Promise Internal error updating ${err}`);
-					console.log('------------------------------------');
-				} else{
-					Bolsista.findOne({cpf:req.params.cpf}, async (err, foundBol) => {
-						if(err){
-							console.log('------------------------------------');
-							console.log(`Second Promise Internal error finding bolsista ${err}`)
-							console.log('------------------------------------');
-						} else{
-							var newPerm = await tools.calcPerm(foundBol.declaracao);
-							Bolsista.findOneAndUpdate({cpf:req.params.cpf}, {'permanenciaTotal':newPerm}, (err, upObejctInt) =>{
-								if(err){
-									console.log('------------------------------------');
-									console.log(`Third Promise Internal error updating after Calculating ${newPerm} ${err}`);
-									console.log('------------------------------------');
-								} else {
-									res.redirect(`/paginadobolsista/${upObejctInt._id}`);
-								}
-							});
-						}
-					});
-				}
-			});
-	} catch(error) {
-		console.log('------------------------------------');
-		console.log(`Exit Promise External error updating ${error}`);
-		console.log('------------------------------------');
-	}
-});
-
-app.put('/editdeclaracao/:cpf', isLoggedIn, async (req, res) => {
-	try{
-		Bolsista.updateOne({cpf:req.params.cpf, 'declaracao._id':req.body.bolsista.declaId},
-		{$set: {'declaracao.$.municipioEscola.uf':req.body.bolsista.EditUfDecl,
-				'declaracao.$.municipioEscola.nome':req.body.bolsista.editMunDecl,
-				'declaracao.$.permanencia':parseInt(req.body.bolsista.editPerm, 10),
-				'declaracao.$.regular':req.body.bolsista.editRegDecl,
-				'declaracao.$.obsv':req.body.bolsista.editObsvDecl,
-				'declaracao.$.user':req.body.user,
-				'declaracao.$.data':new Date(),
-			}
-		},
-		(err, result) => {
-			if(err){
-				console.log(`Internal Error updating declaracao ${req.body.bolsista.declaId}: ${err}`);
-			} else{
-				Bolsista.findOne({cpf:req.params.cpf}, async (err, foundBol) => {
-					if(err){
-						console.log('------------------------------------');
-						console.log(`Second Promise Internal error finding bolsista ${err}`)
-						console.log('------------------------------------');
-					} else{
-						var newPerm = await tools.calcPerm(foundBol.declaracao);
-						Bolsista.findOneAndUpdate({cpf:req.params.cpf}, {'permanenciaTotal':newPerm}, (err, upObejctInt) =>{
-							if(err){
-								console.log('------------------------------------');
-								console.log(`Third Promise Internal error updating after Calculating ${newPerm} ${err}`);
-								console.log('------------------------------------');
-							} else {
-								res.redirect(`/paginadobolsista/${upObejctInt._id}`);
-							}
-						});
-					}
-				});
-			}
-		})
-	} catch(error){
-		console.log(`Internal Error updating declaracao ${req.body.bolsista.declaId}: ${err}`);
-	}
-});
-
-app.delete('/deletedeclaracao/:cpf/:id',isLoggedIn, async (req, res) => {
-	try{
-		Bolsista.updateOne({cpf:req.params.cpf},{$pull: {declaracao:{_id:req.params.id}}}, (err, result) => {
-			if(err){
-				console.log(`First promise Internal Error deleting declaracao ${req.params.id}: ${err}`);
-			} else{
-				Bolsista.findOne({cpf:req.params.cpf}, async (err, foundBol) => {
-					if(err){
-						console.log('------------------------------------');
-						console.log(`Second Promise Internal error finding bolsista ${err}`)
-						console.log('------------------------------------');
-					} else{
-						var newPerm = await tools.calcPerm(foundBol.declaracao);
-						Bolsista.findOneAndUpdate({cpf:req.params.cpf}, {'permanenciaTotal':newPerm}, (err, upObejctInt) =>{
-							if(err){
-								console.log('------------------------------------');
-								console.log(`Third Promise Internal error updating after Calculating ${newPerm} ${err}`);
-								console.log('------------------------------------');
-							} else {
-								res.redirect(`/paginadobolsista/${upObejctInt._id}`);
-							}
-						});
-					}
-				});
-			}
-		})
-	} catch(error){
-		console.log(`Internal Error deleting declaracao ${req.body.bolsista.declaId}: ${err}`);
-	}
-});
+//Routes Applying
+app.use(indexRoutes);
+app.use(paginaDoBolsista);
+app.use(consultaBolsista);
+app.use(consultaColaborador);
+app.use(editarDadosPessoais);
+app.use(editarCompromisso);
+app.use(addDeclaracao);
+app.use(editaDeclaracao);
+app.use(deletaDeclaracao);
+app.use(relatorioSitGeral);
+app.use(resultadosNominal);
 
 	//Routes order matters! This should always be the last route!!
-app.get('*', isLoggedIn, async (req, res) =>{
+app.get('*', middleware.isLoggedIn, async (req, res) =>{
 	console.log('Waiting...');
 	try{
 		res.status(200).send("Sorry, We don't have any content here... yet :)");

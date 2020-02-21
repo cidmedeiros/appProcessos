@@ -31,7 +31,7 @@ function treatInput(input){
 function calcPerm(declaracao){
     let perm = 0;
     declaracao.forEach(decla => {
-        if(decla.regular == "Regular"){
+        if(decla.regular == "Regular" && decla.obsv !== 'Ensino Superior'){
             perm = decla.permanencia + perm;
         } 
     });

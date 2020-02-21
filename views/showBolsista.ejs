@@ -8,7 +8,11 @@
         <div class="col-9 col-md-6">
             <h1>Página do Bolsista</h1>
         </div>
-        <div class="col-md-6"></div>
+        <div class="col col-md-3"></div>
+        <div class="col-2 col-md-3">
+             <%let idColaborador = bolCons.clbr[((bolCons.clbr).length-1)].idClbr%>
+            <a href="/clbrbolsistas/<%=idColaborador%>" class="btn btn-lg btn-success mt-2" style="text-align: right;">Voltar à Página do Colaborador</a>
+        </div>
     </div>
 
     <div class="row justify-content-start dadosPessoais border border-dark rounded mt-2 mb-3 mr-2 ml-2 px-5 py-2">
@@ -717,6 +721,23 @@
             let optReg = `<option selected> Irregular </option>`;
             regDecl.insertAdjacentHTML('beforeend',optReg);
         } else if(obsvDecl.options.item(obsvDecl.selectedIndex).text == 'Data de Conclusão do Curso Pendente'){
+            $(munUfSelect).find('option').remove().end();
+            $(munSelect).find('option').remove().end();
+            $(permDecl).find('option').remove().end();
+            $(regDecl).find('option').remove().end();
+
+            let optUf = `<option selected value="não aplica">não aplica</option>`;
+            munUfSelect.insertAdjacentHTML('beforeend',optUf);
+
+            let optMun = `<option selected>não aplica</option>`;
+            munSelect.insertAdjacentHTML('beforeend',optMun);
+
+            let optPer = `<option selected> 0 </option>`;
+            permDecl.insertAdjacentHTML('beforeend',optPer);
+
+            let optReg = `<option selected> Regular </option>`;
+            regDecl.insertAdjacentHTML('beforeend',optReg);
+        } else if(obsvDecl.options.item(obsvDecl.selectedIndex).text == 'Período de Permanência em Andamento'){
             $(munUfSelect).find('option').remove().end();
             $(munSelect).find('option').remove().end();
             $(permDecl).find('option').remove().end();

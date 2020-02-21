@@ -1,0 +1,105 @@
+<% include partials/header %>
+    <link rel="stylesheet" href="/landingStyle.css"> 
+<% include partials/headerBottom %>
+
+<div class="container-fluid">
+
+    <div class="row title">
+         <div class="col-md-3"></div>
+        <div class="col-6 col-md-6">
+            <h1>Resultados Nominais</h1>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+    <div class="row justify-content-start border border-dark rounded mt-2 mb-3 mr-2 ml-2 px-5 py-2">
+        <h4 class="mb-2 mt-1 mx-auto">Parâmetros do Relatório</h4>
+        <table class="table table-sm table-bordered table-striped table-light table-hover mt-1 mb-0" style="height: 100px;">
+            <thead class="thead-light">
+                <tr>
+                    <th class='align-middle mx-auto' style="text-align: center;" scope="col">Término do Curso</th>
+                    <th class='align-middle mx-auto' style="text-align: center; width: 14%" scope="col">Permanência</th>
+                    <th class='align-middle mx-auto' style="text-align: center;" scope="col">Regularidade do T. Comp</th>
+                    <th class='align-middle mx-auto' style="text-align: center; width: 14%" scope="col">Observação T. Comp</th>
+                    <th class='align-middle mx-auto' style="text-align: center;" scope="col">Regularidade da Análise</th>
+                    <th class='align-middle mx-auto' style="text-align: center; width: 14%" scope="col">Observação Adicional</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <% if(paramRes.terminoCurso == 'Concluído'){ %>
+                    <td style="color: darkgreen; text-align: center"><strong><%=paramRes.terminoCurso%></strong></td>
+                <%} else if(paramRes.statusCurso == 'Pendente de Informação') {%>
+                    <td style="color:darkorange; text-align: center"><strong><%=paramRes.terminoCurso%></strong></td>
+                <%} else {%>
+                    <td style="color:darkred; text-align: center"><strong><%=paramRes.terminoCurso%></strong></td>
+                <%}%>
+                <% if(paramRes.permanencia == 'Ao menos 60 meses'){ %>
+                    <td style="color: darkgreen; text-align: center"><strong>Ao menos 60 meses</strong></td>
+                <%} else if(paramRes.permanencia == 'Sem Permanência') {%>
+                    <td style="color:darkred; text-align: center"><strong><%=paramRes.permanencia%></strong></td>
+                <%} else { %>
+                    <td style="color:darkorange; text-align: center"><strong><%=paramRes.permanencia%></strong></td>
+                <%}%>
+                <% if(paramRes.regTermo == 'Regular'){ %>
+                    <td style="color: darkgreen; text-align: center"><strong>Regular</strong></td>
+                <%} else {%>
+                    <td style="color:darkred; text-align: center"><strong><%=paramRes.regTermo%></strong></td>
+                <%}%>
+                <% if(paramRes.obsvTermo == 'Sem Observações'){ %>
+                    <td style="color: darkgreen; text-align: center"><strong>Sem Observações</strong></td>
+                <%} else {%>
+                    <td style="color:darkorange; text-align: center"><strong><%=paramRes.obsvTermo%></strong></td>
+                <%}%>
+                <% if(paramRes.regAnal == 'Regular'){ %>
+                    <td style="color: darkgreen; text-align: center"><strong>Regular</strong></td>
+                <%} else {%>
+                    <td style="color:darkred; text-align: center"><strong><%=paramRes.regAnal%></strong></td>
+                <%}%>
+                <% if(paramRes.obsvAnal == 'Sem Observações'){ %>
+                    <td style="color: darkgreen; text-align: center"><strong>Sem Observações</strong></td>
+                <%} else {%>
+                    <td style="color:darkorange; text-align: center"><strong><%=paramRes.obsvAnal%></strong></td>
+                <%}%>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row justify-content border border-dark rounded mt-2 mb-3 mr-2 ml-2 px-5 py-2">
+        <h2 class="mb-2 mt-2 mx-auto">Bolsistas Por Colaborador</h2>
+        <div class="container-fluid mb-2 mt-2 mx-auto">
+            <%bolsistas.forEach(colab => { %>
+                <div class="container border border-warning rounded mt-3 mb-3 px-5">
+
+                    <table class="table table-striped mt-3 mb-3">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col"><h3><strong><%=colab._id.colaborador.nomeClbr%></strong></h3></th>
+                                <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col">
+                                    <button class="btn btn-sm btn-dark btn-listBols collapsed" type="submit" data-toggle="collapse" data-target="#listBols<%=colab._id.colaborador.idClbr%>" aria-expanded="false" aria-controls="collapsePags">
+                                        <h3 style="text-align: center;"><strong><%=colab.qtdeBolsistas%></strong></h3>
+                                    </button>
+                                </th>
+                                <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="collapse" id="listBols<%=colab._id.colaborador.idClbr%>">
+                            <%colab.bolsistas.forEach(bolsista =>{ %>
+                            <tr>
+                                <td><strong><%=bolsista.cpf%></strong></td>
+                                <td><strong><%=bolsista.nome%></strong></td>
+                                <td><a class="btn btn-sm btn-primary mx-auto my-auto" href='/paginadobolsista/<%=bolsista.id%>'><strong>Ir</strong></a></td>
+                            </tr>
+                            <%})%>
+                        </tbody>
+                    </table>
+
+                </div>
+            <%}); %>
+        </div>
+    </div>
+
+</div>
+
+<% include partials/footer %>

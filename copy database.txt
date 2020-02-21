@@ -1,0 +1,8 @@
+If you want to transfer database to another system, then you must use the following commands.
+
+First dump the database to the output directory:
+
+mongodump --db DatabaseName -o ./DirectoryName
+then copy that directory and put it into your machine and issue this command:
+
+mongorestore --db DBName ./DirectoryName
