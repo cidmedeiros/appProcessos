@@ -205,7 +205,7 @@
                             <% if(bolCons.statusCurso.length > 0){ %>
                                 <% let curso = bolCons.statusCurso[((bolCons.statusCurso).length-1)]%>
                                 <ul class="list-group list-group-flush">
-                                <% if(curso.status == 'Concluído'){ %>
+                                <% if(curso.status == 'Concluído' | curso.status == 'Concluído (Reingresso)'){ %>
                                     <li class="list-group-item border-success"><h5 class="my-1 ml-1">Status do Curso</h5><h4 class="my-1 ml-1" style="color: darkgreen;"><strong><%=curso.status%></strong></h4></li>
                                 <% } else if(curso.status == 'Abandonou o Curso'){ %>
                                     <li class="list-group-item border-success"><h5 class="my-1 ml-1">Status do Curso</h5><h4 class="my-1 ml-1" style="color: darkred;"><strong><%=curso.status%></strong></h4></li>

@@ -29,7 +29,7 @@ router.get('/relatoriositgeral', middleware.isLoggedIn, async (req, res) => {
                 }
             },
             {$sort: {
-                qtdeBolsistas: -1
+                qtdeBolsistas: -1, '_id.statusCurso': 1, '_id.permanencia': 1, '_id.regularidadeTermo': 1, '_id.regularidadeAnalise': 1
                 }
             }
         ]).then((ans) => {

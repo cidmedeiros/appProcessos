@@ -42,9 +42,9 @@
                             <input type="hidden" name="paramRes[regAnal]" value="<%=cat._id.regularidadeAnalise%>">
                             <input type="hidden" name="paramRes[obsvAnal]" value="<%=cat._id.obsvAnalise%>">
                                 <td><%=number%></td>
-                            <% if(cat._id.statusCurso == 'Concluído'){ %>
+                            <% if(cat._id.statusCurso == 'Concluído' | cat._id.statusCurso == 'Concluído (Reingresso)'){ %>
                                 <td style="color: darkgreen; text-align: center"><strong><%=cat._id.statusCurso%></strong></td>
-                            <%} else if(cat._id.statusCurso == 'Pendente de Informação') {%>
+                            <%} else if(cat._id.statusCurso == 'Pendente de Informação' | cat._id.statusCurso == 'Cursando (Reingresso)') {%>
                                 <td style="color:darkorange; text-align: center"><strong><%=cat._id.statusCurso%></strong></td>
                             <%} else {%>
                                 <td style="color:darkred; text-align: center"><strong><%=cat._id.statusCurso%></strong></td>
