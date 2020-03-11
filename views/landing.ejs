@@ -20,7 +20,7 @@
                 <select class="form-control" name="clbrselect" id="clbrselect" onchange="this.form.submit()">
                     <option value="">Selecione o Colaborador</option>
                 <%clbrs.forEach(clbr => { %>
-                    <option value="<%=clbr.idClbr%>"><%=clbr.nome%></option>
+                    <option value="<%=clbr._id%>"><%=clbr.fullname%></option>
                 <% }) %>
                 </select>
                 <small id="consultaHelp" class="form-text text-muted"> Selecione o nome do colaborador.</small>

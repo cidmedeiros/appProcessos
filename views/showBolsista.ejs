@@ -10,7 +10,7 @@
         </div>
         <div class="col col-md-3"></div>
         <div class="col-2 col-md-3">
-             <%let idColaborador = bolCons.clbr[((bolCons.clbr).length-1)].idClbr%>
+             <%let idColaborador = bolCons.clbr[((bolCons.clbr).length-1)].user._id%>
             <a href="/clbrbolsistas/<%=idColaborador%>" class="btn btn-lg btn-success mt-2" style="text-align: right;">Voltar à Página do Colaborador</a>
         </div>
     </div>
@@ -167,11 +167,10 @@
                 <div class="col-1">
                     <button type="button" class="btn btn-primary btn-md btn-block active" data-toggle="modal" data-target="#modalDadosPessoais">Editar</button>
                 </div>
-                <div class="col-3 mx-auto my-auto"></div>
-                <div class="col-3 mx-auto my-auto" style="text-align: center;">
-                    <%let colaborador = bolCons.clbr[((bolCons.clbr).length-1)].nome%>
-                    <%let Adata = bolCons.clbr[((bolCons.clbr).length-1)].data%> 
-                    <footer style="text-align: right;">Bolsista atribuído(a) para <%=colaborador%> em: <%=Adata.getDate()%>/<%=Adata.getMonth()+1%>/<%=Adata.getFullYear()%></footer>
+                <div class="col-2 mx-auto my-auto"></div>
+                <div class="col-4 mx-auto my-auto" style="text-align: center;">
+                    <%let colaborador = bolCons.clbr[((bolCons.clbr).length-1)].user.fullname%> 
+                    <footer style="text-align: right;">Bolsista atribuído(a) para <%=colaborador%></footer>
                 </div>
             </div>
         </div>
@@ -505,7 +504,7 @@
             <div class="row">
             <div class="col-4"></div>
             <button class="col-4 btn btn-md btn-secondary btn-pags collapsed" type="submit" data-toggle="collapse" data-target="#collapsePags" aria-expanded="false" aria-controls="collapsePags">
-                <span><strong>Expandir Pagamentos</strong></span><b>Minimalizar Pagamentos</b>
+                <span><strong>Expandir Pagamentos</strong></span><b>Fechar Pagamentos</b>
             </button>
             <div class="col-4"></div>
             </div>
@@ -721,23 +720,6 @@
             let optReg = `<option selected> Irregular </option>`;
             regDecl.insertAdjacentHTML('beforeend',optReg);
         } else if(obsvDecl.options.item(obsvDecl.selectedIndex).text == 'Data de Conclusão do Curso Pendente'){
-            $(munUfSelect).find('option').remove().end();
-            $(munSelect).find('option').remove().end();
-            $(permDecl).find('option').remove().end();
-            $(regDecl).find('option').remove().end();
-
-            let optUf = `<option selected value="não aplica">não aplica</option>`;
-            munUfSelect.insertAdjacentHTML('beforeend',optUf);
-
-            let optMun = `<option selected>não aplica</option>`;
-            munSelect.insertAdjacentHTML('beforeend',optMun);
-
-            let optPer = `<option selected> 0 </option>`;
-            permDecl.insertAdjacentHTML('beforeend',optPer);
-
-            let optReg = `<option selected> Regular </option>`;
-            regDecl.insertAdjacentHTML('beforeend',optReg);
-        } else if(obsvDecl.options.item(obsvDecl.selectedIndex).text == 'Período de Permanência em Andamento'){
             $(munUfSelect).find('option').remove().end();
             $(munSelect).find('option').remove().end();
             $(permDecl).find('option').remove().end();

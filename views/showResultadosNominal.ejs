@@ -19,37 +19,35 @@
                 <tr>
                     <th class='align-middle mx-auto' style="text-align: center;" scope="col">Término do Curso</th>
                     <th class='align-middle mx-auto' style="text-align: center; width: 14%" scope="col">Permanência</th>
-                    <th class='align-middle mx-auto' style="text-align: center;" scope="col">Regularidade do T. Comp</th>
-                    <th class='align-middle mx-auto' style="text-align: center; width: 14%" scope="col">Observação T. Comp</th>
+                    <th class='align-middle mx-auto' style="text-align: center;" scope="col">Regularidade Termo Compromisso.</th>
                     <th class='align-middle mx-auto' style="text-align: center;" scope="col">Regularidade da Análise</th>
                     <th class='align-middle mx-auto' style="text-align: center; width: 14%" scope="col">Observação Adicional</th>
                 </tr>
             </thead>
             <tbody>
+                <%var statusCursoGreen = ['Concluído', 'Concluído (Após Prazo Regular)']; %>
+                <%var statusCursoOrange = ['Pendente de Informação', 'Cursando (Reingresso)']; %>
+                <%var permanenciaGreen = ['Ao menos 60 meses']; %>
+                <%var permanenciaOrange = ['Menos que 60 meses']; %>
                 <tr>
-                <% if(paramRes.terminoCurso == 'Concluído'){ %>
+                <% if(statusCursoGreen.indexOf(paramRes.terminoCurso) > -1){ %>
                     <td style="color: darkgreen; text-align: center"><strong><%=paramRes.terminoCurso%></strong></td>
-                <%} else if(paramRes.statusCurso == 'Pendente de Informação') {%>
-                    <td style="color:darkorange; text-align: center"><strong><%=paramRes.terminoCurso%></strong></td>
+                <%} else if(statusCursoOrange.indexOf(paramRes.terminoCurso) > -1){%>
+                    <td style="color:#FF7733; text-align: center"><strong><%=paramRes.terminoCurso%></strong></td>
                 <%} else {%>
                     <td style="color:darkred; text-align: center"><strong><%=paramRes.terminoCurso%></strong></td>
                 <%}%>
-                <% if(paramRes.permanencia == 'Ao menos 60 meses'){ %>
-                    <td style="color: darkgreen; text-align: center"><strong>Ao menos 60 meses</strong></td>
-                <%} else if(paramRes.permanencia == 'Sem Permanência') {%>
-                    <td style="color:darkred; text-align: center"><strong><%=paramRes.permanencia%></strong></td>
+                <% if(permanenciaGreen.indexOf(paramRes.permanencia) > -1){ %>
+                    <td style="color: darkgreen; text-align: center"><strong><%=paramRes.permanencia%></strong></td>
+                <%} else if(permanenciaOrange.indexOf(paramRes.permanencia) > -1) {%>
+                    <td style="color:#FF7733; text-align: center"><strong><%=paramRes.permanencia%></strong></td>
                 <%} else { %>
-                    <td style="color:darkorange; text-align: center"><strong><%=paramRes.permanencia%></strong></td>
+                    <td style="color:darkred; text-align: center"><strong><%=paramRes.permanencia%></strong></td>
                 <%}%>
                 <% if(paramRes.regTermo == 'Regular'){ %>
                     <td style="color: darkgreen; text-align: center"><strong>Regular</strong></td>
                 <%} else {%>
                     <td style="color:darkred; text-align: center"><strong><%=paramRes.regTermo%></strong></td>
-                <%}%>
-                <% if(paramRes.obsvTermo == 'Sem Observações'){ %>
-                    <td style="color: darkgreen; text-align: center"><strong>Sem Observações</strong></td>
-                <%} else {%>
-                    <td style="color:darkorange; text-align: center"><strong><%=paramRes.obsvTermo%></strong></td>
                 <%}%>
                 <% if(paramRes.regAnal == 'Regular'){ %>
                     <td style="color: darkgreen; text-align: center"><strong>Regular</strong></td>
@@ -68,6 +66,29 @@
 
     <div class="row justify-content border border-dark rounded mt-2 mb-3 mr-2 ml-2 px-5 py-2">
         <h2 class="mb-2 mt-2 mx-auto">Bolsistas Por Colaborador</h2>
+        <%var compare = (a,b) => {%>
+            <%const bolsA = a.ultPag.iesLocal.sigla.toUpperCase();%>
+            <%const bolsB = b.ultPag.iesLocal.sigla.toUpperCase();%>
+            <%let comparison = 0;%>
+            <%if (bolsA > bolsB) {%>
+                <%comparison = 1;%>
+            <%} else if (bolsA < bolsB) {%>
+                <%comparison = -1;%>
+            <%}%>
+            <%return comparison;%>
+        <%}%>
+        
+        <%var compareNome = (a,b) => {%>
+            <%const bolsA = a.nome.toUpperCase();%>
+            <%const bolsB = b.nome.toUpperCase();%>
+            <%let comparison = 0;%>
+            <%if (bolsA > bolsB) {%>
+                <%comparison = 1;%>
+            <%} else if (bolsA < bolsB) {%>
+                <%comparison = -1;%>
+            <%}%>
+            <%return comparison;%>
+        <%}%>
         <div class="container-fluid mb-2 mt-2 mx-auto">
             <%bolsistas.forEach(colab => { %>
                 <div class="container border border-warning rounded mt-3 mb-3 px-5">
@@ -75,20 +96,26 @@
                     <table class="table table-striped mt-3 mb-3">
                         <thead class="thead-dark">
                             <tr>
-                                <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col"><h3><strong><%=colab._id.colaborador.nomeClbr%></strong></h3></th>
+                                <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col"></th>
+                                <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col"><h3><strong><%=colab._id.colaborador.user.fullname%></strong></h3></th>
                                 <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col">
-                                    <button class="btn btn-sm btn-dark btn-listBols collapsed" type="submit" data-toggle="collapse" data-target="#listBols<%=colab._id.colaborador.idClbr%>" aria-expanded="false" aria-controls="collapsePags">
+                                    <button class="btn btn-sm btn-dark btn-listBols collapsed" type="submit" data-toggle="collapse" data-target="#listBols<%=colab._id.colaborador.user._id%>" aria-expanded="false" aria-controls="collapsePags">
                                         <h3 style="text-align: center;"><strong><%=colab.qtdeBolsistas%></strong></h3>
                                     </button>
                                 </th>
                                 <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col"></th>
+                                <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col"></th>
                             </tr>
                         </thead>
-                        <tbody class="collapse" id="listBols<%=colab._id.colaborador.idClbr%>">
-                            <%colab.bolsistas.forEach(bolsista =>{ %>
+                        <tbody class="collapse" id="listBols<%=colab._id.colaborador.user._id%>">
+                            <%let SortedBolsNome = colab.bolsistas.sort(compareNome);%>
+                            <%let SortedBolsistas = SortedBolsNome.sort(compare);%> 
+                            <%SortedBolsistas.forEach(bolsista =>{ %>
                             <tr>
-                                <td><strong><%=bolsista.cpf%></strong></td>
-                                <td><strong><%=bolsista.nome%></strong></td>
+                                <td><strong><%=bolsista.ultPag.iesLocal.sigla%></strong></td>
+                                <td style="text-align: left; width: 25%;"><strong><%=bolsista.sei%></strong></td>
+                                <td style="text-align: left;"><strong><%=bolsista.email.email%></strong></td>
+                                <td style="text-align: center; width: 30%"><strong><%=bolsista.nome%></strong></td>
                                 <td><a class="btn btn-sm btn-primary mx-auto my-auto" href='/paginadobolsista/<%=bolsista.id%>'><strong>Ir</strong></a></td>
                             </tr>
                             <%})%>

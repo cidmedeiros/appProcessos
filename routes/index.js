@@ -44,21 +44,11 @@ router.get('/logout', (req, res) =>{
 	//INDEX ROUTE
 router.get('/', middleware.isLoggedIn, async (req, res) =>{
 	try{
-		Bolsista.find({}, (err, allBols) => {
-			if(err){
-				console.log(`Internal error: ${err}`);
+		User.find({}, (err, users) => {
+			if(!err){
+				res.render('landing', {clbrs:users});
 			} else {
-				var clbrsIds = [];
-				var clbrs = [];
-				allBols.forEach(bol => {
-					let indx = (bol.clbr.length)-1;
-					lastClbr = bol.clbr[indx];
-					if(!clbrsIds.includes(lastClbr.idClbr)){
-						clbrsIds.push(lastClbr.idClbr);
-						clbrs.push(lastClbr);
-					}
-				});
-				res.render('landing', {clbrs:clbrs})
+				console.log(`Internal error: ${err}`);
 			}
 		});
 	}catch(error){

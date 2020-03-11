@@ -1,8 +1,13 @@
 If you want to transfer database to another system, then you must use the following commands.
 
-First dump the database to the output directory:
+First copy the database to the output directory.
+Do not start mongo, just run the command straight in the console(mongod must be running, though):
 
 mongodump --db DatabaseName -o ./DirectoryName
+
 then copy that directory and put it into your machine and issue this command:
 
+(mongod must running)
+if a old copy already exists, drop it first -> db.dropDatabase()
+then copy:
 mongorestore --db DBName ./DirectoryName

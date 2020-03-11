@@ -4,10 +4,11 @@ var middleware = require('../middleware/middleware');
 var Bolsista = require('../models/bolsistas');
 var Ies = require('../models/ies');
 var Municipio = require('../models/municipios');
+util = require('util');
 
 router.get('/paginadobolsista/:id',middleware.isLoggedIn, async (req, res) => {
 	try{
-		await Bolsista.findById(req.params.id).populate('pags.iesLocal').populate('certConclusao.ies')
+		await Bolsista.findById(req.params.id).populate('pags.iesLocal').populate('clbr.user').populate('certConclusao.ies')
 		.populate([
 			{
 				path: 'pags.programa',
@@ -29,6 +30,7 @@ router.get('/paginadobolsista/:id',middleware.isLoggedIn, async (req, res) => {
 							if(err){
 								console.log(`Error fetching Municipios collection in Id -> ${err}`)
 							} else{
+								//console.log(util.inspect(foundBol, false, null, true /* enable colors */));
 								res.render('showBolsista', {bolCons:foundBol, entidades:entidades, municipios:municipios});
 							}
 						})						

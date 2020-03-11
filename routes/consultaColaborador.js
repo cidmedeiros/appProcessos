@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var middleware = require('../middleware/middleware');
 var Bolsista = require('../models/bolsistas');
+ObjectId = require('mongodb').ObjectID;
 
 router.post('/clbrbolsistas', middleware.isLoggedIn, async(req, res) =>{
 	res.redirect(`/clbrbolsistas/${req.body.clbrselect}`);
@@ -9,7 +10,7 @@ router.post('/clbrbolsistas', middleware.isLoggedIn, async(req, res) =>{
 
 router.get('/clbrbolsistas/:id', middleware.isLoggedIn, async(req, res) =>{
 	try{
-		Bolsista.find({'clbr.idClbr':req.params.id}).populate('pags.iesLocal').populate('certConclusao.ies')
+		Bolsista.find({$expr : {$eq : [{"$arrayElemAt": ["$clbr.user", -1]},  mongoose.Types.ObjectId(req.params.id)]}}).sort({nome: 1}).populate('pags.iesLocal').populate('certConclusao.ies').populate('clbr.user')
 		.populate([
 			{
 				path: 'pags.programa',
@@ -21,6 +22,7 @@ router.get('/clbrbolsistas/:id', middleware.isLoggedIn, async(req, res) =>{
 			}
 		]).exec((err, allBols) => {
 			if(err){
+				console.log({'Server error':err});
 				res.render('noClbr');
 			} else if (allBols.length == 0){
 				res.render('noClbr');

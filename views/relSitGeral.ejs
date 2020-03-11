@@ -21,8 +21,7 @@
                         <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col"></th>
                         <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col">Término do Curso</th>
                         <th class='align-middle mx-auto sticky-top' style="text-align: center; width: 14%" scope="col">Permanência</th>
-                        <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col">Regularidade do T. Comp</th>
-                        <th class='align-middle mx-auto sticky-top' style="text-align: center; width: 14%" scope="col">Observação T. Comp</th>
+                        <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col">Regularidade do T. Compromisso</th>
                         <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col">Regularidade da Análise</th>
                         <th class='align-middle mx-auto sticky-top' style="text-align: center; width: 14%" scope="col">Observação Adicional</th>
                         <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col">Qtde. Bolsistas</th>
@@ -38,33 +37,31 @@
                             <input type="hidden" name="paramRes[terminoCurso]" value="<%=cat._id.statusCurso%>">
                             <input type="hidden" name="paramRes[permanencia]" value="<%=cat._id.permanencia%>">
                             <input type="hidden" name="paramRes[regTermo]" value="<%=cat._id.regularidadeTermo%>">
-                            <input type="hidden" name="paramRes[obsvTermo]" value="<%=cat._id.obsvTermo%>">
                             <input type="hidden" name="paramRes[regAnal]" value="<%=cat._id.regularidadeAnalise%>">
                             <input type="hidden" name="paramRes[obsvAnal]" value="<%=cat._id.obsvAnalise%>">
+                            <%var statusCursoGreen = ['Concluído', 'Concluído (Após Prazo Regular)']; %>
+                            <%var statusCursoOrange = ['Pendente de Informação', 'Cursando (Reingresso)']; %>
+                            <%var permanenciaGreen = ['Ao menos 60 meses']; %>
+                            <%var permanenciaOrange = ['Menos que 60 meses']; %>
                                 <td><%=number%></td>
-                            <% if(cat._id.statusCurso == 'Concluído' | cat._id.statusCurso == 'Concluído (Reingresso)'){ %>
+                            <% if(statusCursoGreen.indexOf(cat._id.statusCurso) > -1) { %>
                                 <td style="color: darkgreen; text-align: center"><strong><%=cat._id.statusCurso%></strong></td>
-                            <%} else if(cat._id.statusCurso == 'Pendente de Informação' | cat._id.statusCurso == 'Cursando (Reingresso)') {%>
-                                <td style="color:darkorange; text-align: center"><strong><%=cat._id.statusCurso%></strong></td>
+                            <%} else if(statusCursoOrange.indexOf(cat._id.statusCurso) > -1){ %>
+                                <td style="color:#FF7733; text-align: center"><strong><%=cat._id.statusCurso%></strong></td>
                             <%} else {%>
                                 <td style="color:darkred; text-align: center"><strong><%=cat._id.statusCurso%></strong></td>
                             <%}%>
-                            <% if(cat._id.permanencia == 'Ao menos 60 meses'){ %>
+                            <% if(permanenciaGreen.indexOf(cat._id.permanencia) > -1){ %>
                                 <td style="color: darkgreen; text-align: center"><strong>Ao menos 60 meses</strong></td>
-                            <%} else if(cat._id.permanencia == 'Sem Permanência') {%>
-                                <td style="color:darkred; text-align: center"><strong><%=cat._id.permanencia%></strong></td>
+                            <%} else if(permanenciaOrange.indexOf(cat._id.permanencia) > -1) {%>
+                                <td style="color:#FF7733; text-align: center"><strong><%=cat._id.permanencia%></strong></td>
                             <%} else { %>
-                                <td style="color:darkorange; text-align: center"><strong><%=cat._id.permanencia%></strong></td>
+                                <td style="color:darkred; text-align: center"><strong><%=cat._id.permanencia%></strong></td>
                             <%}%>
                             <% if(cat._id.regularidadeTermo == 'Regular'){ %>
                                 <td style="color: darkgreen; text-align: center"><strong>Regular</strong></td>
                             <%} else {%>
                                 <td style="color:darkred; text-align: center"><strong><%=cat._id.regularidadeTermo%></strong></td>
-                            <%}%>
-                            <% if(cat._id.obsvTermo == 'Sem Observações'){ %>
-                                <td style="color: darkgreen; text-align: center"><strong>Sem Observações</strong></td>
-                            <%} else {%>
-                                <td style="color:darkorange; text-align: center"><strong><%=cat._id.obsvTermo%></strong></td>
                             <%}%>
                             <% if(cat._id.regularidadeAnalise == 'Regular'){ %>
                                 <td style="color: darkgreen; text-align: center"><strong>Regular</strong></td>
@@ -74,7 +71,7 @@
                             <% if(cat._id.obsvAnalise == 'Sem Observações'){ %>
                                 <td style="color: darkgreen; text-align: center"><strong>Sem Observações</strong></td>
                             <%} else {%>
-                                <td style="color:darkorange; text-align: center"><strong><%=cat._id.obsvAnalise%></strong></td>
+                                <td style="color:#FF7733; text-align: center"><strong><%=cat._id.obsvAnalise%></strong></td>
                             <%}%>
                                 <td><button type="submit" class="btn btn-sm btn-primary mx-auto my-auto"><strong><%=cat.qtdeBolsistas%></strong></button></td>
                         </form>

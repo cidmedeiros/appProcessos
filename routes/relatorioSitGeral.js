@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var middleware = require('../middleware/middleware');
 var Bolsista = require('../models/bolsistas');
+util = require('util');
 
 router.get('/relatoriositgeral', middleware.isLoggedIn, async (req, res) => {
     try{
@@ -17,7 +18,7 @@ router.get('/relatoriositgeral', middleware.isLoggedIn, async (req, res) => {
              {$group:
                 {
                  _id:{regularidadeAnalise:'$lastAnalise.regular', obsvAnalise:'$lastAnalise.obsv',
-                      regularidadeTermo:'$lastTermo.regular', obsvTermo:'$lastTermo.obsv',
+                      regularidadeTermo:'$lastTermo.regular',
                       statusCurso: '$lastStatus.status',
                       permanencia: '$permanencia'
                     },
@@ -33,6 +34,7 @@ router.get('/relatoriositgeral', middleware.isLoggedIn, async (req, res) => {
                 }
             }
         ]).then((ans) => {
+            //console.log(util.inspect(ans, false, null, true /* enable colors */));
             res.render('relSitGeral', {dados:ans});
         });
     } catch(error) {

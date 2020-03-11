@@ -14,9 +14,8 @@
 
         <%var instance = allBols[0] %>
         <%var colaborador = instance.clbr[instance.clbr.length-1] %>
-        <%var colaboradorNome = colaborador.nome %>
+        <%var colaboradorNome = colaborador.user.fullname %>
         <h4>Colaborador: <%=colaboradorNome.toUpperCase()%></h4>
-
         <div class="container-fluid border border-warning rounded mb-2 py-2" id="datawrap">
              <table class="table table-sm table-bordered table-striped table-light table-hover" style="height: 100px;">
                 <thead class="thead-light">

@@ -3,6 +3,7 @@ mongoose_fuzzy_searching = require('mongoose-fuzzy-searching');
 Municipio = require('./municipios');
 Ies = require('./ies');
 Programa = require('./programa');
+User = require('./user');
 
 const bolsistaSchema = new mongoose.Schema({
 	cpf: String,
@@ -13,7 +14,7 @@ const bolsistaSchema = new mongoose.Schema({
 	sexo: String,
 	statusCurso: [{status:String, data: Date, user: String}],
 	permanenciaTotal: Number,
-	clbr: [{nome: String, idClbr:Number, data: Date}],
+	clbr: [{user:{type: mongoose.Schema.Types.ObjectId,	ref: 'User'}}],
 	valorBolsas: Number,
 	valorDev: [{valor: Number, data: Date, user: String}],
 	docFoto: [
