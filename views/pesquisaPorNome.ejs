@@ -2,12 +2,41 @@
     <link rel="stylesheet" href="/landingStyle.css">
     
 <% include partials/headerBottom %>
-<div class=" justify-content-center container container-fluid" id="body">
-    <div class="row my-2 justify-content-center border border-dark rounded">
-      <h2 class="mx-auto my-auto">A pesquisa por nome ainda não estar disponível. Refaça sua consulta utilizando CPF ou SEI.</h2>
+<div class="container-fluid">
+    <div class="row title">
+        <div class="mx-auto my-auto">
+            <h1>Resultados da Pesquisa</h1>
+        </div>
     </div>
-    <div class="row  my-2 justify-content-center border border-success rounded">
-        <a class="btn btn-lg btn-primary mx-auto my-auto" href="/">Voltar</a>
+
+    <div class="row justify-content-start dadosPessoais border border-dark rounded mt-2 mb-3 mr-2 ml-2 px-5 py-2">
+        <div class="container-fluid border border-warning rounded mb-2 py-2" id="datawrap">
+            <table class="table table-striped mt-3 mb-3">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col">IES</th>
+                        <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col">CPF</th>
+                        <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col">SEI</th>
+                        <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col">Nome do(a) Bolsista</th>
+                        <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col">Colaborador Associado</th>
+                        <th class='align-middle mx-auto sticky-top' style="text-align: center;" scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% bolsistas.forEach((bolsista) => { %>
+                        <tr>
+                            <td style="text-align: center;" scope="col"><strong><%=bolsista.ies%></strong></td>
+                            <td style="text-align: center;" scope="col"><strong><%=bolsista.cpf%></strong></td>
+                            <td style="text-align: center;" scope="col"><strong><%=bolsista.sei%></strong></td>
+                            <td style="text-align: left;" scope="col"><strong><%=bolsista.nome%></strong></td>
+                            <td style="text-align: center;" scope="col"><strong><%=bolsista.colaborador%></strong></td>
+                            <td style="text-align: center;" scope="col"><a class="btn btn-sm btn-primary mx-auto my-auto" href='/paginadobolsista/<%=bolsista.id%>'><strong>Ir</strong></a></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+        <p style="text-align: end;">Acima são apresentados os resultados <strong>mais prováveis</strong> para sua pesquisa. Caso acredite que a lista esteja incompleta, favor retornar à tela de consulta e inserir mais dados na sua pesquisa.</p>
     </div>
 </div>
 

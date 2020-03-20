@@ -203,13 +203,15 @@
                             <div class="border border-success rounded-bottom my-3 py-.5 mx-3">
                             <% if(bolCons.statusCurso.length > 0){ %>
                                 <% let curso = bolCons.statusCurso[((bolCons.statusCurso).length-1)]%>
+                                <%var statusCursoGreen = ['Concluído', 'Concluído (Após Prazo Regular)']; %>
+                                <%var statusCursoOrange = ['Pendente de Informação', 'Cursando (Reingresso)']; %>
                                 <ul class="list-group list-group-flush">
-                                <% if(curso.status == 'Concluído' | curso.status == 'Concluído (Reingresso)'){ %>
+                                <% if(statusCursoGreen.indexOf(curso.status) > -1) { %>
                                     <li class="list-group-item border-success"><h5 class="my-1 ml-1">Status do Curso</h5><h4 class="my-1 ml-1" style="color: darkgreen;"><strong><%=curso.status%></strong></h4></li>
-                                <% } else if(curso.status == 'Abandonou o Curso'){ %>
-                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Status do Curso</h5><h4 class="my-1 ml-1" style="color: darkred;"><strong><%=curso.status%></strong></h4></li>
+                                <%} else if(statusCursoOrange.indexOf(curso.status) > -1){ %>
+                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Status do Curso</h5><h4 class="my-1 ml-1" style="color: #FF7733;"><strong><%=curso.status%></strong></h4></li>
                                 <% } else { %>
-                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Status do Curso</h5><h4 class="my-1 ml-1" style="color: #cc7000;"><strong><%=curso.status%></strong></h4></li>
+                                    <li class="list-group-item border-success"><h5 class="my-1 ml-1">Status do Curso</h5><h4 class="my-1 ml-1" style="color: darkred;"><strong><%=curso.status%></strong></h4></li>
                                 <% } %>
                                 <% var ShowMonth = curso.data.getMonth() %>
                                 <% var showYear = curso.data.getFullYear(); %>

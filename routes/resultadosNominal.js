@@ -52,7 +52,6 @@ router.post('/resultadosnominal/:id', middleware.isLoggedIn, (req, res) => {
                 console.log({'Error populating ies': error});
             }
         });
-        
     });
 });
 

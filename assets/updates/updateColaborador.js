@@ -31,7 +31,7 @@ let updateUsers = async function(users){
         let nome = users[i].clbrNome;
         let id = users[i].id
         let pipeFilter = {$expr : {$eq : [{"$arrayElemAt": ["$clbr.nome", -1]}, nome]}};
-        let update = {$push :{'clbr':{user: id}}};
+        let update = {$push :{'clbr':{'user': id}}};
         await Bolsista.updateMany(pipeFilter,update, (error, res) => {
             if(!error){
                 console.log(`Successful updating: ${id}: ${nome}`);

@@ -193,7 +193,7 @@
                                     </select>
                                     <h5 style="color: black;" for="obsvTermo">Observação</h5>
                                     <select required class="form-control custom-select inlineFormCustomSelect" name='bolsista[obsvTermo]' id='bolsista[obsvTermo]'>
-                                    <%var obsvTermoList = ['Assinado Após Pagamento','Ilegível','Sem Assinatura','Sem Observações','Ausente'];%>
+                                    <%var obsvTermoList = ['Assinado Após Pagamento','Ilegível','Sem Assinatura','Sem Data de Assinatura','Sem Observações','Ausente'];%>
                                     <% if(indexTermo < 0){ %>
                                         <option class="optObsvDocTermo" value=''>Selecione</option>
                                         <% obsvTermoList.forEach((obsvList) => { %>
