@@ -8,6 +8,6 @@ mongodump --db DatabaseName -o ./DirectoryName
 then copy that directory and put it into your machine and issue this command:
 
 (mongod must running)
-if a old copy already exists, drop it first -> db.dropDatabase()
+if an old copy already exists, drop it first -> db.dropDatabase()
 then copy:
 mongorestore --db DBName ./DirectoryName
