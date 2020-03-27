@@ -1,0 +1,21 @@
+<% include partials/header %>
+    <link rel="stylesheet" href="/style.css">
+<% include partials/headerBottom %>
+    <h1>Bolsista Informações</h1>
+    <div class="row">
+        <div class="ans_list col-md-3 col-sm-6">
+            <div class="thumbnail">
+                <li>CPF: <%=outBolsista.cpf%></li>
+                <li>Nome: <%=outBolsista.nome%></li>
+                <li>Sexo: <%=outBolsista.sexo%></li>
+                <li>Colaborador: <%=outBolsista.colaborador%></li>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="showB">
+        <a href="/bolsista/<%= outBolsista._id %>/edit" class="btn btn-primary">Editar</a>
+        <form class="delete" action="/bolsista/<%= outBolsista._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-danger">Excluir</button>
+        </form>
+    </div>
+<% include partials/footer %>

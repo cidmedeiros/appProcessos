@@ -17,9 +17,9 @@ router.get('/relatoriositgeral', middleware.isLoggedIn, async (req, res) => {
             },
              {$group:
                 {
-                 _id:{regularidadeAnalise:'$lastAnalise.regular', obsvAnalise:'$lastAnalise.obsv',
-                      regularidadeTermo:'$lastTermo.regular',
-                      statusCurso: '$lastStatus.status',
+                 _id:{
+                     regularidadeAnalise:'$lastAnalise.regular', obsvAnalise:'$lastAnalise.obsv',
+                      regularidadeTermo:'$lastTermo.regular', statusCurso: '$lastStatus.status',
                       permanencia: '$permanencia'
                     },
                  bolsistas: {$addToSet: '$_id'}
@@ -35,7 +35,7 @@ router.get('/relatoriositgeral', middleware.isLoggedIn, async (req, res) => {
             }
         ]).then((ans) => {
             //console.log(util.inspect(ans, false, null, true /* enable colors */));
-            res.render('relSitGeral', {dados:ans});
+            res.render('showRelSitGeral', {dados:ans});
         });
     } catch(error) {
         console.log(`Error in catch statement: ${error}`);
