@@ -9,7 +9,7 @@ Programa = require('./programa');
 Bolsista = require('./bolsistas');
 
 const fs = require('fs');
-sPath = './assets/dados/bolsistas.json';
+sPath = '../assets/dados/dados_profletras_profmat_2013/bolsistas.json';
 
 const readFile = async (sPath) =>{
     let bolsData = fs.readFileSync(sPath);
@@ -22,7 +22,8 @@ const loadJson = async (sPath) =>{
     return bolsData
 }
 
-const cleanBols = function() {
+//In case it's also needed to clean the DB
+/* const cleanBols = function() {
     Bolsista.deleteMany({}, (err) => {
         if(err){
             console.log('Error 1 trying to clean Bolsistas data', err)
@@ -30,7 +31,7 @@ const cleanBols = function() {
                 console.log('Bolsistas Removed')
             }
     });
-};
+}; */
 
 const preProcBol = async (bolsista) => {
     let indexes = [];
@@ -48,20 +49,17 @@ const preProcBol = async (bolsista) => {
             }
         });
 
-         bolsista.pags[i].iesLocal = await Ies.findOne({'sigla': bolsista.pags[i].iesLocal}, (err, foundOne) => {
+         bolsista.pags[i].iesLocal = await Ies.findOne({'nome': bolsista.pags[i].iesLocal}, (err, foundOne) => {
             if(err){
                 console.log(err)
             } else {
                 return foundOne
             }
         });
-        let ref = bolsista.pags[i].dataRef.split('/');
-        bolsista.pags[i].dataRef = new Date(+ref[2], ref[1] - 1, +ref[0]);
-        let dPag = bolsista.pags[i].dataPag.split('/');
-        bolsista.pags[i].dataPag = new Date(+dPag[2], dPag[1] - 1, +dPag[0]);
+        bolsista.pags[i].dataRef = new Date(bolsista.pags[i].dataRef);
+        bolsista.pags[i].dataPag = new Date(bolsista.pags[i].dataPag);
     }
-    let clbrDate = bolsista.clbr[0].data.split('/');
-    bolsista.clbr[0].data = new Date(+clbrDate[2], clbrDate[1] - 1, +clbrDate[0]);
+    bolsista.clbr[0].data = new Date(bolsista.clbr[0].data);
     
     return bolsista
 };
@@ -73,7 +71,7 @@ const addBol = async (sPath) => {
     try{
         for(bolsista of bolsData){
             refactored.push(await preProcBol(bolsista));
-            console.log('Adding Bolsistas...');
+            console.log('Populating refactored bolsistas...');
         }
     } catch(error){
         console.log(`Populating refactored failed: ${error}`)

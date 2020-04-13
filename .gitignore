@@ -2,5 +2,7 @@
 /assets/bootstrap
 /assets/jquery
 /assets/popper.js
+/cert.pem
+/key.pem
 /data
-/assets/scripts/dataBase/fuzzywuzzy
+/backup

@@ -36,9 +36,9 @@ router.post('/consultabolsista', middleware.isLoggedIn, async (req, res) => {
 					} else if(ans[0].nome == input[1] || ans.length == 1){
 						res.redirect(`/paginadobolsista/${ans[0]._id}`);
 					} else {
-						Ies.populate(ans, {path:'pags.iesLocal'}, (error, ans) => {
+						Ies.populate(ans, {path:'pags.iesLocal'}, async (error, ans) => {
 							if(!error){
-								User.populate(ans, {path:'clbr.user'}, (error, ans) => {
+								await User.populate(ans, {path:'clbr.user'}, (error, ans) => {
 									if(!error){
 										let threshold = 7
 										if(ans.length > threshold){

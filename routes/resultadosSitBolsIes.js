@@ -8,7 +8,7 @@ User = require('../models/user');
 util = require('util');
 
 //Obs -> the id is just a hook to organizer front-end data
-router.post('/resultadosnominalies/:id', middleware.isLoggedIn, (req, res) => {
+router.post('/resultadossitbolsies/:id', middleware.isLoggedIn, (req, res) => {
     let paramRes = req.body.paramRes;
     let data = req.body.paramRes.bolsistas;
     var array = data.split(",");

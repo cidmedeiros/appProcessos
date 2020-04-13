@@ -6,9 +6,9 @@ mongoose.set('useCreateIndex', true);
 
 Ies = require('./ies');
 Programa = require('./programa');
-progData = require('../assets/dados/programas.json');
+progData = require('../assets/dados/dados_profletras_profmat_2013/programas.json');
 
-const cleanProg = function() {
+/* const cleanProg = function() {
     try{
         Programa.deleteMany({}, (err) => {
             if(err){
@@ -20,7 +20,7 @@ const cleanProg = function() {
     }catch(error){
         console.log('Error 2 trying to clean programa data', err)
     }
-};
+}; */
 
 const addProg = function(){
     progData.forEach(element => {

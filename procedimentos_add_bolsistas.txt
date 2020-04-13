@@ -1,0 +1,7 @@
+Procedimentos Inserção de Bolsistas GPAD
+
+1 - Run progSeeds -> add novo programa in DB (CHECAR SE É NECESSÁRIO!!! EVITAR DUPLICAR PROGRAMAS);
+2 - Run db.bolsistas.count() in the mongo console -> check number before adding new bolsistas;
+3 - Dump a DB's backup first -> mongodump --db DatabaseName -o ./DirectoryName (DO NOT RUN THIS FUCKING SHIT ON THE MONGO SHELL!!!!!);
+4 - Run BolSeeds -> add Bolsistas
+5 - folders: routes, views, models, assets, dados*

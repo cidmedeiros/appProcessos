@@ -27,25 +27,43 @@ router.post('/resultadosnominal/:id', middleware.isLoggedIn, (req, res) => {
             },
             {$group:
                 {
-                    _id:{colaborador:'$colaborador'},
-                    bolsistas:{$addToSet: {cpf:'$cpf', sei:'$sei', nome:'$nome', id:'$_id', ultPag:{$arrayElemAt:['$pags', -1]}, email:{$arrayElemAt:['$email', -1]}}}
+                    _id:{colaborador:'$colaborador.user',
+                    ies:{$arrayElemAt:['$pags.iesLocal', -1]}
+                },
+                    bolsistas:{$addToSet: {cpf:'$cpf', sei:'$sei', nome:'$nome', id:'$_id', email:{$arrayElemAt:['$email', -1]}}}
                 }
             },
             {$set: {
-                    qtdeBolsistas: {$size:'$bolsistas'}
+                    qtdeBolsistasIes: {$size:'$bolsistas'}
                 }
             },
-            {$sort: {
+            {$group:
+                {
+                    _id: {colaborador:'$_id.colaborador'},
+                    listIes:{
+                        $push:{ies:'$_id.ies', bolsistas:'$bolsistas'}
+                    },
+                    qtdeBolsistas: {$sum:'$qtdeBolsistasIes'}
+                }
+            },
+            {$sort:
+                {
                     qtdeBolsistas: -1,
                 }
             }
         ]).then(async (ans) =>{
-            await Ies.populate(ans, {path:'bolsistas.ultPag.iesLocal'}, async (error, ans) => {
+            await Ies.populate(ans, {path:'listIes.ies'}, async (error, ans) => {
                 if(!error){
-                    await User.populate(ans, {path:'_id.colaborador.user'}, (error, ans) => {
+                    await User.populate(ans, {path:'_id.colaborador'}, async (error, ans) => {
                         if(!error){
-                            //console.log(util.inspect(ans, false, null, true /* enable colors */));
-                            res.render('showResultadosNominal', {bolsistas:ans, paramRes:paramRes});
+                            for(var i = 0; i < ans.length; i++){
+                                ans[i].listIes = await ans[i].listIes.sort(compareIes);
+                                for(var j = 0; j < ans[i].listIes.length; j++){
+                                    ans[i].listIes[j].bolsistas = await ans[i].listIes[j].bolsistas.sort(compareNome);
+                                }
+                            }
+                            //console.log(util.inspect(ans[0].listIes, false, null, true /* enable colors */));
+                            res.render('showResultadosNominal', {colaboradores:ans, paramRes:paramRes});
                         } else {
                             console.log({'Error populating colaborador': error});
                         }
@@ -83,7 +101,7 @@ router.post('/resultadosnominal/:id', middleware.isLoggedIn, (req, res) => {
                 }
             },
             {$sort: {
-                    qtdeBolsistas: -1,
+                    qtdeBolsistas: -1
                 }
             }
         ]).then(async (ans) =>{
@@ -110,5 +128,29 @@ router.post('/resultadosnominal/:id', middleware.isLoggedIn, (req, res) => {
         res.render('bolsistaNaoEncontrado');
     }
 });
+
+var compareIes = (a,b) => {
+    const bolsA = a.ies.sigla.toUpperCase();
+    const bolsB = b.ies.sigla.toUpperCase();
+    let comparison = 0;
+    if (bolsA > bolsB) {
+        comparison = 1;
+    } else if (bolsA < bolsB) {
+        comparison = -1;
+    }
+    return comparison;
+}
+
+var compareNome = (a,b) => {
+    const bolsA = a.nome.toUpperCase();
+    const bolsB = b.nome.toUpperCase();
+    let comparison = 0;
+    if (bolsA > bolsB) {
+        comparison = 1;
+    } else if (bolsA < bolsB) {
+        comparison = -1;
+    }
+    return comparison;
+}
 
 module.exports = router;

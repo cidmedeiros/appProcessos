@@ -16,8 +16,17 @@
         <%var colaborador = instance.clbr[instance.clbr.length-1] %>
         <%var colaboradorNome = colaborador.user.fullname %>
         <h4>Colaborador: <%=colaboradorNome.toUpperCase()%></h4>
+
         <div class="container-fluid border border-warning rounded mb-2 py-2" id="datawrap">
-             <table class="table table-sm table-bordered table-striped table-light table-hover" style="height: 100px;">
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Filtrar</span>
+                </div>
+                <input type="text" class="form-control" id="filter" onkeyup="filterFunc()" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+
+             <table id='table' class="table table-sm table-bordered table-striped table-light table-hover" style="height: 100px;">
                 <thead class="thead-light">
                     <tr>
                         <th class='align-middle mx-auto' style="text-align: center;" scope="col">Programa</th>
@@ -31,32 +40,39 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <%let idBtn = 0; %>
                     <% allBols.forEach((bol) => { %>
+                        <%idBtn++%>
+                        <%let sei = bol.sei%>
                         <%let lastPay = bol.pags[bol.pags.length-1]%>
                         <%let programa = lastPay.programa%> 
                         <%let nomePro = programa.nome%>
-                    <tr>
-                        <td><%=nomePro%></td>
-                        <td><%=bol.sei%></td>
-                        <td><%=bol.cpf%></td>
-                        <td><%=bol.nome%></td>
-                        <% if(bol.docFoto.length > 0){ %>
-                            <td style="color: darkgreen; text-align: center"><strong>Analisado</strong></td>
-                        <%} else {%>
-                            <td style="color:darkorange; text-align: center"><strong>Pendente</strong></td>
-                        <%}%>
-                        <% if((bol.analiseCompromisso.length > 0) && (bol.declaracao.length > 0)){ %>
-                            <td style="color: darkgreen; text-align: center"><strong>Analisado</strong></td>
-                        <%} else {%>
-                            <td style="color:darkorange; text-align: center"><strong>Pendente</strong></td>
-                        <%}%>
-                        <% if(bol.pad.length > 0){ %>
-                            <td style="color: darkgreen; text-align: center"><strong>Analisado</strong></td>
-                        <%} else {%>
-                            <td style="color:darkorange; text-align: center"><strong>Pendente</strong></td>
-                        <%}%>
-                        <td><a class="btn btn-sm btn-primary mx-auto my-auto" href='/paginadobolsista/<%=bol._id%>'>Ir</a></td>
-                    </tr>
+                        <tr>
+                            <td><%=nomePro%></td>
+                            <%if(sei == 'a cadastrar'){ %>
+                                <td><button type="button" class="btn btn-primary btn-sm btn-block active" style="text-align: center;" data-toggle="modal" id= 'seiBtn<%=idBtn%>' data-target="#cadastrarSei<%=idBtn%>">Cadastrar SEI</button></td>
+                            <%} else { %>
+                                <td><%=sei%></td>
+                            <% }%>
+                            <td><%=bol.cpf%></td>
+                            <td><%=bol.nome%></td>
+                            <% if(bol.docFoto.length > 0){ %>
+                                <td style="color: darkgreen; text-align: center"><strong>Analisado</strong></td>
+                            <%} else {%>
+                                <td style="color:darkorange; text-align: center"><strong>Pendente</strong></td>
+                            <%}%>
+                            <% if((bol.analiseCompromisso.length > 0) && (bol.declaracao.length > 0)){ %>
+                                <td style="color: darkgreen; text-align: center"><strong>Analisado</strong></td>
+                            <%} else {%>
+                                <td style="color:darkorange; text-align: center"><strong>Pendente</strong></td>
+                            <%}%>
+                            <% if(bol.pad.length > 0){ %>
+                                <td style="color: darkgreen; text-align: center"><strong>Analisado</strong></td>
+                            <%} else {%>
+                                <td style="color:darkorange; text-align: center"><strong>Pendente</strong></td>
+                            <%}%>
+                            <td><a class="btn btn-sm btn-primary mx-auto my-auto" href='/paginadobolsista/<%=bol._id%>'>Ir</a></td>
+                        </tr>
                     <% }); %>
                 </tbody>
             </table>
@@ -66,6 +82,112 @@
     </div>
 
 </div>
+<!-- MODAL SEI -->
+<%let idModal = 0; %>
+<% allBols.forEach((bol) => { %>
+    <%idModal++%>
+    <%let seiModal = bol.sei%>
+    <%if(seiModal == 'a cadastrar'){ %>
+        <div class="modal fade bd-modalEditDeclaracao-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalEditDeclaracao" aria-hidden="true" id="cadastrarSei<%=idModal%>">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Cadastrar Processo SEI</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="editHeader">
+                        <%if(bol.pags[bol.pags.length-1].programa.nome == 'PROFMAT'){ %>
+                            <h5 class="ml-3"> <%= bol.nomeDisplay %> CPF: <%= bol.cpf %> <span style="color: chocolate;">PROGRAMA: <%= bol.pags[bol.pags.length-1].programa.nome %></span></h5>
+                        <% } else{ %>
+                            <h5 class="ml-3"> <%= bol.nomeDisplay %> CPF: <%= bol.cpf %> <span style="color: darkgreen;">PROGRAMA: <%= bol.pags[bol.pags.length-1].programa.nome %></span></h5>
+                        <% } %>
+                    </div>
+                    <div class="modal-body border border-rounded border-info mx-1 my-1">
+                        <form action='cadastrosei/<%=bol._id%>' method="POST" id="formSei<%=idModal%>" class="mx-auto my-auto">
+                            <input type="hidden" name="userName" value="<%=currentUser.fullname%>">
+                            <input type="hidden" name="userId" value="<%=currentUser._id%>">
+                            <input type="hidden" name="colaboradorId" value="<%=colaborador.user._id%>">
+                            <h5><strong>Informar Número SEI</strong></h5>
+                            <div class="card mt-2 mb-3 my-1 py-.25 pl-.5">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="input-group mt-3 mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">SEI</span>
+                                                    </div>
+                                                    <input type="text" value="23038." name="numSei" class="form-control inputSei" aria-label="SEI" aria-describedby="basic-addon1" maxlength="20" id="inputSei<%=idModal%>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="btnSei<%=idModal%>" style='display: none;' type="submit" class="btn btn-primary">Salvar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <%}%>
+<%})%>
+
+<script>
+    /* @TODO: add button to add filter; get length of filters; iterate over cells to match all inputs in the filter assigning points to a variable;
+    display row if points ==  length of filters 
+     */
+
+    document.addEventListener('keypress', function (e) {
+        if (e.keyCode === 13 || e.which === 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    function filterFunc() {
+        var input, filter, table, tr, td, cell, i, j;
+        input = document.getElementById("filter");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("table");
+        tr = table.getElementsByTagName("tr");
+        for (i = 1; i < tr.length; i++) {
+            // Hide the row initially.
+            tr[i].style.display = "none";
+        
+            td = tr[i].getElementsByTagName("td");
+            for (var j = 0; j < td.length; j++) {
+                cell = tr[i].getElementsByTagName("td")[j];
+                if (cell) {
+                    if (cell.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break;
+                    } 
+                }
+            }
+        }
+    }
+
+    var inputsSei = document.getElementsByClassName('inputSei');
+    for(var i = 0; i < inputsSei.length; i++){
+        inputsSei[i].oninput = validateSei;
+    }
+
+    function validateSei(e){
+        let validation = /23038.[0-9]{6}\/2020-[0-9]{2}$/;
+        let value = e.target.value;
+        let id = e.target.id.match(/\d/g).join('')
+        let btnSei  = document.getElementById(`btnSei${id}`);
+        if(value.match(validation)){
+            btnSei.style.display = "";
+        } else {
+            btnSei.style.display = 'none';
+        }
+    }
+
+</script>
 
 <!-- closing elements -->
 <% include partials/footer %>

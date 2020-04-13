@@ -81,7 +81,7 @@
                     <% dados.forEach((item) => { %>
                         <% number = number+1; %>
                         <tr>
-                            <form action="/resultadosnominalies/<%=item.iesSigla%>" method="POST" class="formulario">
+                            <form action="/resultadossitbolsies/<%=item.iesSigla%>" method="POST" class="formulario">
                                 <input type="hidden" name="paramRes[terminoCurso]" value="<%=paramRes.terminoCurso%>">
                                 <input type="hidden" name="paramRes[permanencia]" value="<%=paramRes.permanencia%>">
                                 <input type="hidden" name="paramRes[regTermo]" value="<%=paramRes.regTermo%>">
