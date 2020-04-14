@@ -1,0 +1,21 @@
+<% include partials/header %>
+<% include partials/headerBottom %>
+
+<div class="container container-fluid mt-5">
+    <h5 class="mt-3 mb-3" style="text-align: center;">Pesquise o Bolsista para Editar o Processo SEI</h5>
+    <div class="row justify-content-center border border-dark rounded mt-3 mb-5 ml-5 mr-5">
+        <div class="container col-5 border border-warning rounded mt-3 mb-3">
+            <form class="mt-3 mb-3" action="/consultabolsistaeditarsei" method="POST">
+                <div class="form-group">
+                    <label for="consulta">Consultar Bolsista</label>
+                    <input class="form-control" type="text" name="consulta" id="consulta" placeholder="consultar">
+                    <small id="consultaHelp" class="form-text text-muted"> A consulta pode ser feita por CPF, NOME ou SEI.</small>
+                    <%var clbrs = clbrs%>
+                    <button type="submit" class="btn btn-md btn-primary mt-2 mb-2 mx-auto" style="text-align: center;">Ir</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<% include partials/footer %>

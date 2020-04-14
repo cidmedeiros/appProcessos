@@ -1,0 +1,122 @@
+<% include partials/header %>
+    <link rel="stylesheet" href="/landingStyle.css">
+    <link rel="stylesheet" href="/editaSei.css">
+<% include partials/headerBottom %>
+<div class="container-fluid">
+    <div class="row title">
+        <div class="mx-auto my-auto">
+            <h2>Editar Processos SEI</h2>
+        </div>
+    </div>
+
+    <div class="row justify-content-center border border-dark rounded mt-2 mb-2 mx-5">
+        <h5>Clique no SEI para Editar</h5>
+        <div class="container border border-warning rounded mt-2 mb-2" id="datawrap">
+            <table class="table table-striped mt-3 mb-3">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class='align-middle mx-auto sticky-top' style="text-align: center; width:fit-content" scope="col">IES</th>
+                        <th class='align-middle mx-auto sticky-top' style="text-align: center; width:15%" scope="col">CPF</th>
+                        <th class='align-middle mx-auto sticky-top' style="text-align: center; width:20%" scope="col">SEI</th>
+                        <th class='align-middle mx-auto sticky-top' style="text-align: center; width:fit-content" scope="col">Nome do(a) Bolsista</th>
+                        <th class='align-middle mx-auto sticky-top' style="text-align: center; width:fit-content" scope="col">Colaborador Associado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%let idBtn = 0; %>
+                    <% bolsistas.forEach((bolsista) => { %>
+                        <%idBtn++%>
+                        <tr>
+                            <div>
+                                <td style="text-align: center; width: fit-content;" scope="col"><strong><%=bolsista.ies%></strong></td>
+                                <td style="text-align: center; width: 15%;" scope="col"><strong><%=bolsista.cpf%></strong></td>
+                                <td scope="col" style="text-align: center; width: 20%;"><button class="editBtn" type="button" data-toggle="modal" id= 'seiBtn<%=idBtn%>' data-target="#editarSei<%=idBtn%>"><strong><%=bolsista.sei%></strong></button></td>
+                                <td style="text-align: center; width: fit-content;" scope="col"><strong><%=bolsista.nome%></strong></td>
+                                <td style="text-align: center; width: fit-content;" scope="col"><strong><%=bolsista.colaborador%></strong></td>
+                            </div>
+                        </tr>
+                        <tr>
+                            <td style="color: lightgrey;" style="text-align: left;" scope="col" colspan="6"><strong>processo sei atual informado por <%=bolsista.seiHist.user%> em <%=bolsista.seiHist.data.toLocaleString()%></strong></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+        <p style="text-align: justify-self: start;;">Em caso de ter realizado a pesquisa por nome, acima são apresentados os resultados <strong>mais prováveis</strong> para sua pesquisa. Caso acredite que a lista esteja incompleta, favor retornar à tela de consulta e inserir mais dados na sua pesquisa.</p>
+    </div>
+</div>
+
+<!-- MODAL EDITAR SEI -->
+<%let idModal = 0; %>
+<% bolsistas.forEach((bol) => { %>
+    <%idModal++%>
+    <div class="modal fade bd-modalEditDeclaracao-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalEditDeclaracao" aria-hidden="true" id="editarSei<%=idModal%>">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Editar Processo SEI</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="editHeader">
+                    <h5 class="ml-3"> <%= bol.nome %> CPF: <%= bol.cpf %></h5>
+                </div>
+                <div class="modal-body border border-rounded border-info mx-1 my-1">
+                    <form action='editasei/<%=bol.id%>' method="POST" id="formSei<%=idModal%>" class="mx-auto my-auto">
+                        <input type="hidden" name="userName" value="<%=currentUser.fullname%>">
+                        <h5><strong>Informar Número SEI</strong></h5>
+                        <div class="card mt-2 mb-3 my-1 py-.25 pl-.5">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="input-group mt-3 mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">SEI</span>
+                                                </div>
+                                                <input type="text" value="<%=bol.sei%>" name="numSei" class="form-control inputSei" aria-label="SEI" aria-describedby="basic-addon1" maxlength="20" id="inputSei<%=idModal%>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="btnSei<%=idModal%>" style='display: none;' type="submit" class="btn btn-primary">Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<%})%>
+
+<script>
+     document.addEventListener('keypress', function (e) {
+        if (e.keyCode === 13 || e.which === 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    var inputsSei = document.getElementsByClassName('inputSei');
+    for(var i = 0; i < inputsSei.length; i++){
+        inputsSei[i].oninput = validateSei;
+    }
+
+    function validateSei(e){
+        let validation = /23038.[0-9]{6}\/2020-[0-9]{2}$/;
+        let value = e.target.value;
+        let id = e.target.id.match(/\d/g).join('')
+        let btnSei  = document.getElementById(`btnSei${id}`);
+        if(value.match(validation)){
+            btnSei.style.display = "";
+        } else {
+            btnSei.style.display = 'none';
+        }
+    }
+
+</script>
+
+<!-- closing elements -->
+
+<% include partials/footer %>

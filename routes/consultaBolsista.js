@@ -52,8 +52,10 @@ router.post('/consultabolsista', middleware.isLoggedIn, async (req, res) => {
 											res.render('pesquisaPorNome', {bolsistas:foundBols});
 										} else {
 											let foundBols = [];
-											for(var i = 0; i < ans.length; i++){																			let lastIes = ans[i].pags[ans[i].pags.length-1].iesLocal.sigla;
+											for(var i = 0; i < ans.length; i++){
+												let lastIes = ans[i].pags[ans[i].pags.length-1].iesLocal.sigla;
 												let colaborador = ans[i].clbr[ans[i].clbr.length-1].user.fullname;
+												
 												foundBols.push({'ies':lastIes,'cpf':ans[i].cpf, 'sei':ans[i].sei, 'nome':ans[i].nome, 'colaborador': colaborador, 'id':ans[i]._id})
 											}
 											//console.log(util.inspect(foundBols, false, null, true /* enable colors */));
