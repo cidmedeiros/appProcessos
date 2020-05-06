@@ -4,12 +4,12 @@ mongoose.connect('mongodb://localhost:27017/DBproc', {'useNewUrlParser': true, '
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-Ies = require('./ies');
-Programa = require('./programa');
-Bolsista = require('./bolsistas');
+Ies = require('../../models/ies');
+Programa = require('../../models/programa');
+Bolsista = require('../../models/bolsistas');
 
 const fs = require('fs');
-sPath = './assets/dados/dados_bolsistas_carga_anterior2019/bolsistas.json';
+sPath = 'G:/CGFO/CCB/Bolsas/geProcessos/appProcessos/assets/dados/bolsistasCargaAnterior2019/bolsistas.json'
 
 const readFile = async (sPath) =>{
     let bolsData = fs.readFileSync(sPath);
@@ -89,5 +89,4 @@ const addBol = async (sPath) => {
     }
 }
 
-//cleanBols();
 addBol(sPath);

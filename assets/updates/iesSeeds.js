@@ -4,10 +4,8 @@ mongoose.connect('mongodb://localhost:27017/DBproc', {'useNewUrlParser': true, '
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-Ies = require('./ies');
-iesData = require('../assets/dados/iesMaternidade.json'); //it returns a string
-//iesData = JSON.parse(iesData); //it parses the string to a iterable object
-
+Ies = require('../../models/ies');
+iesData = require('../dados/iesMaternidade.json');
 
 /* const cleanIes = function() {
     try{

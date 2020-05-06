@@ -59,11 +59,6 @@ const forLoopPromiss = async bolsistasDuplicados => {
 };
 
 findDuplicates(Bolsista, async (err, bolsistasDuplicados) => {
-    console.log(util.inspect(bolsistasDuplicados, false, null, true /* enable colors */));
-    console.log(bolsistasDuplicados.length);
-});
-
-/* findDuplicates(Bolsista, async (err, bolsistasDuplicados) => {
     if(!err && bolsistasDuplicados.length > 0){
         let toBeUpdated = [];
         let toBeDeleted = [];
@@ -116,4 +111,4 @@ findDuplicates(Bolsista, async (err, bolsistasDuplicados) => {
     } else {
         console.log({'error':err, 'data': bolsistasDuplicados});
     }
-}); */
+});

@@ -4,9 +4,9 @@ mongoose.connect('mongodb://localhost:27017/DBproc', {'useNewUrlParser': true, '
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-Ies = require('./ies');
-Programa = require('./programa');
-progData = require('../assets/dados/dados_bolsistas_carga_anterior2019/programas.json');
+Ies = require('../../models/ies');
+Programa = require('../../models/programa');
+progData = require('../dados/bolsistasCargaAnterior2019/programas.json');
 
 /* const cleanProg = function() {
     try{
