@@ -14,8 +14,10 @@ from fuzzywuzzy import fuzz
 def munJson():
     
     """
+    Make municipios json file from the IBGE csv file
     """
     municipios = pd.read_csv(r'D:\computer-science\web-development\capesProject\assets\dados\ibge_mun.csv',sep=';',encoding='ISO-8859-1',dtype=str)
+    
     municipios = municipios[['Codmun','NomeMunic','UF']].copy()
     municipios.columns = ['ibge','nome','uf']
     municipios['siglaUf'] = np.where(municipios.uf == 'Rondônia','RO',np.where(municipios.uf == 'Acre','AC',
@@ -53,8 +55,9 @@ def munJson():
 def iesJson():
     
     """
+    Make ies json file from the csv historical payments file
     """
-    ies = pd.read_csv(r'D:\computer-science\web-development\capesProject\assets\dados\ies.csv', sep=';', encoding='UTF-8',dtype=str)
+    ies = pd.read_csv(r'G:\CGFO\CCB\Bolsas\geProcessos\appProcessos\assets\dados\iesMaternidade.csv', sep=';', encoding='UTF-8',dtype=str)
     
     ies_json = []
     
@@ -63,17 +66,17 @@ def iesJson():
                   'regiao':row.regiao}
         ies_json.append(values)
         
-    with open('dados\ies.json', 'w', encoding='utf-8') as f:
+    with open('iesMaternidade.json', 'w', encoding='utf-8') as f:
         json.dump(ies_json, f, ensure_ascii=False)
         
     return ies_json
 
-def programaJson(file):
+def programaJson(bolsistaFile):
     
     """
-    file is the relative to root file location -> 'dados\proeb_2011_2012_profmat.xlsx'
+    bolsistaFile is the excel file absolute location -> r'dados\proeb_2011_2012_profmat.xlsx
     """
-    bolsistas = pd.read_excel(file, encoding='ISO-8859-1')
+    bolsistas = pd.read_excel(bolsistaFile, encoding='ISO-8859-1')
     
     progIes = bolsistas[['programa','nome_entidade_nacional', 'dataRef']].drop_duplicates()
     progIesmin = progIes.groupby(['programa','nome_entidade_nacional'], as_index=False)['dataRef'].min()
@@ -90,7 +93,7 @@ def programaJson(file):
         values = {'nome':row.programa, 'coordNacional':[{'ies':row.nome_entidade_nacional,'inicio':row.inicio,'fim':row.fim}]}
         progrmJson.append(values)
     
-    with open('dados_profletras_08_2013\programas.json', 'w', encoding='utf-8') as f:
+    with open('programas.json', 'w', encoding='utf-8') as f:
         json.dump(progrmJson, f, ensure_ascii=False, sort_keys=True, default=str)
         
     return progrmJson
@@ -125,16 +128,17 @@ def match_name(name, list_names, min_score=0):
             
     return (max_name, max_score)
 
-def padronizaIesLocal(file, min_score):
+def padronizaIesLocal(bolsistaFile, iesFile, min_score):
     
     """
-    file is the relative to root file location -> 'dados\proeb_2011_2012_profmat.xlsx'
+    bolsistaFile is the excel file absolute location -> r'dados\proeb_2011_2012_profmat.xlsx
+    iesFile is the csv file absolute location -> r'dados\ies.csv
     """
     
-    ies = pd.read_csv(r'D:\computer-science\web-development\capesProject\assets\dados\ies.csv', sep=';', encoding='utf-8')
+    ies = pd.read_csv(iesFile, sep=';', encoding='utf-8')
     ies = list(ies.nome_entidade)
     
-    bolsistas = pd.read_excel(file, encoding='utf-8')
+    bolsistas = pd.read_excel(bolsistaFile, encoding='utf-8')
     #Lista de IES com intervencao manual
     bolsistas.nome_entidade_local = np.where(bolsistas.nome_entidade_local.isin([
             'UNIVERSIDADE EST.PAULISTA JÚLIO DE MESQUITA FILHO/SJ.R PRETO',
@@ -143,6 +147,9 @@ def padronizaIesLocal(file, min_score):
             'UNIVERSIDADE EST.PAULISTA JÚLIO DE MESQUITA FILHO/SJR. PRETO',
             'UNIVERSIDADE EST.PAULISTA JÚLIO DE MESQUITA FILHO']),
             'UNIVERSIDADE ESTADUAL PAULISTA',bolsistas.nome_entidade_local)
+    
+    bolsistas.nome_entidade_local = np.where(bolsistas.nome_entidade_local.isin(['INSTITUTO FEDERAL DO PIAUÍ']),
+            'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO PIAUÍ', bolsistas.nome_entidade_local)
     
     bolsistas.nome_entidade_local = bolsistas.nome_entidade_local.str.upper()
     
@@ -161,7 +168,7 @@ def padronizaIesLocal(file, min_score):
         if ans[1] == -1:
             print('WARNING! IES requer intervencao manual')
             print('Nome da IES com problema: {}'.format(nome))
-            print('Corrija o nome da IES e rode de novo o script')
+            print('Corrija o nome da IES e rode novamente o script!')
    
     localIes_list = pd.DataFrame()
     localIes_list = localIes_list.append(list_series_local)
@@ -187,7 +194,7 @@ def padronizaIesLocal(file, min_score):
 def divisaoClbr(bolsistas):
     
     """
-    file is the relative to root file location -> 'dados\proeb_2011_2012_profmat.xlsx'
+    Bolsistas dataFrame.
     """
     
     cpfs = list(bolsistas.cpf.unique())
@@ -224,13 +231,14 @@ def divisaoClbr(bolsistas):
                 
     return clbrsCpfs
 
-def procFrame(file, min_score):
+def procFrame(bolsistaFile, iesFile, min_score):
     
     """
-    file is the relative to root file location -> 'dados\proeb_2011_2012_profmat.xlsx'
+    bolsistaFile is the excel file absolute location -> r'dados\proeb_2011_2012_profmat.xlsx
+    iesFile is the csv file absolute location -> r'dados\ies.csv
     """
     
-    df = padronizaIesLocal(file, min_score)
+    df = padronizaIesLocal(bolsistaFile, iesFile, min_score)
     df['sei'] = 'a cadastrar'
     
     #Agrupando em lista para formar DataFrame em seguida
@@ -263,15 +271,16 @@ def procFrame(file, min_score):
     
     return bolsistas
 
-def procClbr(file, min_score):
+def procClbr(bolsistaFile, iesFile, min_score):
     
    """
-   file is the relative to root file location -> 'dados\proeb_2011_2012_profmat.xlsx'
+   bolsistaFile is the excel file absolute location -> r'dados\proeb_2011_2012_profmat.xlsx'
+   iesFile is the csv file absolute location -> r'dados\ies.csv
    """
-   file = r'D:\computer-science\web-development\capesProject\assets\dados\dados_profletras_profmat_2013\profletras_profmat_2013.xlsx'
+   
    min_score = 75
     
-   bolsistas = procFrame(file, min_score)
+   bolsistas = procFrame(bolsistaFile, iesFile, min_score)
    
    clbrsCpfs = divisaoClbr(bolsistas)
    
@@ -285,13 +294,14 @@ def procClbr(file, min_score):
    
    return bolsistas
     
-def bolsistasJson(file, min_score):
+def bolsistasJson(bolsistaFile, iesFile, min_score):
     
    """
-   file is the relative to root file location -> 'dados\proeb_2011_2012_profmat.xlsx'
+   file is the excel file absolute location -> r'dados\proeb_2011_2012_profmat.xlsx
+   iesFile is the csv file absolute location -> r'dados\ies.csv
    """
    
-   bolsistas = procClbr(file, min_score)
+   bolsistas = procClbr(bolsistaFile, iesFile, min_score)
    bolJson = []
     
    for _id, row in bolsistas.iterrows():
@@ -331,7 +341,7 @@ def bolsistasJson(file, min_score):
        values['pags'] = pags
        bolJson.append(values)
     
-   with open(r'D:\computer-science\web-development\capesProject\assets\dados\dados_profletras_profmat_2013\bolsistas.json', 'w', encoding='utf-8') as f:
+   with open('bolsistas.json', 'w', encoding='utf-8') as f:
         json.dump(bolJson, f, ensure_ascii=False, sort_keys=True, default=str)
     
    return bolJson
