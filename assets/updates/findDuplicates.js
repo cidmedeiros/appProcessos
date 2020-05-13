@@ -13,7 +13,7 @@ const findDuplicates = (collection, callback) => {(collection.aggregate([
         {_id : {
             cpf:'$cpf'
             },
-        idBolsistas : {$addToSet : {'id':'$_id', 'qtdeDeclara': {$size: '$declaracao'}}}
+        idBolsistas : {$addToSet : {'id':'$_id', 'qtdeDeclara': {$size: '$declaracao'}, 'sei':'$sei'}}
         }
     },
     {$set:
@@ -60,6 +60,9 @@ const forLoopPromiss = async bolsistasDuplicados => {
 
 findDuplicates(Bolsista, async (err, bolsistasDuplicados) => {
     if(!err && bolsistasDuplicados.length > 0){
+        var problematicos = {};
+        problematicos.toBeUpdated = [];
+        problematicos.toBeDeleted = [];
         let toBeUpdated = [];
         let toBeDeleted = [];
         for(pair of bolsistasDuplicados){
@@ -68,6 +71,9 @@ findDuplicates(Bolsista, async (err, bolsistasDuplicados) => {
             for(bolsista of pair.idBolsistas){
                 if(bolsista.qtdeDeclara >= 1){
                     update.id = bolsista.id;
+                //Option in case there's a tie
+                /* } else if(bolsista.sei !== 'a cadastrar'){
+                    update.id = bolsista.id; */
                 } else {
                     deletion.id = bolsista.id;
                     let bols = await getBolsista(bolsista.id);
@@ -75,8 +81,13 @@ findDuplicates(Bolsista, async (err, bolsistasDuplicados) => {
                     update.pags = pags;
                 }
             }
-            toBeUpdated.push(update);
-            toBeDeleted.push(deletion);
+            if(Object.keys(update).length >= 2){
+                toBeUpdated.push(update);
+                toBeDeleted.push(deletion);
+            } else {
+                problematicos.toBeUpdated.push(update);
+                problematicos.toBeDeleted.push(deletion);
+            }
         }
         console.log('update');
         console.log(toBeUpdated);
@@ -91,7 +102,7 @@ findDuplicates(Bolsista, async (err, bolsistasDuplicados) => {
             let valorList = [];
             pags.forEach((pag) => {
                 valorList.push(pag.valor);
-            })
+            });
             console.log(`Done Updating lista de pagamentos for ${cpf.id} -> OK!`);
             console.log(`Updating Valor total de bolsas for ${cpf.id}`);
             let valorTotal = valorList.reduce((a,b) => a+b, 0);
@@ -108,7 +119,19 @@ findDuplicates(Bolsista, async (err, bolsistasDuplicados) => {
                 }
             });
         }
+        console.log(`Não foi possivel homologar ${problematicos.toBeUpdated.length} bolsistas`);
+        console.log(problematicos.toBeUpdated);
     } else {
         console.log({'error':err, 'data': bolsistasDuplicados});
     }
 });
+
+//CHECA BOLSISTAS PROBLEMÁTICOS PARA DUPLICIDADE
+/* findDuplicates(Bolsista, (err, duplicados) => {
+    if(!err && duplicados){
+        console.log(duplicados.length);
+        console.log(util.inspect(duplicados, false, null, true));
+    } else {
+        console.log(err);
+    }
+}); */
