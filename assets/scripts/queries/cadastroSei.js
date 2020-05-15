@@ -10,7 +10,7 @@ User = require('../../../models/user');
 
 Bolsista.aggregate([
     {$match:
-        {seiHist : {$exists:true, $not: {$size: 0}}}
+        {seiHist : {$exists:true, $size: 0} /*$not:{$size: 0}*/ }
     },
     {$group:
         {_id : {

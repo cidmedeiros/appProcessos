@@ -100,8 +100,18 @@
                     <div class="editHeader">
                         <%if(bol.pags[bol.pags.length-1].programa.nome == 'PROFMAT'){ %>
                             <h5 class="ml-3"> <%= bol.nomeDisplay %> CPF: <%= bol.cpf %> <span style="color: chocolate;">PROGRAMA: <%= bol.pags[bol.pags.length-1].programa.nome %></span></h5>
-                        <% } else{ %>
+                        <% } else if(bol.pags[bol.pags.length-1].programa.nome == 'PROFLETRAS'){ %>
                             <h5 class="ml-3"> <%= bol.nomeDisplay %> CPF: <%= bol.cpf %> <span style="color: darkgreen;">PROGRAMA: <%= bol.pags[bol.pags.length-1].programa.nome %></span></h5>
+                        <% } else if(bol.pags[bol.pags.length-1].programa.nome == 'PROFARTES'){ %>
+                            <h5 class="ml-3"> <%= bol.nomeDisplay %> CPF: <%= bol.cpf %> <span style="color: darkmagenta;">PROGRAMA: <%= bol.pags[bol.pags.length-1].programa.nome %></span></h5>
+                        <% } else if(bol.pags[bol.pags.length-1].programa.nome == 'PROFISICA'){ %>
+                            <h5 class="ml-3"> <%= bol.nomeDisplay %> CPF: <%= bol.cpf %> <span style="color: rgb(92, 67, 5);">PROGRAMA: <%= bol.pags[bol.pags.length-1].programa.nome %></span></h5>
+                        <% } else if(bol.pags[bol.pags.length-1].programa.nome == 'PROFHISTORIA'){ %>
+                            <h5 class="ml-3"> <%= bol.nomeDisplay %> CPF: <%= bol.cpf %> <span style="color: darkslateblue;">PROGRAMA: <%= bol.pags[bol.pags.length-1].programa.nome %></span></h5>
+                        <% } else if(bol.pags[bol.pags.length-1].programa.nome == 'PROFBIO'){ %>
+                            <h5 class="ml-3"> <%= bol.nomeDisplay %> CPF: <%= bol.cpf %> <span style="color: darkblue;">PROGRAMA: <%= bol.pags[bol.pags.length-1].programa.nome %></span></h5>
+                        <% } else { %>
+                            <h5 class="ml-3"> <%= bol.nomeDisplay %> CPF: <%= bol.cpf %> <span style="color: black;">PROGRAMA: <%= bol.pags[bol.pags.length-1].programa.nome %></span></h5>
                         <% } %>
                     </div>
                     <div class="modal-body border border-rounded border-info mx-1 my-1">
