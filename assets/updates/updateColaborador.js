@@ -18,11 +18,11 @@ Bolsista = require('../../models/bolsistas');
 
 var users = [
     {clbrNome:'André Amorim', id: mongoose.Types.ObjectId('5e21a1cec6fbcc262c905839')},
-    {clbrNome:'Pricilla Oliveira', id:mongoose.Types.ObjectId("5e21a31ac6fbcc262c90583a")},
-    {clbrNome:'Débora Gonçalves', id:mongoose.Types.ObjectId("5e21a4d3c6fbcc262c90583b")},
-    {clbrNome:'Gilson Souza', id:mongoose.Types.ObjectId('5e21a677c6fbcc262c90583d')},
-    {clbrNome:'Carlos Boselli', id:mongoose.Types.ObjectId('5e259c2307e8be0320a76467')},
-    {clbrNome:'Mônica Gama', id:mongoose.Types.ObjectId('5e3ab2c5c3d09e39f8574cc6')},
+    {clbrNome:'Pricilla Oliveira', id: mongoose.Types.ObjectId("5e21a31ac6fbcc262c90583a")},
+    {clbrNome:'Débora Gonçalves', id: mongoose.Types.ObjectId("5e21a4d3c6fbcc262c90583b")},
+    {clbrNome:'Gilson Souza', id: mongoose.Types.ObjectId('5e21a677c6fbcc262c90583d')},
+    {clbrNome:'Carlos Boselli', id: mongoose.Types.ObjectId('5e259c2307e8be0320a76467')},
+    {clbrNome:'Mônica Gama', id: mongoose.Types.ObjectId('5e3ab2c5c3d09e39f8574cc6')},
     {clbrNome:'Mayra Gobbato', id: mongoose.Types.ObjectId('5e21a59ac6fbcc262c90583c')}
 ]
 
