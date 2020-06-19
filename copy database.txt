@@ -8,7 +8,7 @@ mongodump --db DatabaseName -o ./DirectoryName
 
 then copy that directory and put it into your machine and issue this command:
 
-(mongod must running, but NOT the mongo shell)
+(mongod must running, access mongo shell to drop database)
 if a old copy already exists, drop it first -> db.dropDatabase()
 
 then run (DO NOT RUN THIS FUCKING SHIT ON THE MONGO SHELL!!!!!):

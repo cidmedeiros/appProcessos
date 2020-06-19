@@ -1,0 +1,70 @@
+<% include partials/header %>
+    <link rel="stylesheet" href="/landingStyle.css"> 
+<% include partials/headerBottom %>
+
+<div class="container-fluid">
+
+    <div class="row title">
+        <div class="col-md-3"></div>
+       <div class="col-6 col-md-6">
+           <h1>Pendências Por Instituição de Ensino</h1>
+       </div>
+       <div class="col-md-3"></div>
+   </div>
+
+   <div class="row justify-content-start border border-dark rounded mt-2 mb-3 mr-2 ml-2 px-5 py-2">
+       <h4 class="mb-2 mt-1 mx-auto">Pendências</h4>
+       <table class="table table-sm table-bordered table-striped table-light table-hover mt-1 mb-0" style="height: 100px;">
+           <thead class="thead-light">
+               <tr>
+                   <th class='align-middle mx-auto' style="text-align: center;" scope="col">Término do Curso</th>
+                   <th class='align-middle mx-auto' style="text-align: center;" scope="col">Termo Compromisso</th>
+               </tr>
+           </thead>
+           <tbody>
+               <tr>
+                   <td style="color:darkorange; text-align: center"><strong>Pendente de Informação</strong></td>
+                   <td style="color:darkred; text-align: center"><strong>Irregular</strong></td>
+               </tr>
+           </tbody>
+       </table>
+   </div>
+
+   <div class="container">
+       <div class="row justify-content-center border border-dark rounded mt-2 mb-3 mr-2 ml-2 px-5 py-2">
+            <div class="row justify-content-center border border-warning rounded mt-2 mb-3 mr-2 ml-2 px-5 py-2">
+                <table class="table table-sm table-bordered table-striped table-light table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class='align-middle mx-auto sticky-top' style="text-align: center; width:5%" scope="col"></th>
+                            <th class='align-middle mx-auto sticky-top' style="text-align: center; width: 18%;" scope="col">Sigla da IES</th>
+                            <th class='align-middle mx-auto sticky-top' style="text-align: center; width: 70%" scope="col">Nome da IES</th>
+                            <th class='align-middle mx-auto sticky-top' style="text-align: center; width: 7%" scope="col">Qtde Bolsistas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <% var number = 0 %>
+                    <% dados.forEach((item) => { %>
+                        <% number = number+1; %>
+                        <tr>
+                            <form action="/resultadospendenciasies/<%=item._id.ies.sigla%>" method="POST" class="formulario">
+                                <input type="hidden" name="paramRes[bolsistas]" value="<%=item.bolsistas%>">
+                                <input type="hidden" name="paramRes[siglaIes]" value="<%=item._id.ies.sigla%>">
+                                <input type="hidden" name="paramRes[nomeIes]" value="<%=item._id.ies.nome%>">
+                                <td style="text-align: center;"><%=number%></td>
+                                <td style="text-align: center;"><%=item._id.ies.sigla%></td>
+                                <td style="text-align: left;"><%=item._id.ies.nome%></td>
+                                <td><button type="submit" class="btn btn-sm btn-primary mx-auto my-auto" value="colbr"><strong><%=item.qtde%></strong></button></td>
+                            </form>
+                        <% }); %>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+       </div>
+   </div>
+
+</div>
+
+<!-- closing elements -->
+<% include partials/footer %>

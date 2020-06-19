@@ -69,6 +69,8 @@ cadastraSei = require('./routes/cadastraSei');
 consultarSei = require('./routes/consultarSei');
 consultabolsistaeditarsei = require('./routes/consultaBolsistaEditarSei');
 editaSei = require('./routes/editaSei');
+pendenciasIes = require('./routes/relatorioPendenciasIes');
+resultadosPendenciasIes = require('./routes/resultadosPendenciasIes');
 
 //Routes Applying
 app.use(indexRoutes);
@@ -87,6 +89,8 @@ app.use(cadastraSei);
 app.use(consultarSei);
 app.use(consultabolsistaeditarsei);
 app.use(editaSei);
+app.use(pendenciasIes);
+app.use(resultadosPendenciasIes);
 
 	//Routes order matters! This should always be the last route!!
 app.get('*', middleware.isLoggedIn, async (req, res) =>{
