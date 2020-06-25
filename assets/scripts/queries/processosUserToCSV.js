@@ -28,24 +28,23 @@ Bolsista.aggregate([
     }
     let titles = [Object.keys(listProc[0])].concat(listProc);
     let csvFile = titles.map(it => {
-        return Object.values(it).toString()
-    }).join('\n')
-    console.log(typeof(csvFile));
+        return Object.values(it).toString();
+    }).join('\n');
     fs.open('C:/Users/cidm/Documents/processos.txt','wx', (err, fileDescriptor) =>{
         if(!err && fileDescriptor){
-            console.log('file opened!')
+            console.log('file opened!');
             fs.write(fileDescriptor, csvFile, (err) => {
                 if(!err){
-                    console.log('Beginning Writting!')
+                    console.log('Beginning Writting!');
                     fs.close(fileDescriptor, (err) => {
                         if(!err){
-                            console.log('Success writting the file!')
+                            console.log('Success writting the file!');
                         } else {
-                            console.log('error closing the file', err)
+                            console.log('error closing the file', err);
                         }
                     })
                 } else {
-                    console.log('error writing the file', err)
+                    console.log('error writing the file', err);
                 }
             });
         }
