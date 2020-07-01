@@ -1,4 +1,5 @@
 //Repeatedly used functions
+fs = require('fs');
 
 function getLocalIp() {
     const os = require('os');
@@ -38,6 +39,34 @@ function calcPerm(declaracao){
         } 
     });
     return perm;
+};
+
+function saveToCsv(fileName, data){
+    let titles = [Object.keys(data[0])].concat(data);
+    let csvFile = titles.map(it => {
+        return Object.values(it).toString();
+    }).join('\n');
+    fs.open(`${fileName}.txt`,'wx', (err, fileDescriptor) =>{
+        if(!err && fileDescriptor){
+            console.log('file opened!');
+            fs.write(fileDescriptor, csvFile, 'utf8', (err) => {
+                if(!err){
+                    console.log('Beginning Writting!');
+                    fs.close(fileDescriptor, (err) => {
+                        if(!err){
+                            console.log('Success writting the file!');
+                        } else {
+                            console.log('error closing the file', err);
+                        }
+                    })
+                } else {
+                    console.log('error writing the file', err);
+                }
+            });
+        } else {
+            console.log(err);
+        }
+    });
 };
 
 function divisaoClbr(bolsistas){
@@ -132,5 +161,6 @@ module.exports = {
     getLocalIp:getLocalIp,
     treatInput:treatInput,
     calcPerm:calcPerm,
+    saveToCsv:saveToCsv,
     divisaoClbr:divisaoClbr
 }
