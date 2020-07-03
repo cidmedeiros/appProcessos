@@ -3,7 +3,7 @@ mongoose.connect('mongodb://localhost:27017/DBproc', {'useNewUrlParser': true, '
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-const tools = require('../scripts/tools');
+var tools = require('../scripts/tools');
 util = require('util')
 ObjectId = require('mongodb').ObjectID;
 Bolsista = require('../../models/bolsistas');
@@ -25,29 +25,30 @@ try {
         {_id:1}
     }
     ], async (err, ans) => {
-        if(!err){
-            clbrIds = await tools.divisaoClbr(ans);
-            var colaboradores = Object.keys(clbrIds);
-            console.log(`Lista de users: ${colaboradores}`);
-            for(clbr of colaboradores){
-                let usuario = clbr; //it seems unecessary but it is forcing variable scope for the async mongo promise
-                let bolsistas = clbrIds[usuario];
-                let filter = {'_id': {$in : bolsistas}};
-                let update = {$push :{'clbr':{'user': mongoose.Types.ObjectId(usuario)}}};
-                await Bolsista.find(filter, (err, found) => {
-                    if(!err){
-                        console.log('-------------------------------------------------------------------------------------');
-                        console.log(`User: ${usuario} ----- Searched for: ${bolsistas.length}. Found: ${found.length}`);
-                        console.log(`First one -> user: ${found[0].clbr} --- nome: ${found[0].nome}`);
-                        console.log('                           ----                           ');
-                        console.log(`Last one -> user: ${found[found.length-1].clbr} --- nome: ${found[found.length-1].nome}`);
-                    } else {
-                        console.log(err);
+        if(ans.length > 0){
+            if(!err){
+                clbrIds = await tools.divisaoClbr(ans);
+                var colaboradores = Object.keys(clbrIds);
+                console.log(`Lista de users: ${colaboradores}`);
+                var loader = '';
+                for(clbr of colaboradores){
+                    loader += '#';
+                    console.log(`Updating: ${loader}`);
+                    let usuario = clbr; //it seems unecessary but it is forcing variable scope for the async mongo promise
+                    let bolsistas = clbrIds[usuario];
+                    let filter = {'_id': {$in : bolsistas}};
+                    let update = {$push :{'clbr':{'user': mongoose.Types.ObjectId(usuario)}}};
+                    try{
+                        await Bolsista.updateMany(filter,update);
+                    } catch (e){
+                        console.log(e);
                     }
-                });
+                }
+            } else {
+                console.log(err);
             }
-        } else {
-            console.log(err);
+        } else{
+            console.log('Não há bolsistas para esse colaborador');
         }
     });
 } catch(err){
