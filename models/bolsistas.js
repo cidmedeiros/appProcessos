@@ -4,6 +4,7 @@ Municipio = require('./municipios');
 Ies = require('./ies');
 Programa = require('./programa');
 User = require('./user');
+Processo = require('./processos');
 
 const bolsistaSchema = new mongoose.Schema({
 	cpf: String,
@@ -79,12 +80,9 @@ const bolsistaSchema = new mongoose.Schema({
 	],
 	pad: [
 		{
-		tramite: {tipo: String, acao: String, inicioTramite: Date, fimTramite: Date},
-		situacao: String,
-		regular: String,
-		obsv: String,
-		user: String,
-		data: Date
+			processo:{type: mongoose.Schema.Types.ObjectId,	ref: 'Processo'},
+			data: Date,
+			hist: [{status: Number, user: String}]
 		}
 	],
 	pags: [

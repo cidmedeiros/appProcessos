@@ -1,8 +1,8 @@
 curso,permanencia,qtde
-Concluído,Ao menos 60 meses,668
+Concluído,Ao menos 60 meses,671
 Pendente de Informação,Sem Permanência,597
-Concluído,Sem Permanência,441
-Concluído,Menos que 60 meses,186
+Concluído,Sem Permanência,444
+Concluído,Menos que 60 meses,189
 Reprovado,Sem Permanência,175
 Evasão,Sem Permanência,138
 Evasão,Ao menos 60 meses,28
@@ -10,8 +10,5 @@ Pendente de Informação,Ao menos 60 meses,25
 Reprovado,Ao menos 60 meses,23
 Cursando (Reingresso),Sem Permanência,18
 Desligado,Sem Permanência,7
-Concluído (Após Prazo Regular),Sem Permanência,5
 Reprovado,Menos que 60 meses,3
-Concluído (Após Prazo Regular),Menos que 60 meses,3
 Evasão,Menos que 60 meses,2
-Concluído (Após Prazo Regular),Ao menos 60 meses,1

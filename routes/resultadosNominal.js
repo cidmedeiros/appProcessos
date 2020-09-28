@@ -10,14 +10,31 @@ util = require('util');
 //Obs -> the id is just a hook to organizer front-end data
 router.post('/resultadosnominal/:id', middleware.isLoggedIn, (req, res) => {
     let paramRes = req.body.paramRes;
-    let data = req.body.listaBolsistas;
-    var array = data.split(",");
-    let objectIdArray = array.map(s => mongoose.Types.ObjectId(s));
     if(paramRes.consulta == 'colbr'){
         Bolsista.aggregate([
+            {$set:
+                {
+                    lastAnalise: {$arrayElemAt:['$analiseCompromisso', -1]},
+                    lastTermo: {$arrayElemAt:['$termo', -1]},
+                    lastStatus: {$arrayElemAt:['$statusCurso', -1]},
+                    permanencia: {$cond:[{$gte:['$permanenciaTotal', 60]}, 'Ao menos 60 meses', {$cond:[{$eq:['$permanenciaTotal', 0]},'Sem Permanência','Menos que 60 meses']}]}
+                }
+            },
+            {$set:
+                {
+                    regularidadeAnalise:'$lastAnalise.regular', obsvAnalise:'$lastAnalise.obsv',
+                    regularidadeTermo:'$lastTermo.regular', statusCurso: '$lastStatus.status',
+                }
+            },
             {$match:
                 {
-                    _id:{$in : objectIdArray}
+                    $and : [
+                        {statusCurso:{$eq : paramRes.terminoCurso}},
+                        {permanencia:{$eq : paramRes.permanencia}},
+                        {regularidadeTermo:{$eq : paramRes.regTermo}},
+                        {regularidadeAnalise:{$eq : paramRes.regAnal}},
+                        {obsvAnalise:{$eq : paramRes.obsvAnal}}
+                    ]
                 }
             },
             {$set :
@@ -75,9 +92,29 @@ router.post('/resultadosnominal/:id', middleware.isLoggedIn, (req, res) => {
         });
     } else if(paramRes.consulta == 'ies'){
         Bolsista.aggregate([
+            {$set:
+                {
+                    lastAnalise: {$arrayElemAt:['$analiseCompromisso', -1]},
+                    lastTermo: {$arrayElemAt:['$termo', -1]},
+                    lastStatus: {$arrayElemAt:['$statusCurso', -1]},
+                    permanencia: {$cond:[{$gte:['$permanenciaTotal', 60]}, 'Ao menos 60 meses', {$cond:[{$eq:['$permanenciaTotal', 0]},'Sem Permanência','Menos que 60 meses']}]}
+                }
+            },
+            {$set:
+                {
+                    regularidadeAnalise:'$lastAnalise.regular', obsvAnalise:'$lastAnalise.obsv',
+                    regularidadeTermo:'$lastTermo.regular', statusCurso: '$lastStatus.status',
+                }
+            },
             {$match:
                 {
-                    _id:{$in : objectIdArray}
+                    $and : [
+                        {statusCurso:{$eq : paramRes.terminoCurso}},
+                        {permanencia:{$eq : paramRes.permanencia}},
+                        {regularidadeTermo:{$eq : paramRes.regTermo}},
+                        {regularidadeAnalise:{$eq : paramRes.regAnal}},
+                        {obsvAnalise:{$eq : paramRes.obsvAnal}}
+                    ]
                 }
             },
             {$set:

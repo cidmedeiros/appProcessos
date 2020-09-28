@@ -85,6 +85,6 @@ proeb_quin_resumo = proeb_quin.groupby(['programa', 'turma_proeb'], as_index=Fal
 
 ########################################################################################################################################
 ###EXPORTAR RESULTADOS PARA EXCEL
-fc.excel(bolsistasCargaAnterior2019, 'bolsistasCargaAnterior2019', index=False)
+fc.excel(pj, 'pj', index=False)
 ########################################################################################################################################
 

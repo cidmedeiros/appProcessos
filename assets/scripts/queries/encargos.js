@@ -14,12 +14,17 @@ Bolsista.aggregate([
     {$set:
         {
             permanencia: {$cond:[{$gte:['$permanenciaTotal', 60]}, 'Ao menos 60 meses', {$cond:[{$eq:['$permanenciaTotal', 0]},'Sem Permanência','Menos que 60 meses']}]},
-            curso: {$arrayElemAt: ['$statusCurso', -1]},
+            cursoLast: {$arrayElemAt: ['$statusCurso', -1]},
+        }
+    },
+    {$set:
+        {
+            curso: {$cond:[{$eq:['$cursoLast.status', 'Concluído (Após Prazo Regular)']}, 'Concluído', '$cursoLast.status']}
         }
     },
     {$group:
         {_id: {
-            status:'$curso.status',
+            status:'$curso',
             permanencia:'$permanencia',
             },
         bolsistas : {$addToSet : {'id':'$_id'}}
