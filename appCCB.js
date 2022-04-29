@@ -18,9 +18,9 @@ Ies = require('./models/ies');
 Municipio = require('./models/municipios');
 User = require('./models/user');
 
-//App Variable
-const app = express();
-app.use(bodyParser.urlencoded({extended:true})); /* body-parser module parses the JSON, buffer, string and URL encoded data submitted using HTTP POST request. */
+//Set app Variable
+const app = express(); //express object
+app.use(bodyParser.urlencoded({extended:true})); /* body-parser module parses JSON, buffer, string and URL encoded data submitted using HTTP POST request. */
 app.use(expressSanitizer());
 app.use(express.static('assets'));
 app.use(methodOverride("_method"));
@@ -29,9 +29,8 @@ app.use(require('express-session')({
 	resave:false,
 	saveUninitialized:false
 }));
-
 app.set('view engine', 'ejs');
-const hostname = `${tools.getLocalIp()}`;
+const hostname = `${tools.getLocalIp()}` //machine address IP;
 const port = 8087;
 
 //Set DataBase
@@ -39,7 +38,7 @@ mongoose.connect('mongodb://localhost:27017/DBproc', {'useNewUrlParser': true, '
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-//Set Auth
+//Set app Auth
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new localStrategy(User.authenticate()));
