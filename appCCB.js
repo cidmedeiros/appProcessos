@@ -112,4 +112,6 @@ var activateServer = function(hostname, port){
 	app).listen(port);
 	console.log(`Server running at https://${hostname}:${port}/`);
 }
+
+//Runs the server
 activateServer(hostname, port);
