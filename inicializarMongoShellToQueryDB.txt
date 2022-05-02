@@ -1,4 +1,0 @@
-windows + R ->
-mongo ->
-show dbs ->
-use nameDB

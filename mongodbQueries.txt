@@ -1,5 +1,0 @@
-empty array
-db.bolsistas.find({seiHist : {$exists:true, $size:0}}).count()
-
-non empty array
-db.bolsistas.find({seiHist : {$exists:true, $not:{$size:0}}}).count()
