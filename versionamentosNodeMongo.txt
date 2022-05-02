@@ -1,0 +1,22 @@
+Gestão de Versionamento
+- Vesões no G:
+	node -> v13.0.1
+	npm -> 6.12.0
+
+	mongod -> db version v4.2.1
+	git version: edf6d45851c0b9ee15548f0f847df141764a317e
+	allocator: tcmalloc
+	modules: none
+	build environment:
+    		distmod: 2012plus
+    		distarch: x86_64
+    		target_arch: x86_64
+	
+	MongoDB shell version v4.2.1
+	git version: edf6d45851c0b9ee15548f0f847df141764a317e
+	allocator: tcmalloc
+	modules: none
+	build environment:
+   		distmod: 2012plus
+    		distarch: x86_64
+    		target_arch: x86_64

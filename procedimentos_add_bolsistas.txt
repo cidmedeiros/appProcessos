@@ -1,7 +1,5 @@
 ﻿Procedimentos Inserção de Bolsistas GPAD
 
-
-
 1 - Dump a DB's backup first -> mongodump --db DatabaseName -o ./DirectoryName (DO NOT RUN THIS FUCKING SHIT ON THE MONGO SHELL!!!!!);
 2 - Run db.bolsistas.count() in the mongo console -> check number before adding new bolsistas;
 
