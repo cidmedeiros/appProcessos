@@ -8,6 +8,11 @@
                 <!-- Logo Text -->
                 <span style="padding-left: 5px;" class="d-inline-block align-middle ml-2"><h3>GPAD</h3></span>
             </a>
+            <ul class="nav navbar-nav navbar-right mx-4">
+                <li class="nav-item">
+                    <p style="color: rgb(225, 65, 65); font: size 28px;">DEVELOPMENT</p>
+                </li>
+            </ul>
 
             <% if(currentUser){ %>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,7 +54,7 @@
 
                     <ul class="nav navbar-nav navbar-right mx-4">
                         <li class="nav-item">
-                            <a class="nav-link" href='/clbrbolsistas/<%=currentUser._id%>'>Conectado como   <%=currentUser.fullname%></a>
+                            <a class="nav-link" href='/clbrbolsistas/<%=currentUser._id%>'>Conectado como <%=currentUser.fullname%></a>
                         </li>
                     </ul>
                 </div>
